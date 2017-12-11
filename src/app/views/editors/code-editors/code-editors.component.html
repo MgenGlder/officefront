@@ -1,0 +1,27 @@
+<script src="ace-builds/src-min/ace.js"></script>
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      Ace
+      <div class="card-actions">
+        <a href="https://github.com/fxmontigny/ng2-ace-editor"><small class="text-muted">docs</small></a>
+      </div>
+    </div>
+    <div class="card-body">
+      <ace-editor [(text)]="text" [options]="options" #editor style="min-height: 200px; width:100%; overflow: auto;"></ace-editor>
+    </div>
+    <div class="card-footer">
+      <form class="form-inline">
+        <select id="theme" class="form-control form-control-sm" (change)="onThemeChange($event)">
+          <option value="monokai">monokai</option>
+          <option value="eclipse">eclipse</option>
+        </select>
+        <select id="mode" class="form-control form-control-sm" (change)="onModeChange($event)">
+          <option value="markdown">markdown</option>
+          <option value="javascript">javascript</option>
+          <option value="html">html</option>
+        </select>
+      </form>
+    </div>
+  </div>
+</div>

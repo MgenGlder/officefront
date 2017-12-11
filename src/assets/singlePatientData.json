@@ -1,0 +1,104 @@
+[
+    {
+        "_id": "4324jk4n32jk4hklj75876kl",
+        "firstName"   : "Adekunle",
+        "lastName"    : "Oshiyoye",
+        "dateOfBirth" : "07/30/1970",
+        "ordersStatus": 1,
+        "visits"      : [
+            {
+                "doctor": "Hampson",
+                "date"  : "Mon, 13 Nov 2017 18:44:20 GMT",
+                "orders": [
+                    {
+                        "type": "XRay",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "RNToMonitorBp",
+                        "status": [
+                            "ordered",
+                            "awaitingSignature",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "bloodwork",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    }
+                ]
+            },
+            {
+                "doctor": "Patel",
+                "date"  : "Mon, 14 Nov 2017 18:44:20 GMT",
+                "orders": [
+                    {
+                        "type": "XRay",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "RNToMonitorBp",
+                        "status": [
+                            "ordered",
+                            "awaitingSignature",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "bloodwork",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    }
+                ]
+            },
+            {
+                "doctor": "Adler",
+                "date"  : "Mon, 15 Nov 2017 18:44:20 GMT",
+                "orders": [
+                    {
+                        "type": "XRay",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "RNToMonitorBp",
+                        "status": [
+                            "ordered",
+                            "awaitingSignature",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "bloodwork",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

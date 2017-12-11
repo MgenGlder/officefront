@@ -1,0 +1,370 @@
+[
+    {
+        "_id": "4324jk4n32jk4hklj75876kl",
+        "firstName"   : "Adekunle",
+        "lastName"    : "Oshiyoye",
+        "dateOfBirth" : "07/30/1970",
+        "ordersStatus": 1,
+        "visits"      : [
+            {
+                "doctor": "Hampson",
+                "date"  : "Mon, 13 Nov 2017 18:44:20 GMT",
+                "orders": [
+                    {
+                        "type": "XRay",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "RNToMonitorBp",
+                        "status": [
+                            "ordered",
+                            "awaitingSignature",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "bloodwork",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id": "2432542tregfdsg",
+        "firstName"   : "Irene",
+        "lastName"    : "Oshiyoye",
+        "dateOfBirth" : "07/30/1970",
+        "ordersStatus": 3,
+        "visits"      : [
+            {
+                "doctor": "Hampson",
+                "date": "Mon, 13 Nov 2017 18:44:20 GMT",
+                "orders": [
+                    {
+                        "type": "XRay",
+                        
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "RNToMonitorBp",
+                        "status": [
+                            "ordered",
+                            "awaitingSignature",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "bloodwork",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id"         : "32143543fdsag23142352",
+        "firstName"   : "Brittany",
+        "lastName"    : "Oshiyoye",
+        "dateOfBirth" : "07/30/1970",
+        "ordersStatus": 2,
+        "visits"      : [
+            {
+                "doctor": "Hampson",
+                "date"  : "Mon, 13 Nov 2017 18:44:20 GMT",
+                "orders": [
+                    {
+                        "type": "XRay",
+                        
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type"  : "RNToMonitorBp",
+                        "status": [
+                            "ordered",
+                            "awaitingSignature",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "bloodwork",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id": "4325tdghfg98709gfd",
+        "firstName": "Dr.",
+        "lastName": "Adler",
+        "dateOfBirth": "07/30/1970",
+        "ordersStatus": 1,        
+        "visits": [
+            {
+                "doctor": "Hampson",
+                "date": "Mon, 13 Nov 2017 18:44:20 GMT",
+                "orders": [
+                    {
+                        "type": "XRay",
+                        
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "RNToMonitorBp",
+                        "status": [
+                            "ordered",
+                            "awaitingSignature",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "bloodwork",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id": "3214321fsdagfHgfhdgfdjh",
+        "firstName": "Dr.",
+        "lastName": "Patel",
+        "dateOfBirth": "07/30/1970",
+        "ordersStatus": 3,        
+        "visits": [
+            {
+                "doctor": "Hampson",
+                "date": "Mon, 13 Nov 2017 18:44:20 GMT",
+                "orders": [
+                    {
+                        "type": "XRay",
+                        
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "RNToMonitorBp",
+                        "status": [
+                            "ordered",
+                            "awaitingSignature",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "bloodwork",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id": "gdhgdjhgfu7657hf6",
+        "firstName": "Dr",
+        "lastName": "Hampson",
+        "dateOfBirth": "07/30/1970",
+        "ordersStatus": 2,        
+        "visits": [
+            {
+                "doctor": "Hampson",
+                "date": "Mon, 13 Nov 2017 18:44:20 GMT",
+                "orders": [
+                    {
+                        "type": "XRay",
+                        
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "RNToMonitorBp",
+                        "status": [
+                            "ordered",
+                            "awaitingSignature",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "bloodwork",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id": "45654365eyhghghdh6y78",
+        "firstName": "Demyra",
+        "lastName": "Ross",
+        "dateOfBirth": "07/30/1970",
+        "ordersStatus": 1,        
+        "visits": [
+            {
+                "doctor": "Hampson",
+                "date": "Mon, 13 Nov 2017 18:44:20 GMT",
+                "orders": [
+                    {
+                        "type": "XRay",
+                        
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "RNToMonitorBp",
+                        "status": [
+                            "ordered",
+                            "awaitingSignature",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "bloodwork",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id": "425gfsgfdhgdjhgjhfg",
+        "firstName": "Myia",
+        "lastName": "Levine",
+        "dateOfBirth": "07/30/1970",
+        "ordersStatus": 2,        
+        "visits": [
+            {
+                "doctor": "Hampson",
+                "date": "Mon, 13 Nov 2017 18:44:20 GMT",
+                "orders": [
+                    {
+                        "type": "XRay",
+                        
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "RNToMonitorBp",
+                        "status": [
+                            "ordered",
+                            "awaitingSignature",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "bloodwork",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id": "43564gfdsgadsDAw21312321",
+        "firstName": "Justice",
+        "lastName": "Oshiyoye",
+        "dateOfBirth": "07/30/1970",
+        "ordersStatus": 1,        
+        "visits": [
+            {
+                "doctor": "Hampson",
+                "date": "Mon, 13 Nov 2017 18:44:20 GMT",
+                "orders": [
+                    {
+                        "type": "XRay",
+                        
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "RNToMonitorBp",
+                        "status": [
+                            "ordered",
+                            "awaitingSignature",
+                            "faxed",
+                            "completed"
+                        ]
+                    },
+                    {
+                        "type": "bloodwork",
+                        "status": [
+                            "ordered",
+                            "faxed",
+                            "completed"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

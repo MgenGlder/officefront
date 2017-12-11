@@ -1,0 +1,35 @@
+<div *ngIf="order" style="margin-top: 20px; position: relative;" class="card text-white bg-primary text-center">
+    <div class="card-body" style="padding: 0px;">
+        <blockquote class="card-bodyquote" style="margin: 5px 0 5px;">
+            {{type}}
+            <div [ngSwitch]="type">
+                <div *ngSwitchCase="'test'">
+                    <span *ngFor="let test of order.tests">
+                        {{test.text}}
+                    </span>
+                </div>
+                <div *ngSwitchCase="'bloodwork'">
+                    <span *ngFor="let bloodTest of order.bloodTests">
+                        {{bloodTest.text}} &nbsp;
+                    </span>
+                </div>
+                <div *ngSwitchCase="'specialist'">
+                    {{order.type | orderNameTransform}}
+                </div>
+                <div *ngSwitchCase="'nurse'">
+                    <div>
+                        RN to
+                        <ng-container *ngFor="let purpose of order.nursePurpose; let first = first; let last = last">
+                            <span *ngIf="last; else elseBlock;">{{purpose.text}}</span>
+                            <ng-template #elseBlock>{{purpose.text}},</ng-template>
+                        </ng-container>
+                    </div>
+                </div>
+                <div *ngDefaultCase>Default case...</div>
+            </div>
+        </blockquote>
+    </div>
+    <div (click)="deleteOrder($event);" style="position: absolute; background-color: #f86c6b; height: 100%; width: 50px; right: 0px;">
+        X
+    </div>
+</div>

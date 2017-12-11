@@ -1,0 +1,115 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <i class="icon-note"></i>
+          <strong>New Patient Order</strong>
+          <small> Patient information</small>
+          <div class="card-actions">
+            <a href="https://github.com/digitalBush/jquery.maskedinput">
+              <small class="text-muted">docs</small>
+            </a>
+          </div>
+        </div>
+        <form>
+          <div class="card-body">
+            <fieldset class="form-group">
+              <label>Patient First Name</label>
+              <div class="input-group" style="width: 100%;">
+                <span class="input-group-addon">
+                  <i class="fa fa-male"></i>
+                </span>
+                <input [(ngModel)]="patientProfile.firstName" name="firstName" (valueChanged)="firstNameAutoCompleted($event)" ngui-auto-complete min-chars="3" max-num-list="5"
+                  type="text" class="form-control" [source]="examplePatients" value-property-name="firstName"  display-property-name="firstName"
+                  style="width: 100%;" z-index="3" [list-formatter]="autocompleListFormatter" [value-formatter]="autocompleteValueFormatter" autocomplete="off">
+              </div>
+              <small class="text-muted">ex. Jane</small>
+            </fieldset>
+            <fieldset class="form-group">
+              <label>Patient Last Name</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-male"></i>
+                </span>
+                <input type="text" class="form-control" [(ngModel)]="patientProfile.lastName" name="lastName" autocomplete="off">
+              </div>
+              <small class="text-muted">ex. Doe</small>
+            </fieldset>
+            <fieldset class="form-group">
+              <label>Date of Birth</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </span>
+                <input type="text" class="form-control" [textMask]="{mask: dateMask}" [(ngModel)]="patientProfile.dateOfBirth" name="dateOfBirth">
+              </div>
+              <small class="text-muted">ex. 99/99/9999</small>
+            </fieldset>
+            <fieldset style="padding-bottom:17px;">
+              <label>Visiting Doctor</label>
+              <select id="select" name="select" class="form-control" disabled>
+                <option value="adler">Dr. Adler</option>
+                <option value="hampson">Dr. Hampson</option>
+                <option value="patel">Dr. Patel</option>
+              </select>
+            </fieldset>
+            <fieldset>
+              <label>Reporter</label>
+              <input type="text" placeholder="Kunle Oshiyoye" disabled="disabled" class="form-control" [(ngModel)]="patientProfile.reporter" name="reporter" />
+            </fieldset>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.col -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Date of Visit</strong>
+          <small>Date the Doctor went out to see the patient</small>
+        </div>
+        <div class="card-body">
+          <datepickercontainer></datepickercontainer>
+        </div>
+      </div>
+    </div>
+    <div class="card card-body col-md-12">
+      <div id="doctors-orders">
+        <a [routerLink]="['specialist']">
+          <button class="btn btn-primary" type="button">
+            <i class="fa fa-star"></i>Add Specialist
+          </button>
+        </a>
+        <a [routerLink]="['test']">
+          <button class="btn btn-primary" type="button">
+            <i class="fa fa-star"></i>Add Test
+          </button>
+        </a>
+        <a [routerLink]="['bloodwork']">
+          <button class="btn btn-primary" type="button">
+            <i class="fa fa-star"></i>Add Bloodwork
+          </button>
+        </a>
+        <a [routerLink]="['nurse']">
+          <button class="btn btn-primary" type="button">
+            <i class="fa fa-star"></i>Add Nurse
+          </button>
+        </a>
+      </div>
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+      <div>
+        <div *ngFor="let order of orders">
+          <order-container [order]="order"></order-container>
+        </div>
+      </div>
+      <div class="card-body">
+        <button (click)="submitOrder()" class="btn btn-success btn-ladda ladda-button">
+          <span class="ladda-label">Submit</span>
+        </button>
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>

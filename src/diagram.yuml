@@ -1,0 +1,8 @@
+// { type: activity}
+(start)
+(end)
+(Find Products)
+(start)->(Find Products)
+(start)->(Find Products)->(end)
+(Simulator running)[Pause]->(Simulator paused|do/wait)[Unpause]->(Simulator running)
+(state)-(note: a note here)

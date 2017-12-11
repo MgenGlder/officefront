@@ -1,0 +1,32 @@
+<div class="animated fadeIn">
+    <div class="view-specific-order" *ngIf="data">
+        <h3>Orders for {{data.firstName}} {{data.lastName}}</h3>
+        <div class="whole">
+            <div class="card card-accent-primary" *ngFor="let visit of data.visits; let currentIndex = index;">
+                <input id="tab-{{currentIndex}}" type="checkbox" name="tabs">
+                <label for="tab-{{currentIndex}}">{{visit.date}} <small>{{visit.doctor}}</small></label>
+                <div class="card-header tab-content">
+                    <p *ngFor="let order of visit.orders">
+                        {{mappingsForOrders[order.type]}} 
+                        <span  *ngFor="let status of order.status" class="badge badge-success">{{mappingsForStatuses[status]}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        <!--
+            <div class="half">
+                <p>Open
+                    <strong>one</strong>
+                </p>
+                <div class="tab blue">
+                    <input id="tab-four" type="radio" name="tabs2">
+                    <label for="tab-four">Label One</label>
+                    <div class="tab-content">
+                        <p>Stuff</p>
+                    </div>
+                </div>
+            </div>
+        -->
+    </div>
+</div>

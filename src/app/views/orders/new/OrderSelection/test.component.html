@@ -1,0 +1,50 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit();">
+    <div style="padding-top: 40px">
+        <tabset #staticTabs>
+            <tab>
+                <ng-template tabHeading>
+                    <i class="icon-list"></i> Type of Test &nbsp;
+                    <span class="badge badge-success">New</span>
+                </ng-template>
+                <div class="form-group-row">
+                    <ng-container *ngFor="let test of testData">
+                        <div class="col-md-3" style="float: left;">
+                            <div class="radio">
+                                <label for="{{test.id}">
+                                    <input type="checkbox" id="{{test.id}}" name="{{test.id}}" [formControl]="test.control" /> {{test.text}}
+                                </label>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <div class="clearfix"></div>
+                    <button type="button" (click)="selectTab(1)" class="btn btn-success btn-ladda ladda-button">Next: Details =></button>
+                </div>
+            </tab>
+            <tab (select)="loadInputsForExtraInfo();">
+                <ng-template tabHeading>
+                    <i class="icon-calculator"></i> Details &nbsp;
+                    <span class="badge badge-pill badge-danger">1</span>
+                </ng-template>
+                <div class="form-group row" style="margin-top: 10px;">
+                    <label class="col-md-2 col-form-label" for="textarea-input">Reason</label>
+                    <div class="col-md-9" style="margin-bottom: 20px;">
+                        <textarea class="textarea-input form-control" formControlName="reason" placeholder="Ex: New patient..." rows="2"></textarea>
+                    </div>
+                    <ng-container *ngFor="let input of selectedInputs">
+                        <label class="col-md-2 col-form-label">{{input.text}} location</label>
+                        <div class="col-md-9" style="margin-bottom: 20px;">
+                            <input type="text" class="form-control" [formControl]="input.control" placeholder="Ex: Right Arm, left knee" />
+                        </div>
+                    </ng-container>
+                </div>
+                <button type="button" (click)="selectTab(2)" class="btn btn-success btn-ladda ladda-button">Next: Additional Notes =></button>
+            </tab>
+            <tab>
+                <ng-template tabHeading>
+                    <i class="icon-pie-chart"></i> Additional Notes</ng-template>
+                <textarea formControlName="notes" style="margin-bottom: 15px;" class="form-control" placeholder="Additional notes for the specialist to take into account..."></textarea>
+                <button type="submit" class="btn btn-success btn-ladda ladda-button">Add Order</button>
+            </tab>
+        </tabset>
+    </div>
+</form>
