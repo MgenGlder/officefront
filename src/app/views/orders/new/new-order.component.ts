@@ -14,17 +14,11 @@ export class NewOrderComponent implements OnInit {
 
   public examplePatients;
   // Angular 2 Input Mask
-  public patientProfile = {
-    visitingDoctor: '',
-    reporter: '',
-    dateOfBirth: '',
-    firstName: '',
-    lastName: ''
-  }
+
   public dateMask = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
 
   private orders: Array<Order>;
-
+  public patientProfile;
   public constructor(public orderBuilderService: OrderBuilderService, 
                       public orderService: OrderService, 
                       public router: Router, 
@@ -33,6 +27,13 @@ export class NewOrderComponent implements OnInit {
     this.orderService.visitingDoctor = "Dr. Hampson";
     this.orderService.referrer = "Dr. Hampson";
     this.examplePatients = db.getPatientList();
+    this.patientProfile = {
+      visitingDoctor: this.orderService.visitingDoctor,
+      reporter: this.orderService.referrer,
+      dateOfBirth: '',
+      firstName: '',
+      lastName: ''
+    }
     
   }
 

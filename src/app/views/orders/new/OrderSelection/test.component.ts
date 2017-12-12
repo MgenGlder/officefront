@@ -23,12 +23,6 @@ export class TestComponent {
     public fb: FormBuilder,
     public router: Router,
     public db: DBService) {
-      this.form = fb.group({
-        tests: new FormArray(this.testAndFormControls),
-        reason: '',
-        notes: '',
-        extraInfo: new FormArray([])
-      });
       this.order = new TestOrder([], "", "", "", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
       this.tests = this.db.getTestOptions();
       orderBuilderService.startBuildingTestOrder();
@@ -42,10 +36,13 @@ export class TestComponent {
           control: newFormControl
         }
       });
+      this.form = fb.group({
+        tests: new FormArray(this.testAndFormControls),
+        reason: '',
+        notes: '',
+        extraInfo: new FormArray([])
+      });
     }
-
-
-
 
   @ViewChild('staticTabs') staticTabs: TabsetComponent;
 
@@ -56,7 +53,6 @@ export class TestComponent {
     let formArrayTestsNeedingInfo: Array<FormControl> = [];
     let arrayMappedTestsNeedingInfoWithControls: Array<{ value: string, text: string, control: FormControl }>;
     arrayMappedTests = this.mapFormValues(this.form.get("tests").value);
-
     arrayMappedTestsNeedingInfoWithControls = arrayMappedTests
       .filter((input) => {
         return input.location;
@@ -81,10 +77,22 @@ export class TestComponent {
 
   onSubmit() {
     this.order.notes = this.form.get("notes").value;
-    this.order.tests = this.mapFormValues(this.form.get("tests").value);
+    let testValues = this.mapFormValues(this.form.get("tests").value);
+    for (let value of testValues) {
+      if (value.location){
+        for (let selectedValue of this.selectedInputs){
+          if (selectedValue.value == value.value){
+            value.locationNotes = selectedValue.control.value;
+          }
+        }
+      }
+    }
+    this.order.tests = testValues;
     this.order.reason = this.form.get("reason").value;
+    
     this.router.navigate(['orders/new/entered', 'test'], { skipLocationChange: true });
     this.save();
+    this.resetForm();
   }
   save() {
     console.log("Saving the order...");
@@ -96,7 +104,7 @@ export class TestComponent {
     this.form.reset();
   }
 
-  mapFormValues(booleanFormValues: Array<boolean>): Array<{ value: string, text: string, location: boolean }> {
+  mapFormValues(booleanFormValues: Array<boolean>): Array<{ value: string, text: string, location: boolean, locationNotes?: string }> {
     if (booleanFormValues.length !== this.tests.length) return;
     return this.tests.filter((element, index) => {
       return booleanFormValues[index];

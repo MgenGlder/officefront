@@ -25,11 +25,6 @@ export class NurseComponent {
     public fb: FormBuilder,
     public router: Router,
     public db: DBService) {
-      this.form = fb.group({
-        nursePurpose: new FormArray(this.testAndFormControls),
-        reason: '',
-        notes: '',
-      });
       this.order = new NurseOrder([], "", "", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
       this.tests = db.getNurseOptions();
       orderBuilderService.startBuildingTestOrder();
@@ -42,6 +37,11 @@ export class NurseComponent {
           text: test.text,
           control: newFormControl
         }
+      });
+      this.form = fb.group({
+        nursePurpose: new FormArray(this.testAndFormControls),
+        reason: '',
+        notes: '',
       });
     }
 

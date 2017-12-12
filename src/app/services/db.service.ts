@@ -4,6 +4,11 @@ import { Injectable } from '@angular/core';
 export class DBService {
     constructor() { }
 
+    saveCompletePatientOrder(order) {
+        console.log(order);
+        console.log("order saved");
+    }
+
     getBloodworkOptions() {
         return [
             { value: "hgb-aic-level", text: "Hgb. AIC Level" },

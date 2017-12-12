@@ -23,11 +23,6 @@ export class BloodworkComponent {
     public fb: FormBuilder,
     public router: Router,
     public db: DBService) {
-    this.form = fb.group({
-      bloodTests: new FormArray(this.testAndFormControls),
-      notes: '',
-      reason: ''
-    });
     this.order = new BloodworkOrder([], this.tests, "", "", "", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
     this.tests = this.db.getBloodworkOptions();
     orderBuilderService.startBuildingSpecialistOrder();
@@ -41,7 +36,11 @@ export class BloodworkComponent {
         control: newFormControl
       }
     });
-
+    this.form = fb.group({
+      bloodTests: new FormArray(this.testAndFormControls),
+      notes: '',
+      reason: ''
+    });
   }
 
   @ViewChild('staticTabs') staticTabs: TabsetComponent;

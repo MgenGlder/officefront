@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Order } from '../models/pending-order.model'
+import {DBService } from './db.service';
 @Injectable()
 export class OrderService {
     public orders: Array<Order> = [];
     public visitingDoctor;
     public referrer;
-    constructor() {}
+    constructor(private db: DBService) {}
 
     addOrder(order: Order) {
         this.orders.push(order);
@@ -25,10 +26,11 @@ export class OrderService {
     getOrders(){
         return this.orders;
     }
-    submitOrder(completeOrder) {
+    submitOrder(patientProfile) {
         console.log("order was submitted \n ");
-        console.dir(completeOrder);
+        console.dir(patientProfile);
         console.log("current orders are... \n");
         console.dir(this.orders);
+        this.db.saveCompletePatientOrder(this.orders);
     }
 }
