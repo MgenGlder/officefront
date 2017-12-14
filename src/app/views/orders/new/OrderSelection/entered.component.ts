@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
     templateUrl: 'entered.component.html'
 })
 export class EnteredOrderComponent implements OnInit {
-    private type: string;
+    public type: string;
     private sub: Subscription;
     constructor(private router: Router, private activatedRoute: ActivatedRoute) {
 

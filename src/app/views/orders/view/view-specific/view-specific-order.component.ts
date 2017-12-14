@@ -10,7 +10,7 @@ declare var $: any;
 export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
     id: number;
     private sub: any;
-    private data: any;
+    public data: any;
     public specificPatient: any;
 
     public mappingsForOrders: {} = {

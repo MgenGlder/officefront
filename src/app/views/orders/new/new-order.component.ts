@@ -17,7 +17,7 @@ export class NewOrderComponent implements OnInit {
 
   public dateMask = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
 
-  private orders: Array<Order>;
+  public orders: Array<Order>;
   public patientProfile;
   public constructor(public orderBuilderService: OrderBuilderService, 
                       public orderService: OrderService, 
