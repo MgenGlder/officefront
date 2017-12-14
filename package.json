@@ -8,13 +8,18 @@
   "license": "http://coreui.io/pro/license/",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
+    "serve": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "server": "node server.js",
     "postinstall": "ng build --aot -prod"
+  },
+  "engines": {
+    "node": "8.7.0",
+    "npm": "5.5.1"
   },
   "private": true,
   "dependencies": {
