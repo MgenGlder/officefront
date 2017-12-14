@@ -12,13 +12,17 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "server": "node server.js",
+    "postinstall": "ng build --aot -prod"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^4.4.6",
+    "@angular/cli": "1.4.9",
     "@angular/common": "^4.4.6",
     "@angular/compiler": "^4.4.6",
+    "@angular/compiler-cli": "4.4.6",
     "@angular/core": "^4.4.6",
     "@angular/forms": "^4.4.6",
     "@angular/http": "^4.4.6",
@@ -38,6 +42,7 @@
     "codemirror": "^5.31.0",
     "core-js": "2.5.1",
     "dragula": "3.7.2",
+    "express": "^4.16.2",
     "font-awesome": "^4.7.0",
     "moment": "^2.19.1",
     "ng2-ace-editor": "0.3.1",
@@ -50,9 +55,7 @@
     "simple-line-icons": "^2.4.1",
     "spinkit": "^1.2.5",
     "ts-helpers": "1.1.2",
-    "zone.js": "0.8.18",
-    "@angular/cli": "1.4.9",
-    "@angular/compiler-cli": "4.4.6"
+    "zone.js": "0.8.18"
   },
   "devDependencies": {
     "@types/jasmine": "2.6.0",
