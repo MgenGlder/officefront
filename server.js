@@ -1,4 +1,4 @@
-// server
+// server to be run on heroku
 const express = require('express');
 const app = express();
 
