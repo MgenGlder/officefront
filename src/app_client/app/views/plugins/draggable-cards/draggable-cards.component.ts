@@ -3,7 +3,7 @@ import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
 @Component({
   templateUrl: 'draggable-cards.component.html',
-  styleUrls: ['../../../../../node_modules/dragula/dist/dragula.min.css'],
+  styleUrls: ['../../../../../../node_modules/dragula/dist/dragula.min.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class DraggableCardsComponent {
