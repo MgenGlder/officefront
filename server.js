@@ -1,13 +1,13 @@
 // server to be run on heroku
-require("dotenv").load();
+// require("dotenv").load();
 const express = require('express');
 const app = express();
-var path = require('path');
-var favicon = require('serve-favicon');
-var cookieparser = require('cookie-parser');
-var bodyParser = require('body-parser');
+// var path = require('path');
+// var favicon = require('serve-favicon');
+// var cookieparser = require('cookie-parser');
+// var bodyParser = require('body-parser');
 //require('./app_api/models/db');
-var fs = require('fs');
+// var fs = require('fs');
 
 
 //var routesApi = require('./app_api/routes/index');
