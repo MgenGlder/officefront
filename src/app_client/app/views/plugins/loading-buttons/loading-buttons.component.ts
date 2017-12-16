@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   templateUrl: 'loading-buttons.component.html',
-  styleUrls: ['../../../../../node_modules/ladda/dist/ladda-themeless.min.css'],
+  styleUrls: ['../../../../../../node_modules/ladda/dist/ladda-themeless.min.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class LoadingButtonsComponent {
