@@ -27,3 +27,9 @@ function getPatient (req, res) {
         "data": "getPatient api called."
     });
 }
+
+module.exports = {
+    createPatient: createPatient,
+    getAllPatients: getAllPatients,
+    getPatient: getPatient
+}

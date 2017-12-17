@@ -2,15 +2,15 @@
 // require("dotenv").load();
 const express = require('express');
 const app = express();
-// var path = require('path');
-// var favicon = require('serve-favicon');
-// var cookieparser = require('cookie-parser');
-// var bodyParser = require('body-parser');
-//require('./app_api/models/db');
-// var fs = require('fs');
+var path = require('path');
+var favicon = require('serve-favicon');
+var cookieparser = require('cookie-parser');
+var bodyParser = require('body-parser');
+require('./src/app_api/models/db');
+var fs = require('fs');
 
 
-//var routesApi = require('./app_api/routes/index');
+var routesApi = require('./src/app_api/routes/index');
 
 app.use(express.static(__dirname + '/dist'));
 

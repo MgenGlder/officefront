@@ -19,7 +19,9 @@ if (process.env.NODE_ENV === "production") {
   dbURI = process.env.MONGOLAB_URI
   console.log("We in the server database")
 }
-mongoose.connect(dbURI);
+mongoose.connect(dbURI, {
+  useMongoClient: true
+});
 console.log("the database connected")
 mongoose.connection.on("connected", function () {
   console.log("Mongoose connected to " + dbURI);
@@ -58,4 +60,6 @@ process.on("SIGTERM", function (){
 });
 
 require("./locations");
+require("./patients");
 require("./users");
+require("./orders");
