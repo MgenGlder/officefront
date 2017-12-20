@@ -8,5 +8,5 @@ router.get('/patient', ctrlPatients.getPatient);
 router.post('/patient', ctrlPatients.createPatient);
 router.get('/patients', ctrlPatients.getAllPatients);
 router.get('/orders', ctrlOrders.getOrder);
-router.post('/oders', ctrlOrders.createOrder);
+router.post('/orders', ctrlOrders.createOrder);
 module.exports = router;
