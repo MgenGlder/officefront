@@ -4,7 +4,7 @@ var router = express.Router();
 var ctrlPatients = require('../controllers/patients');
 var ctrlOrders = require('../controllers/orders');
 
-router.get('/patients', ctrlPatients.getPatient);
+router.get('/patient', ctrlPatients.getPatient);
 router.post('/patients', ctrlPatients.createPatient);
 router.get('/patients', ctrlPatients.getAllPatients);
 router.get('/orders', ctrlOrders.getOrder);
