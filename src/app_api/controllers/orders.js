@@ -36,9 +36,9 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
 function getOrder(req, res) {
     Order
         .findOne({
-            "type"          : req.body.type,
-            "dateOfVisit"   : req.body.dateOfVisit,
-            "visitingDoctor": req.body.visitingDoctor,
+            "type"          : req.params.type,
+            "dateOfVisit"   : new Date(req.params.dateOfVisit),
+            "visitingDoctor": req.params.visitingDoctor,
         })
         .exec((err, orders) => {
             if (err) {
