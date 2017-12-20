@@ -4,41 +4,60 @@ var Patient = mongoose.model("Patient");
 var sendJsonResponse = function (res, status, content) {
     res.status(status);
     res.json(content);
-
 }
 
 function createPatient(req, res) {
     Patient.create({
-        firstName: "Kunle",
-        lastName: "Oshiyoye"
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        dateOfBirth: req.body.dateOfBirth
     }, (err, location) => {
         if (err) {
-            sendJsonResponse(res, 200, {
+            sendJsonResponse(res, 400, {
                 "status": "ok",
-                "data": "createPatient api called."
+                "data": "Patient creation failed"
             })
         }
         else {
-            sendJsonResponse(res, 200, {
+            sendJsonResponse(res, 400, {
                 "status": "ok",
-                "data": "createPatient api called."
+                "data": "Patient created successfully"
             })
         }
     })
 }
 
 function getAllPatients(req, res) {
-    sendJsonResponse(res, 200, {
-        "status": "ok",
-        "data": "getAllPatients api called."
-    });
+    Patient
+        .find({}, (err, patients) => {
+            if (!err && patients.length >= 1) {
+                sendJsonResponse(res, 200, patients);
+            }
+        })
 }
 
 function getPatient(req, res) {
-    sendJsonResponse(res, 200, {
-        "status": "ok",
-        "data": "getPatient api called."
-    });
+    Patient
+        .findOne({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
+        })
+        .exec((err, patient) => {
+            if (!patient) {
+                sendJsonResponse(res, 404, {
+                    "message": "Patient not found"
+                })
+                return;
+            }
+            else if (err) {
+                console.log(err);
+                sendJsonResponse(res, 404, err);
+                return;
+            }
+            else {
+                sendJsonResponse(res, 404, response);
+            }
+        })
 }
 
 module.exports = {
