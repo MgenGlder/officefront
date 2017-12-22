@@ -30,7 +30,7 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
             }
             else {
                 sendJsonResponse(res, 200, {
-                    "status" : "ok",
+                    "status": "ok",
                     "message": "Order was created successfully"
                 });
             }
@@ -45,13 +45,13 @@ function getOrder(req, res) {
         }, (err, orders) => {
             if (err) {
                 sendJsonResponse(res, 400, {
-                    "status" : "error",
+                    "status": "error",
                     "message": err
                 })
             }
             else {
                 sendJsonResponse(res, 200, {
-                    "status" : "ok",
+                    "status": "ok",
                     "message": orders
                 })
             }
@@ -79,6 +79,7 @@ function getAllOrders(req, res) {
         })
 }
 module.exports = {
-    getOrder: getOrder,
-    createOrder: createOrder
+    getOrder    : getOrder,
+    getAllOrders: getAllOrders,
+    createOrder : createOrder
 }
