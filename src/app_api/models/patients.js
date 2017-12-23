@@ -7,3 +7,7 @@ var patientSchema = new mongoose.Schema({
 })
 
 mongoose.model("Patient", patientSchema);
+
+module.exports = {
+    patientSchema: patientSchema
+}
