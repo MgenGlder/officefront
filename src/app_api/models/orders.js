@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var patientSchema = require("./patients");
 
 var orderSchema = new mongoose.Schema({
     type              : String,
@@ -7,9 +8,9 @@ var orderSchema = new mongoose.Schema({
     uniqueID          : String,
     patientFirstName  : String,
     patientlastName   : String,
-    patientDateOfBirth: Date
-    
-
+    patientDateOfBirth: Date,
+    patient: [patientSchema]
 });
 
 mongoose.model("Order", orderSchema);
+
