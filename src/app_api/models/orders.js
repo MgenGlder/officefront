@@ -3,7 +3,7 @@ var patientSchema = require("./patients");
 
 var orderSchema = new mongoose.Schema({
     type              : String,
-    dateOfVisit       : Date,
+    dateOfVisit       : String,
     visitingDoctor    : String,
     uniqueID          : String,
     patientFirstName  : String,
