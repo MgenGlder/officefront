@@ -19,7 +19,7 @@ function createPatient(req, res) {
             })
         }
         else {
-            sendJsonResponse(res, 400, {
+            sendJsonResponse(res, 200, {
                 "status": "ok",
                 "data": "Patient created successfully"
             })
