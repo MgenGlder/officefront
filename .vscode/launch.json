@@ -6,13 +6,16 @@
     "configurations": [
         {
             "type": "node",
+            "request": "attach",
+            "name": "Attach",
+            "port": 8080,
+        },
+        {
+            "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/src\\app\\views\\orders\\new\\OrderSelection\\nurse.component.ts",
-            "preLaunchTask": "tsc: build - tsconfig.json",
-            "outFiles": [
-                "${workspaceFolder}/dist/out-tsc/**/*.js"
-            ]
+            "program": "${workspaceFolder}/server.js",
+            "cwd": "${workspaceFolder}"
         }
     ]
 }
