@@ -51,11 +51,11 @@ function getPatient(req, res) {
             }
             else if (err) {
                 console.log(err);
-                sendJsonResponse(res, 404, err);
+                sendJsonResponse(res, 400, err);
                 return;
             }
             else {
-                sendJsonResponse(res, 404, response);
+                sendJsonResponse(res, 200, response);
             }
         })
 }
