@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
-var Order    = mongoose.model("Order");
-var Patient  = mongoose.model("Patient");
+var Order = mongoose.model("Order");
+var Patient = mongoose.model("Patient");
 
 var sendJsonResponse = function (res, status, content) {
     res.status(status);
@@ -18,26 +18,36 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
         }, (err, patient) => {
             if (err) {
                 sendJsonResponse(res, 400, {
-                    "status" : "error",
+                    "status": "error",
                     "message": err
                 })
                 return;
             }
-            else {
-                associatedPatient = patient;
+            else if (!patient) {
+                sendJsonResponse(res, 404, {
+                    "status": "error",
+                    "message": "Patient was not found"
+                })
+                return;
             }
-        }).cursor();
-    cursor.on("data", () => {
-        Order
+            else {
+                createOrderSchema(patient, req, res);
+            }
+        })
+}
+
+function createOrderSchema(lookedUpPatient, req, res) {
+    console.log(lookedUpPatient);
+    Order
         .create({
-            "patient"       : associatedPatient,
-            "type"          : req.body.type,
-            "reason"        : req.body.reason,
-            "location"      : req.body.location,
-            "notes"         : req.body.notes,
-            "dateOfVisit"   : req.body.dateOfVisit,
+            "patient": lookedUpPatient,
+            "type": req.body.type,
+            "reason": req.body.reason,
+            "location": req.body.location,
+            "notes": req.body.notes,
+            "dateOfVisit": req.body.dateOfVisit,
             "visitingDoctor": req.body.visitingDoctor,
-            "reporter"      : req.body.reporter,
+            "reporter": req.body.reporter,
         }, (err, order) => {
             if (err) {
                 sendJsonResponse(res, 400, {
@@ -46,6 +56,7 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
                 });
             }
             else {
+                console.log(order);
                 sendJsonResponse(res, 200, {
                     "status": "ok",
                     "message": "Order was created successfully",
@@ -53,7 +64,6 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
                 });
             }
         })
-    })
 }
 
 function getOrder(req, res) {
@@ -98,29 +108,29 @@ function getAllOrders(req, res) {
         })
 }
 
-function getAllOrdersSpecificPatient(req, res){
+function getAllOrdersSpecificPatient(req, res) {
     Order
         .find({
-                'patient.firstName'  : req.query.patientFirstName,
-                'patient.lastName'   : req.body.patientLastName,
-                'patient.dateOfBirth': req.body.patientDateOfBirth
-            }, (err, allPatientOrders) => {
-                if (err) {
-                    sendJsonResponse(res, 400, {
-                        "status": "error",
-                        "message": err
-                    })
-                }
-                else {
-                    sendJsonResponse(res, 200, {
-                        "status": "ok",
-                        "message": allPatientOrders
-                    });
-                }
-            })
+            'patient.firstName': req.query.patientFirstName,
+            'patient.lastName': req.body.patientLastName,
+            'patient.dateOfBirth': req.body.patientDateOfBirth
+        }, (err, allPatientOrders) => {
+            if (err) {
+                sendJsonResponse(res, 400, {
+                    "status": "error",
+                    "message": err
+                })
+            }
+            else {
+                sendJsonResponse(res, 200, {
+                    "status": "ok",
+                    "message": allPatientOrders
+                });
+            }
+        })
 }
 module.exports = {
-    getOrder    : getOrder,
+    getOrder: getOrder,
     getAllOrders: getAllOrders,
-    createOrder : createOrder
+    createOrder: createOrder
 }
