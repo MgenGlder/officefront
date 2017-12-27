@@ -37,7 +37,6 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
 }
 
 function createOrderSchema(lookedUpPatient, req, res) {
-    console.log(lookedUpPatient);
     Order
         .create({
             "patient": lookedUpPatient,
@@ -56,7 +55,6 @@ function createOrderSchema(lookedUpPatient, req, res) {
                 });
             }
             else {
-                console.log(order);
                 sendJsonResponse(res, 200, {
                     "status": "ok",
                     "message": "Order was created successfully",
@@ -67,7 +65,6 @@ function createOrderSchema(lookedUpPatient, req, res) {
 }
 
 function getOrder(req, res) {
-    console.log(req.query);
     Order
         .findOne({
             "uniqueID": req.query.uniqueID
