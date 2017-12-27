@@ -10,9 +10,9 @@ var sendJsonResponse = function (res, status, content) {
 
 function createOrder(req, res) { //generic, TODO: create a unique function for each type of test.
     var associatedPatient;
-    Patient
+    var cursor = Patient
         .findOne({
-            firstName: req.boy.patientFirstName,
+            firstName: req.body.patientFirstName,
             lastName: req.body.patientLastName,
             dateOfBirth: req.body.patientDateOfBirth
         }, (err, patient) => {
@@ -21,18 +21,14 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
                     "status" : "error",
                     "message": err
                 })
-                console.log("could not find the patient");
                 return;
             }
             else {
                 associatedPatient = patient;
-                sendJsonResponse(res, 200, {
-                    "status" : ok,
-                    "message": patient
-                })
             }
-        })
-    Order
+        }).cursor();
+    cursor.on("data", () => {
+        Order
         .create({
             "patient"       : associatedPatient,
             "type"          : req.body.type,
@@ -42,9 +38,6 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
             "dateOfVisit"   : req.body.dateOfVisit,
             "visitingDoctor": req.body.visitingDoctor,
             "reporter"      : req.body.reporter,
-            "uniqueID"      : `${req.body.patientLastName}${req.body.patientFirstName}${req.body.patientDateOfBirth}${req.body.type}${req.body.dateOfVisit}${req.body.visitingDoctor}`
-            //not the best solution because the patient's name might change.
-            //might have to use mongo functions to do validation before order updates.
         }, (err, order) => {
             if (err) {
                 sendJsonResponse(res, 400, {
@@ -55,10 +48,12 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
             else {
                 sendJsonResponse(res, 200, {
                     "status": "ok",
-                    "message": "Order was created successfully"
+                    "message": "Order was created successfully",
+                    "order": order
                 });
             }
         })
+    })
 }
 
 function getOrder(req, res) {
