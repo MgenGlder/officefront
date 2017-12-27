@@ -9,7 +9,7 @@ var orderSchema = new mongoose.Schema({
     patientFirstName  : String,
     patientlastName   : String,
     patientDateOfBirth: Date,
-    patient: [patientSchema]
+    patient: patientSchema
 });
 
 mongoose.model("Order", orderSchema);
