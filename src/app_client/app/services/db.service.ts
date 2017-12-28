@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-
+import { Http } from '@angular/http';
 @Injectable()
 export class DBService {
-    constructor() { }
+    constructor(private http:Http) {
+      }
+
 
     saveCompletePatientOrder(order) {
         console.log(order);
