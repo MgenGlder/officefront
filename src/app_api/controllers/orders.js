@@ -3,9 +3,10 @@ var Order = mongoose.model("Order");
 var Patient = mongoose.model("Patient");
 
 var sendJsonResponse = function (res, status, content) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.status(status);
     res.json(content);
-
 }
 
 function createOrder(req, res) { //generic, TODO: create a unique function for each type of test.
@@ -47,6 +48,7 @@ function createOrderSchema(lookedUpPatient, req, res) {
             "dateOfVisit": req.body.dateOfVisit,
             "visitingDoctor": req.body.visitingDoctor,
             "reporter": req.body.reporter,
+            "status": "new"
         }, (err, order) => {
             if (err) {
                 sendJsonResponse(res, 400, {
@@ -55,6 +57,9 @@ function createOrderSchema(lookedUpPatient, req, res) {
                 });
             }
             else {
+                // Add new order to patients array of orders.e
+                lookedUpPatient.orders.push(order);
+                lookedUpPatient.save();
                 sendJsonResponse(res, 200, {
                     "status": "ok",
                     "message": "Order was created successfully",
@@ -66,13 +71,17 @@ function createOrderSchema(lookedUpPatient, req, res) {
 
 function getOrder(req, res) {
     Order
-        .findOne({
-            "uniqueID": req.query.uniqueID
-        }, (err, orders) => {
+        .findById(req.query.uniqueID, (err, orders) => {
             if (err) {
                 sendJsonResponse(res, 400, {
                     "status": "error",
                     "message": err
+                })
+            }
+            else if (!patient) {
+                sendJsonResponse(res, 400, { 
+                    "status": "error",
+                    "message": "Order was not found"
                 })
             }
             else {
@@ -85,6 +94,48 @@ function getOrder(req, res) {
     // .exec((err, orders) => {
 
     // });
+}
+
+function updateOrder(req, res) {
+    let fields = ["type", "dateOfVisit", "visitingDoctor", "visitingDoctor", "location", "notes", "reporter", "reason", "patient", "status"];
+    Order.findById(req.body.uniqueID, (err, order) => {
+        if (err) {
+            sendJsonResponse(res, 400, {
+                "status": "error",
+                "message": err
+            })
+        }
+        else if (!order){
+            sendJsonResponse(res, 404, {
+                "status": "error",
+                "message": "Patient could not be found"
+            })
+        }
+        else {
+            for (let field of fields) {
+
+                if (req.body[field] != null && 
+                        req.body[field] != undefined &&
+                        req.body[field] != order[field])
+                    order[field] = req.body[field];
+            }
+            order.save((err, order) => {
+                if (err || !order) {
+                    sendJsonResponse(res, 400, {
+                        "status": "error",
+                        "message": "Error saving the order"
+                    })
+                }
+                else {
+                    sendJsonResponse(res, 200, {
+                        "status": "ok",
+                        "message": "Patient updated successfully"
+                    })
+                }
+            })
+
+        }
+    })
 }
 
 function getAllOrders(req, res) {
@@ -127,7 +178,9 @@ function getAllOrdersSpecificPatient(req, res) {
         })
 }
 module.exports = {
-    getOrder: getOrder,
-    getAllOrders: getAllOrders,
-    createOrder: createOrder
+    getOrder                   : getOrder,
+    getAllOrders               : getAllOrders,
+    createOrder                : createOrder,
+    getAllOrdersSpecificPatient: getAllOrdersSpecificPatient,
+    updateOrder : updateOrder
 }
