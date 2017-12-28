@@ -11,6 +11,7 @@ import { DataFilterPipe } from './datafilterpipe';
 import { ViewOrderRoutingModule } from './view-order-routing.module';
 
 import { ViewOrderComponent } from './view-order.component';
+import { PatientService } from '../../../services/patient.service';
 
 @NgModule({
   imports: [
@@ -23,6 +24,9 @@ import { ViewOrderComponent } from './view-order.component';
   declarations: [
     ViewOrderComponent,
     DataFilterPipe
+  ],
+  providers: [
+    PatientService
   ]
 })
 export class ViewOrderModule { }
