@@ -48,6 +48,7 @@
     "codemirror": "^5.31.0",
     "cookie-parser": "^1.4.3",
     "core-js": "2.5.1",
+    "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "dragula": "3.7.2",
     "express": "^4.16.2",
