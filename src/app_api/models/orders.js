@@ -10,7 +10,8 @@ var orderSchema = new mongoose.Schema({
     notes         : String,
     reporter      : String,
     reason        : String,
-    patient       : {type: Schema.Types.ObjectId, ref: 'Patient'}
+    patient       : {type: Schema.Types.ObjectId, ref: 'Patient'},
+    status        : String
 });
 
 mongoose.model("Order", orderSchema);
