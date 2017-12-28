@@ -35,6 +35,7 @@ import { DatePickerContainerComponent } from './datepickercontainer.component';
 
 import { OrderNameTransformPipe } from '../../../pipes/order-type.pipe';
 import { DBService } from '../../../services/db.service';
+import { PatientService } from '../../../services/patient.service';
 
 @NgModule({
   imports: [
@@ -64,7 +65,8 @@ import { DBService } from '../../../services/db.service';
   providers: [
     OrderService,
     OrderBuilderService,
-    DBService
+    DBService,
+    PatientService
   ]
 })
 export class NewOrderModule { }
