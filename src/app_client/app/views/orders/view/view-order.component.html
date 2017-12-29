@@ -12,17 +12,23 @@
           </div>
         </div>
       </div>
-      <table class="table table-striped" [mfData]="patientData | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
+      <table class="table table-striped" [mfData]="orderData | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
         <thead>
           <tr>
             <th style="width: 20%">
-              <mfDefaultSorter by="firstName">First Name</mfDefaultSorter>
+              <mfDefaultSorter by="patient.firstName">First Name</mfDefaultSorter>
             </th>
             <th style="width: 30%">
-              <mfDefaultSorter by="lastName">Last Name</mfDefaultSorter>
+              <mfDefaultSorter by="patient.lastName">Last Name</mfDefaultSorter>
+            </th>
+            <th style="width:10%">
+              <mfDefaultSorter by="patient.type">Type of Order</mfDefaultSorter>
             </th>
             <th style="width: 10%">
-              <mfDefaultSorter by="dateOfBirth">Date Of Birth</mfDefaultSorter>
+              <mfDefaultSorter by="patient.dateOfBirth">Date Of Birth</mfDefaultSorter>
+            </th>
+            <th style="width:10%">
+              <mfDefaultSorter by="dateOfVisit">Date of Visit</mfDefaultSorter>
             </th>
             <th style="width: 20%">
               <mfDefaultSorter by="ordersStatus">Orders Status</mfDefaultSorter>
@@ -31,14 +37,18 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of mf.data">
-            <td>{{item.firstName}}</td>
-            <td>{{item.lastName}}</td>
-            <td class="text-right">{{item.dateOfBirth}}</td>
-            <td>
-              <span *ngIf="item.ordersStatus == 1" class="badge badge-success">Completed</span>
-              <span *ngIf="item.ordersStatus == 2" class="badge badge-danger">Not started</span>
-              <span *ngIf="item.ordersStatus == 3" class="badge badge-warning">In progress</span>
-            </td>
+            <ng-container *ngIf="item.patient">
+              <td>{{item.patient.firstName}}</td>
+              <td>{{item.patient.lastName}}</td>
+              <td>{{item.type}}</td>
+              <td class="text-right">{{item.patient.dateOfBirth}}</td>
+              <td>{{item.dateOfVisit}}</td>
+              <td>
+                <span *ngIf="item.ordersStatus == 1" class="badge badge-success">Completed</span>
+                <span *ngIf="item.ordersStatus == 2" class="badge badge-danger">Not started</span>
+                <span *ngIf="item.ordersStatus == 3" class="badge badge-warning">In progress</span>
+              </td>
+            </ng-container>
           </tr>
         </tbody>
         <tfoot>
