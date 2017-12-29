@@ -6,6 +6,7 @@ import {Subscription} from "rxjs/Subscription";
 export class PatientService {
     patients: Observable<Response>;
     constructor(private http: Http) {
+        console.log("fetching all patients using the patients services...");
         this.patients = this.fetchAllPatients()
     }
 
