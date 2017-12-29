@@ -12,6 +12,8 @@ import { ViewOrderRoutingModule } from './view-order-routing.module';
 
 import { ViewOrderComponent } from './view-order.component';
 import { PatientService } from '../../../services/patient.service';
+import { OrderService } from '../../../services/order.service';
+import { DBService } from '../../../services/db.service';
 
 @NgModule({
   imports: [
@@ -26,7 +28,9 @@ import { PatientService } from '../../../services/patient.service';
     DataFilterPipe
   ],
   providers: [
-    PatientService
+    PatientService,
+    OrderService,
+    DBService
   ]
 })
 export class ViewOrderModule { }
