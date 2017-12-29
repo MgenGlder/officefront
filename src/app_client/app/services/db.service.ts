@@ -52,7 +52,7 @@ export class DBService {
             { value: "physical-therapy", text: "Physical Therapy" }
         ]
     }
-    getPatientList() {
+   /*  getPatientList() {
         return [
             { firstName: "Joe", lastName: "Budden", dob: "09/11/1976" },
             { firstName: "DJ", lastName: "Akademiks", dob: "03/12/1955" },
@@ -63,5 +63,6 @@ export class DBService {
             { firstName: "Adekunle", lastName: "Oshiyoye", dob: "01/05/1951" },
             { firstName: "Harold", lastName: "Pegues", dob: "06/20/1974" }
         ]
-    }
+    } 
+    Depreciated, was used for testing purposes.*/
 }
