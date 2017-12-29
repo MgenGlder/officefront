@@ -40,7 +40,7 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
 function createOrderSchema(lookedUpPatient, req, res) {
     Order
         .create({
-            "patient": lookedUpPatient,
+            "patient": lookedUpPatient._id,
             "type": req.body.type,
             "reason": req.body.reason,
             "location": req.body.location,
@@ -49,23 +49,11 @@ function createOrderSchema(lookedUpPatient, req, res) {
             "visitingDoctor": req.body.visitingDoctor,
             "reporter": req.body.reporter,
             "status": "new"
-        }, (err, order) => {
-            if (err) {
-                sendJsonResponse(res, 400, {
-                    "status": "error",
-                    "message": err
-                });
-            }
-            else {
-                // Add new order to patients array of orders.e
-                lookedUpPatient.orders.push(order);
-                lookedUpPatient.save();
-                sendJsonResponse(res, 200, {
-                    "status": "ok",
-                    "message": "Order was created successfully",
-                    "order": order
-                });
-            }
+        }).then((order) => {
+            sendJsonResponse(res, 200, {
+                "status": "ok",
+                "message": order
+            });
         })
 }
 
@@ -141,19 +129,21 @@ function updateOrder(req, res) {
 function getAllOrders(req, res) {
     Order
         .find({}, (err, orders) => {
-            if (err) {
-                sendJsonResponse(res, 400, {
-                    "status": "error",
-                    "message": err
-                })
-            }
-            else {
-                sendJsonResponse(res, 200, {
-                    "status": "ok",
-                    "message": orders
-                })
-            }
+            // if (err) {
+            //     sendJsonResponse(res, 400, {
+            //         "status": "error",
+            //         "message": err
+            //     })
+            // }
+            // else {
+            //     sendJsonResponse(res, 200, {
+            //         "status": "ok",
+            //         "message": orders
+            //     })
+            // }
+            sendJsonResponse(res, 200, orders);
         })
+        .populate("patient");
 }
 
 function getAllOrdersSpecificPatient(req, res) {
