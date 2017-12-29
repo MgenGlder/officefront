@@ -21,7 +21,7 @@
                   <i class="fa fa-male"></i>
                 </span>
                 <input [(ngModel)]="patientProfile.firstName" name="firstName" (valueChanged)="firstNameAutoCompleted($event)" ngui-auto-complete min-chars="3" max-num-list="5"
-                  type="text" class="form-control" [source]="examplePatients" value-property-name="firstName"  display-property-name="firstName"
+                  type="text" class="form-control" [source]="patientData" value-property-name="firstName"  display-property-name="firstName"
                   style="width: 100%;" z-index="3" [list-formatter]="autocompleListFormatter" [value-formatter]="autocompleteValueFormatter" autocomplete="off">
               </div>
               <small class="text-muted">ex. Jane</small>
