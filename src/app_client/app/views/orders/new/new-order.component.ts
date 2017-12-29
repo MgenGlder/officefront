@@ -1,16 +1,20 @@
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { OrderBuilderService, } from '../../../services/order-builder.service'
 import { OrderService } from '../../../services/order.service';
 import { Order } from '../../../models/pending-order.model'
 import { Router } from '@angular/router';
 import { DBService } from '../../../services/db.service';
+import { PatientService } from '../../../services/patient.service';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Response } from '@angular/http';
 @Component({
   templateUrl: 'new-order.component.html',
   styles: [`.btn.btn-primary { display: inline-block;width: 150px;margin-bottom: 0px;margin-bottom: 10px; margin-left: 5px;} #doctors-orders { display: flex; flex-direction: row; justify-content: center } `],
   encapsulation: ViewEncapsulation.Emulated
 })
-export class NewOrderComponent implements OnInit {
+export class NewOrderComponent implements OnInit, OnDestroy {
 
   public examplePatients;
   // Angular 2 Input Mask
@@ -19,14 +23,18 @@ export class NewOrderComponent implements OnInit {
 
   public orders: Array<Order>;
   public patientProfile;
+  public patientsObservable: Observable<Response>;
+  public patientsSubscription: Subscription;
+  public patientData;
   public constructor(public orderBuilderService: OrderBuilderService, 
-                      public orderService: OrderService, 
+                      public orderService: OrderService,
+                      private patientService: PatientService, 
                       public router: Router, 
                       private _sanitizer: DomSanitizer,
                       private db : DBService) {
     this.orderService.visitingDoctor = "Dr. Hampson";
     this.orderService.referrer = "Dr. Hampson";
-    this.examplePatients = db.getPatientList();
+    // this.examplePatients = db.getPatientList();
     this.patientProfile = {
       visitingDoctor: this.orderService.visitingDoctor,
       reporter: this.orderService.referrer,
@@ -34,6 +42,16 @@ export class NewOrderComponent implements OnInit {
       firstName: '',
       lastName: ''
     }
+
+    this.patientsObservable = patientService.getAllPatients();
+
+    this.patientsSubscription = this.patientsObservable
+      .map(data => data.json())
+      .subscribe((patientData) => {
+        this.patientData = patientData;
+        console.log("Grabbed patient data while in the new-order component");
+        console.log(this.patientData);
+      })
     
   }
 
@@ -44,10 +62,16 @@ export class NewOrderComponent implements OnInit {
     this.orders = this.orderService.getOrders();
     
   }
+
+  ngOnDestroy() {
+    this.patientsSubscription.unsubscribe();
+    console.log("destroyed in new order");
+  }
+
   firstNameAutoCompleted(data: any) {
     console.log(data);
     this.patientProfile.lastName = data.lastName;
-    this.patientProfile.dateOfBirth = data.dob;
+    this.patientProfile.dateOfBirth = data.dateOfBirth;
     this.patientProfile.firstName = data.firstName;
   }
   autocompleteValueFormatter =  (data: any) => { //might be able to just get rid of this since using ^^^^
@@ -60,7 +84,7 @@ export class NewOrderComponent implements OnInit {
     let html = 
     `
       <span>${data.firstName} ${data.lastName}</span></br>
-      <span>${data.dob}</span>
+      <span>${data.dateOfBirth}</span>
     `;
     return this._sanitizer.bypassSecurityTrustHtml(html);
   }
