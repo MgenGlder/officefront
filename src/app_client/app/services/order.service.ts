@@ -41,10 +41,6 @@ export class OrderService {
         return this.orders;
     }
     submitOrder(patientProfile) {
-        console.log("order was submitted \n ");
-        console.dir(patientProfile);
-        console.log("current orders are... \n");
-        console.dir(this.orders);
-        this.db.saveCompletePatientOrder(this.orders);
+        this.db.saveCompletePatientOrder(this.orders, patientProfile);
     }
 }
