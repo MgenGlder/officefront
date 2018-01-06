@@ -7,7 +7,7 @@ export class PatientService {
     patients: Observable<Response>;
     constructor(private http: Http) {
         console.log("fetching all patients using the patients services...");
-        this.patients = this.fetchAllPatients()
+        this.patients = this.fetchAllPatients();
     }
 
     getAllPatients(): Observable<Response> {

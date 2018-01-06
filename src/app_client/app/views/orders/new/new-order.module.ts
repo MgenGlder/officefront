@@ -36,6 +36,8 @@ import { DatePickerContainerComponent } from './datepickercontainer.component';
 import { OrderNameTransformPipe } from '../../../pipes/order-type.pipe';
 import { DBService } from '../../../services/db.service';
 import { PatientService } from '../../../services/patient.service';
+import { OrderSubmittedComponent } from './ordersubmitted.component';
+import { OrderNotSubmittedComponent } from './ordernotsubmitted.component';
 
 @NgModule({
   imports: [
@@ -60,7 +62,9 @@ import { PatientService } from '../../../services/patient.service';
     OrderNameTransformPipe,
     EnteredOrderComponent,
     ChoiceWrapperComponent,
-    DatePickerContainerComponent
+    DatePickerContainerComponent,
+    OrderSubmittedComponent,
+    OrderNotSubmittedComponent
   ],
   providers: [
     OrderService,

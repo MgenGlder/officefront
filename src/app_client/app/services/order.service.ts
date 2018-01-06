@@ -40,7 +40,7 @@ export class OrderService {
     getOrders() {
         return this.orders;
     }
-    submitOrder(patientProfile) {
-        this.db.saveCompletePatientOrder(this.orders, patientProfile);
+    submitOrder(patientProfile): Promise<any> {
+        return this.db.saveCompletePatientOrder(this.orders, patientProfile);
     }
 }

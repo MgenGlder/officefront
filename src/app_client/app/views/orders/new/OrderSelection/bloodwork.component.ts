@@ -23,7 +23,8 @@ export class BloodworkComponent {
     public fb: FormBuilder,
     public router: Router,
     public db: DBService) {
-    this.order = new BloodworkOrder([], this.tests, "", "", "", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
+    let date = new Date();
+    this.order = new BloodworkOrder([], this.tests, "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
     this.tests = this.db.getBloodworkOptions();
     orderBuilderService.startBuildingSpecialistOrder();
     this.testData =
@@ -60,7 +61,8 @@ export class BloodworkComponent {
     console.log("Saving the order...");
     this.orderService.addOrder(this.order);
     console.log(this.orderService.getOrders());
-    this.order = new BloodworkOrder([], this.tests, "", "", "", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
+    let date = new Date();
+    this.order = new BloodworkOrder([], this.tests, "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
   }
   resetForm() {
     this.form.reset();

@@ -26,18 +26,16 @@ export class NewOrderComponent implements OnInit, OnDestroy {
   public patientsObservable: Observable<Response>;
   public patientsSubscription: Subscription;
   public patientData;
-  public constructor(public orderBuilderService: OrderBuilderService, 
-                      public orderService: OrderService,
-                      private patientService: PatientService, 
-                      public router: Router, 
-                      private _sanitizer: DomSanitizer,
-                      private db : DBService) {
+  public constructor(public orderBuilderService: OrderBuilderService,
+    public orderService: OrderService,
+    private patientService: PatientService,
+    public router: Router,
+    private _sanitizer: DomSanitizer,
+    private db: DBService) {
     this.orderService.visitingDoctor = "Dr. Hampson";
     this.orderService.referrer = "Dr. Hampson";
     // this.examplePatients = db.getPatientList();
     this.patientProfile = {
-      visitingDoctor: this.orderService.visitingDoctor,
-      reporter: this.orderService.referrer,
       dateOfBirth: '',
       firstName: '',
       lastName: ''
@@ -52,15 +50,23 @@ export class NewOrderComponent implements OnInit, OnDestroy {
         console.log("Grabbed patient data while in the new-order component");
         console.log(this.patientData);
       })
-    
   }
 
   submitOrder() {
-    this.orderService.submitOrder(this.patientProfile);
+    this.orderService.submitOrder(this.patientProfile)
+      .then((response) => {
+        console.log("Order save call was sent, the response to it was...");
+        console.log(response);
+        this.router.navigateByUrl("/orders/new/submitted");
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("something went terribly wrong with the order creation");
+        this.router.navigateByUrl("/orders/new/notsubmitted");
+      })
   }
   ngOnInit() {
     this.orders = this.orderService.getOrders();
-    
   }
 
   ngOnDestroy() {
@@ -74,26 +80,19 @@ export class NewOrderComponent implements OnInit, OnDestroy {
     this.patientProfile.dateOfBirth = data.dateOfBirth;
     this.patientProfile.firstName = data.firstName;
   }
-  autocompleteValueFormatter =  (data: any) => { //might be able to just get rid of this since using ^^^^
+  autocompleteValueFormatter = (data: any) => { //might be able to just get rid of this since using ^^^^
     console.log(data.firstName);
-    console.log(data);    
+    console.log(data);
     return data.firstName;
-    
+
   }
   autocompleListFormatter = (data: any): SafeHtml => {
-    let html = 
-    `
+    let html =
+      `
       <span>${data.firstName} ${data.lastName}</span></br>
       <span>${data.dateOfBirth}</span>
     `;
     return this._sanitizer.bypassSecurityTrustHtml(html);
-  }
-
-  public enteredOrderNavigation(typeOfOrder: string) {
-    console.log("reached the event in the parent");
-    console.log(typeOfOrder);
-    this.router.navigate(['entered'], { skipLocationChange: true });
-
   }
 
   // Timepicker

@@ -18,13 +18,16 @@ export class OrderBuilderService {
     constructor(private orderService: OrderService) {}
 
     startBuildingSpecialistOrder() {
-        this.pendingSpeclialistOrder = new SpecialistOrder("", "", "","", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
+        let date = new Date();
+        this.pendingSpeclialistOrder = new SpecialistOrder("", "", "","", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
     }
     startBuildingTestOrder() {
-        this.pendingTestOrder = new TestOrder([], "", "", "", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
+        let date = new Date();
+        this.pendingTestOrder = new TestOrder([], "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
     }
     startBuildingBloodworkOrder(){
-        this.pendingBloodworkOrder = new BloodworkOrder([], this.tests, "", "", "", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
+        let date = new Date();
+        this.pendingBloodworkOrder = new BloodworkOrder([], this.tests, "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
     }
     save() {
 

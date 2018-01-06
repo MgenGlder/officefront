@@ -6,9 +6,23 @@ export class DBService {
       }
 
 
-    saveCompletePatientOrder(order) {
-        console.log(order);
+    saveCompletePatientOrder(orders, patientProfile): Promise<any> {
+        console.log(patientProfile);
+        console.log(orders);
+        let order = orders[0];
         console.log("order saved");
+        return this.http.post("http://localhost:8080/api/order", {
+            patientFirstName: patientProfile.firstName,
+            patientLastName: patientProfile.lastName,
+            patientDateOfBirth: patientProfile.dateOfBirth,
+            type: order.type,
+            reason: order.reason,
+            notes: order.notes,
+            dateOfVisit: order.dateOfVisit,
+            visitingDoctor: order.reporter,
+            reporter: order.reporter,
+            location: order.location
+        }).toPromise();
     }
 
     getBloodworkOptions() {

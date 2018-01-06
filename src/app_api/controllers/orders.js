@@ -3,8 +3,6 @@ var Order = mongoose.model("Order");
 var Patient = mongoose.model("Patient");
 
 var sendJsonResponse = function (res, status, content) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.status(status);
     res.json(content);
 }

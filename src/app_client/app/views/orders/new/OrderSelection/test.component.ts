@@ -23,7 +23,8 @@ export class TestComponent {
     public fb: FormBuilder,
     public router: Router,
     public db: DBService) {
-      this.order = new TestOrder([], "", "", "", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
+      let date = new Date();
+      this.order = new TestOrder([], "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
       this.tests = this.db.getTestOptions();
       orderBuilderService.startBuildingTestOrder();
       this.testData =
@@ -98,7 +99,8 @@ export class TestComponent {
     console.log("Saving the order...");
     this.orderService.addOrder(this.order);
     console.log(this.orderService.getOrders());
-    this.order = new TestOrder([], "", "", "", new Date(),this.orderService.visitingDoctor, this.orderService.referrer);
+    let date = new Date();
+    this.order = new TestOrder([], "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`,this.orderService.visitingDoctor, this.orderService.referrer);
   }
   resetForm() {
     this.form.reset();

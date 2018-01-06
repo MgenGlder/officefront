@@ -7,6 +7,8 @@ import { BloodworkComponent } from './OrderSelection/bloodwork.component';
 import { EnteredOrderComponent } from './OrderSelection/entered.component';
 import { NewOrderComponent } from './new-order.component';
 import { NurseComponent } from './OrderSelection/nurse.component';
+import { OrderSubmittedComponent } from './ordersubmitted.component';
+import { OrderNotSubmittedComponent } from './ordernotsubmitted.component';
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +23,20 @@ const routes: Routes = [
         {path: 'bloodwork', component: BloodworkComponent },
         {path: 'entered/:order', component: EnteredOrderComponent}
     ]
+  },
+  {
+    path: "submitted",
+    component: OrderSubmittedComponent,
+    data: {
+      title: 'Order Submitted!'
+    }
+  },
+  {
+    path: "notsubmitted",
+    component: OrderNotSubmittedComponent,
+    data: {
+      title: "Order was not submitted!"
+    }
   }
 ];
 

@@ -2,7 +2,7 @@ export class Order {
     protected constructor(
         public reason: string,//using public, or any modifier, automatically instantiantes the parameter in the class for you.
         public notes: string,
-        public dateOfVisit: Date,
+        public dateOfVisit: String,
         public visitingDoctor: string,
         public reporter: string
     ) { }
@@ -14,7 +14,7 @@ export class SpecialistOrder extends Order {
         public reason: string,
         public location: string,
         public notes: string,
-        public readonly dateOfVisit: Date, //has to be initialized in constructor, afterwards cannot be changed.
+        public readonly dateOfVisit: String, //has to be initialized in constructor, afterwards cannot be changed.
         public readonly visitingDoctor: string,
         public readonly reporter: string
     ) { super(reason, notes, dateOfVisit, visitingDoctor, reporter) }
@@ -27,7 +27,7 @@ export class TestOrder extends Order {
         public reason: string,
         public location: string,
         public notes: string,
-        public readonly dateOfVisit: Date,
+        public readonly dateOfVisit: String,
         public readonly visitingDoctor: string,
         public readonly reporter: string
     ) {
@@ -43,7 +43,7 @@ export class BloodworkOrder extends Order {
         public reason: string,
         public location: string,
         public notes: string,
-        public readonly dateOfVisit: Date,
+        public readonly dateOfVisit: String,
         public readonly visitingDoctor: string,
         public readonly reporter: string
     ) {
@@ -56,7 +56,7 @@ export class NurseOrder extends Order {
         public nursePurpose: Array<{value: string, text: string}>,
         public reason: string,
         public notes: string,
-        public readonly dateOfVisit: Date,
+        public readonly dateOfVisit: String,
         public readonly visitingDoctor: string,
         public readonly reporter: string
     ){

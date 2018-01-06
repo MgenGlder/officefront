@@ -26,7 +26,8 @@ export class SpecialistComponent {
       reason: ''
     });
     this.specialistData = this.db.getSpecialistOptions();
-    this.order = new SpecialistOrder("", "", "", "", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
+    let date = new Date();
+    this.order = new SpecialistOrder("", "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
     orderBuilderService.startBuildingSpecialistOrder();
 
   }
@@ -48,7 +49,8 @@ export class SpecialistComponent {
     console.log("Saving the order...");
     this.orderService.addOrder(this.order);
     console.log(this.orderService.getOrders());
-    this.order = new SpecialistOrder("", "", "", "", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
+    let date = new Date();
+    this.order = new SpecialistOrder("", "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
   }
   resetForm() {
     this.form.reset();

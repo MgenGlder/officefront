@@ -25,7 +25,8 @@ export class NurseComponent {
     public fb: FormBuilder,
     public router: Router,
     public db: DBService) {
-      this.order = new NurseOrder([], "", "", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
+      let date = new Date();
+      this.order = new NurseOrder([], "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
       this.tests = db.getNurseOptions();
       orderBuilderService.startBuildingTestOrder();
       this.testData =
@@ -62,7 +63,8 @@ export class NurseComponent {
     console.log("Saving the order...");
     this.orderService.addOrder(this.order);
     console.log(this.orderService.getOrders());
-    this.order = new NurseOrder([], "", "", new Date(), this.orderService.visitingDoctor, this.orderService.referrer);
+    let date = new Date();
+    this.order = new NurseOrder([], "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
   }
   resetForm() {
     this.form.reset();
