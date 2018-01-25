@@ -11,7 +11,9 @@ var orderSchema = new mongoose.Schema({
     reporter      : String,
     reason        : String,
     patient       : {type: Schema.Types.ObjectId, ref: 'Patient'},
-    status        : String
+    status        : String,
+    testID        : String,
+    nursePurpose  : String
 });
 
 mongoose.model("Order", orderSchema);
