@@ -27,9 +27,8 @@ export class SpecialistComponent {
     });
     this.specialistData = this.db.getSpecialistOptions();
     let date = new Date();
-    this.order = new SpecialistOrder("", "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+    this.order = new SpecialistOrder("", "", "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
     orderBuilderService.startBuildingSpecialistOrder();
-
   }
 
   @ViewChild('staticTabs') staticTabs: TabsetComponent;
@@ -50,7 +49,7 @@ export class SpecialistComponent {
     this.orderService.addOrder(this.order);
     console.log(this.orderService.getOrders());
     let date = new Date();
-    this.order = new SpecialistOrder("", "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+    this.order = new SpecialistOrder("", "", "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
   }
   resetForm() {
     this.form.reset();

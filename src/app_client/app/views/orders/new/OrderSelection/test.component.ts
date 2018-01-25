@@ -11,6 +11,7 @@ import { DBService } from '../../../../services/db.service';
 })
 export class TestComponent {
   order: TestOrder;
+  orders: Array<any> = [];
   form: FormGroup;
   selectedInputs: Array<{ value: string, text: string, control: FormControl }>;
   testData: Array<{ id: string, text: string, control: FormControl }>;
@@ -23,11 +24,11 @@ export class TestComponent {
     public fb: FormBuilder,
     public router: Router,
     public db: DBService) {
-      let date = new Date();
-      this.order = new TestOrder([], "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
-      this.tests = this.db.getTestOptions();
-      orderBuilderService.startBuildingTestOrder();
-      this.testData =
+    let date = new Date();
+    this.order = new TestOrder("", "", "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+    this.tests = this.db.getTestOptions();
+    orderBuilderService.startBuildingTestOrder();
+    this.testData =
       this.tests.map((test) => {
         let newFormControl = new FormControl(false);
         this.testAndFormControls.push(newFormControl);
@@ -37,13 +38,14 @@ export class TestComponent {
           control: newFormControl
         }
       });
-      this.form = fb.group({
-        tests: new FormArray(this.testAndFormControls),
-        reason: '',
-        notes: '',
-        extraInfo: new FormArray([])
-      });
-    }
+    console.log(this.testAndFormControls);
+    this.form = fb.group({
+      tests: new FormArray(this.testAndFormControls),
+      reason: '',
+      notes: '',
+      extraInfo: new FormArray([])
+    });
+  }
 
   @ViewChild('staticTabs') staticTabs: TabsetComponent;
 
@@ -80,33 +82,36 @@ export class TestComponent {
     this.order.notes = this.form.get("notes").value;
     let testValues = this.mapFormValues(this.form.get("tests").value);
     for (let value of testValues) {
-      if (value.location){
-        for (let selectedValue of this.selectedInputs){
-          if (selectedValue.value == value.value){
-            value.locationNotes = selectedValue.control.value;
+      let date = new Date();
+      console.log("value.value is equal too... " + value.value);
+      let newTestOrder = new TestOrder(value.value, this.form.get("reason").value, "", this.form.get("notes").value, `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer)
+      if (value.location) {
+        for (let selectedValue of this.selectedInputs) {
+          if (selectedValue.value == value.value) {
+            newTestOrder.location = selectedValue.control.value;
           }
         }
       }
+      this.orders.push(newTestOrder);
     }
-    this.order.tests = testValues;
-    this.order.reason = this.form.get("reason").value;
-    
     this.router.navigate(['orders/new/entered', 'test'], { skipLocationChange: true });
     this.save();
     this.resetForm();
   }
   save() {
     console.log("Saving the order...");
-    this.orderService.addOrder(this.order);
+    for (let singleOrder of this.orders) {
+      this.orderService.addOrder(singleOrder);
+    }
     console.log(this.orderService.getOrders());
     let date = new Date();
-    this.order = new TestOrder([], "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`,this.orderService.visitingDoctor, this.orderService.referrer);
+    this.orders = [];
   }
   resetForm() {
     this.form.reset();
   }
 
-  mapFormValues(booleanFormValues: Array<boolean>): Array<{ value: string, text: string, location: boolean, locationNotes?: string }> {
+  mapFormValues(booleanFormValues: Array<boolean>): Array<{ value: string, text: string, location: boolean, locationNotes?: string, reason?: string, notes?: string }> {
     if (booleanFormValues.length !== this.tests.length) return;
     return this.tests.filter((element, index) => {
       return booleanFormValues[index];

@@ -24,7 +24,7 @@ export class BloodworkComponent {
     public router: Router,
     public db: DBService) {
     let date = new Date();
-    this.order = new BloodworkOrder([], this.tests, "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+    this.order = new BloodworkOrder([], this.tests, "", "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
     this.tests = this.db.getBloodworkOptions();
     orderBuilderService.startBuildingSpecialistOrder();
     this.testData =
@@ -62,7 +62,7 @@ export class BloodworkComponent {
     this.orderService.addOrder(this.order);
     console.log(this.orderService.getOrders());
     let date = new Date();
-    this.order = new BloodworkOrder([], this.tests, "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+    this.order = new BloodworkOrder([], this.tests, "", "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
   }
   resetForm() {
     this.form.reset();

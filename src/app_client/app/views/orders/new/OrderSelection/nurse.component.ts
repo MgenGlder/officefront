@@ -26,7 +26,7 @@ export class NurseComponent {
     public router: Router,
     public db: DBService) {
       let date = new Date();
-      this.order = new NurseOrder([], "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+      this.order = new NurseOrder([], "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
       this.tests = db.getNurseOptions();
       orderBuilderService.startBuildingTestOrder();
       this.testData =
@@ -55,6 +55,8 @@ export class NurseComponent {
   onSubmit() {
     this.order.notes = this.form.get("notes").value;
     this.order.nursePurpose = this.mapFormValues(this.form.get("nursePurpose").value);
+    console.log("the value being set for the nursing work");
+    console.log( this.mapFormValues(this.form.get("nursePurpose").value))
     this.order.reason = this.form.get("reason").value;
     this.router.navigate(['orders/new/entered', 'nurse'], { skipLocationChange: true });
     this.save();
@@ -64,7 +66,7 @@ export class NurseComponent {
     this.orderService.addOrder(this.order);
     console.log(this.orderService.getOrders());
     let date = new Date();
-    this.order = new NurseOrder([], "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+    this.order = new NurseOrder([], "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
   }
   resetForm() {
     this.form.reset();
