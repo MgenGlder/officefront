@@ -30,7 +30,15 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
                 return;
             }
             else {
-                createOrderSchema(patient, req, res);
+                if (req.body["testID"]) {
+                    createOrderSchemaTest(patient, req, res);
+                }
+                else if (req.body.nursePurpose) {
+                    createOrderSchemaNurse(patient,req,res);
+                }
+                else {
+                    createOrderSchema(patient, req, res);
+                }
             }
         })
 }
@@ -54,6 +62,46 @@ function createOrderSchema(lookedUpPatient, req, res) {
             });
         })
 }
+function createOrderSchemaTest(lookedUpPatient, req, res) {
+    Order
+        .create({
+            "patient": lookedUpPatient._id,
+            "type": req.body.type,
+            "reason": req.body.reason,
+            "location": req.body.location,
+            "notes": req.body.notes,
+            "dateOfVisit": req.body.dateOfVisit,
+            "visitingDoctor": req.body.visitingDoctor,
+            "reporter": req.body.reporter,
+            "testID": req.body.testID,
+            "status": "new"
+        }).then((order) => {
+            sendJsonResponse(res, 200, {
+                "status": "ok",
+                "message": order
+            });
+        })
+}
+function createOrderSchemaNurse(lookedUpPatient, req, res) {
+    Order
+        .create({
+            "patient": lookedUpPatient._id,
+            "type": req.body.type,
+            "reason": req.body.reason,
+            "location": req.body.location,
+            "notes": req.body.notes,
+            "dateOfVisit": req.body.dateOfVisit,
+            "visitingDoctor": req.body.visitingDoctor,
+            "reporter": req.body.reporter,
+            "nursePurpose": req.body.nursePurpose,
+            "status": "new"
+        }).then((order) => {
+            sendJsonResponse(req, 200, {
+                "status": "ok",
+                "message": order
+            });
+        })
+}
 
 function getOrder(req, res) {
     Order
@@ -65,7 +113,7 @@ function getOrder(req, res) {
                 })
             }
             else if (!patient) {
-                sendJsonResponse(res, 400, { 
+                sendJsonResponse(res, 400, {
                     "status": "error",
                     "message": "Order was not found"
                 })
@@ -91,7 +139,7 @@ function updateOrder(req, res) {
                 "message": err
             })
         }
-        else if (!order){
+        else if (!order) {
             sendJsonResponse(res, 404, {
                 "status": "error",
                 "message": "Patient could not be found"
@@ -100,9 +148,9 @@ function updateOrder(req, res) {
         else {
             for (let field of fields) {
 
-                if (req.body[field] != null && 
-                        req.body[field] != undefined &&
-                        req.body[field] != order[field])
+                if (req.body[field] != null &&
+                    req.body[field] != undefined &&
+                    req.body[field] != order[field])
                     order[field] = req.body[field];
             }
             order.save((err, order) => {
@@ -166,9 +214,9 @@ function getAllOrdersSpecificPatient(req, res) {
         })
 }
 module.exports = {
-    getOrder                   : getOrder,
-    getAllOrders               : getAllOrders,
-    createOrder                : createOrder,
+    getOrder: getOrder,
+    getAllOrders: getAllOrders,
+    createOrder: createOrder,
     getAllOrdersSpecificPatient: getAllOrdersSpecificPatient,
-    updateOrder : updateOrder
+    updateOrder: updateOrder
 }
