@@ -19,15 +19,15 @@ export class OrderBuilderService {
 
     startBuildingSpecialistOrder() {
         let date = new Date();
-        this.pendingSpeclialistOrder = new SpecialistOrder("", "", "","", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+        this.pendingSpeclialistOrder = new SpecialistOrder("", "", "","", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
     }
     startBuildingTestOrder() {
         let date = new Date();
-        this.pendingTestOrder = new TestOrder([], "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+        this.pendingTestOrder = new TestOrder( "","", "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
     }
     startBuildingBloodworkOrder(){
         let date = new Date();
-        this.pendingBloodworkOrder = new BloodworkOrder([], this.tests, "", "", "", `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+        this.pendingBloodworkOrder = new BloodworkOrder([], this.tests, "", "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
     }
     save() {
 
