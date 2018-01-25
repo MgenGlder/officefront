@@ -77,7 +77,7 @@ export class AdvancedFormsComponent {
   }
 
   public disabled(date:Date, mode:string):boolean {
-    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+    return ( mode === 'day' && ( date.getDate() === 0 || date.getDate() === 6 ) );
   }
 
   public open():void {
