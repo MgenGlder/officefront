@@ -23,7 +23,7 @@ export class SpecialistOrder extends Order {
 export class TestOrder extends Order {
     public typeOfOrder: string = "test";
     constructor(
-        public tests: Array<{value: string, text: string}>,
+        public testID: string,
         public reason: string,
         public location: string,
         public notes: string,
