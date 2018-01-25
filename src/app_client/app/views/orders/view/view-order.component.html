@@ -40,13 +40,25 @@
             <ng-container *ngIf="item.patient">
               <td>{{item.patient.firstName}}</td>
               <td>{{item.patient.lastName}}</td>
-              <td>{{item.type}}</td>
+              <td>
+                <ng-container *ngIf="item.type">
+                  {{item.type}} 
+                </ng-container>
+                <ng-container *ngIf="item.testID">
+                    {{item.testID}}
+                </ng-container>
+                
+            
+            </td>
               <td class="text-right">{{item.patient.dateOfBirth}}</td>
               <td>{{item.dateOfVisit}}</td>
               <td>
+                {{item.status}}
+                <!--
                 <span *ngIf="item.ordersStatus == 1" class="badge badge-success">Completed</span>
                 <span *ngIf="item.ordersStatus == 2" class="badge badge-danger">Not started</span>
                 <span *ngIf="item.ordersStatus == 3" class="badge badge-warning">In progress</span>
+                -->
               </td>
             </ng-container>
           </tr>
