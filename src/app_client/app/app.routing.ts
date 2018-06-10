@@ -62,6 +62,13 @@ export const routes: Routes = [
           title: 'Orders'
         },
         loadChildren: './views/orders/orders.module#OrdersModule'
+      },
+      {
+        path: 'patients',
+        data: {
+          title: 'Patients'
+        },
+        loadChildren: './views/patients/patients.module#PatientsModule'
       }
     ]
   },

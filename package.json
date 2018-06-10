@@ -24,7 +24,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^4.4.6",
-    "@angular/cli": "1.4.9",
+    "@angular/cli": "^1.7.0",
     "@angular/common": "^4.4.6",
     "@angular/compiler": "^4.4.6",
     "@angular/compiler-cli": "4.4.6",

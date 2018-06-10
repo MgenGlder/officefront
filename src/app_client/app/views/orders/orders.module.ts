@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-//Routing
+// Routing
 import { OrdersRoutingModule } from './orders-router.module';
 
 @NgModule({

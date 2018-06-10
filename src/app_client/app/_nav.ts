@@ -27,6 +27,17 @@ export const navigation = [
       }
     ]
   },
+  {
+    name: 'Patients',
+    url: '/patients',
+    icon: 'icon-note',
+    children: [
+      {
+        name: 'Create new',
+        url: '/patients/new'
+      }
+    ]
+  }
 ];
 // Old default navigation from Core UI, keeping for the sake of looking back if need be.
 // export const navigation = [

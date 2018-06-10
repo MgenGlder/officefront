@@ -11,13 +11,13 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 // Datepicker
 import { DatepickerModule } from 'ngx-bootstrap/datepicker';
 
-//Tabs
+// Tabs
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
 // Ng2-select
 import { SelectModule } from 'ng2-select';
 
-//Routing
+// Routing
 import { NewOrderRoutingModule } from './new-order-routing.module';
 
 import { SpecialistComponent } from './OrderSelection/specialist.component';

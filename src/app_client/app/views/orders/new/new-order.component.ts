@@ -11,7 +11,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { Response } from '@angular/http';
 @Component({
   templateUrl: 'new-order.component.html',
-  styles: [`.btn.btn-primary { display: inline-block;width: 150px;margin-bottom: 0px;margin-bottom: 10px; margin-left: 5px;} #doctors-orders { display: flex; flex-direction: row; justify-content: center } `],
+  styles: [`.btn.btn-primary { display: inline-block;width: 150px;margin-bottom: 0px;margin-bottom: 10px; margin-left: 5px;} 
+  #doctors-orders { display: flex; flex-direction: row; justify-content: center } `],
   encapsulation: ViewEncapsulation.Emulated
 })
 export class NewOrderComponent implements OnInit, OnDestroy {
@@ -32,8 +33,8 @@ export class NewOrderComponent implements OnInit, OnDestroy {
     public router: Router,
     private _sanitizer: DomSanitizer,
     private db: DBService) {
-    this.orderService.visitingDoctor = "Dr. Hampson";
-    this.orderService.referrer = "Dr. Hampson";
+    this.orderService.visitingDoctor = 'Dr. Hampson';
+    this.orderService.referrer = 'Dr. Hampson';
     // this.examplePatients = db.getPatientList();
     this.patientProfile = {
       dateOfBirth: '',
@@ -47,7 +48,7 @@ export class NewOrderComponent implements OnInit, OnDestroy {
       .map(data => data.json())
       .subscribe((patientData) => {
         this.patientData = patientData;
-        console.log("Grabbed patient data while in the new-order component");
+        console.log('Grabbed patient data while in the new-order component');
         console.log(this.patientData);
       })
   }
@@ -55,14 +56,14 @@ export class NewOrderComponent implements OnInit, OnDestroy {
   submitOrder() {
     this.orderService.submitOrder(this.patientProfile)
       .then((response) => {
-        console.log("Order save call was sent, the response to it was...");
+        console.log('Order save call was sent, the response to it was...');
         console.log(response);
-        this.router.navigateByUrl("/orders/new/submitted");
+        this.router.navigateByUrl('/orders/new/submitted');
       })
       .catch((err) => {
         console.log(err);
-        console.log("something went terribly wrong with the order creation");
-        this.router.navigateByUrl("/orders/new/notsubmitted");
+        console.log('something went terribly wrong with the order creation');
+        this.router.navigateByUrl('/orders/new/notsubmitted');
       })
   }
   ngOnInit() {
@@ -71,7 +72,7 @@ export class NewOrderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.patientsSubscription.unsubscribe();
-    console.log("destroyed in new order");
+    console.log('destroyed in new order');
   }
 
   firstNameAutoCompleted(data: any) {

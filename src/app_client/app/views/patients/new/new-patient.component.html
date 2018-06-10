@@ -1,0 +1,84 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <i class="icon-note"></i>
+            <strong>New Patient</strong>
+            <small> Patient information</small>
+            <div class="card-actions">
+              <a href="https://github.com/digitalBush/jquery.maskedinput">
+                <small class="text-muted">docs</small>
+              </a>
+            </div>
+          </div>
+          <form>
+            <div class="card-body">
+              <fieldset class="form-group">
+                <label>Patient First Name</label>
+                <div class="input-group" style="width: 100%;">
+                  <span class="input-group-addon">
+                    <i class="fa fa-male"></i>
+                  </span>
+                  <input name="firstName" type="text" class="form-control" style="width: 100%;" z-index="3" autocomplete="off" [(ngModel)]="patientProfile.firstName"> 
+                </div>
+                <small class="text-muted">ex. Jane</small>
+              </fieldset>
+              <fieldset class="form-group">
+                <label>Patient Last Name</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-male"></i>
+                  </span>
+                  <input type="text" class="form-control"  name="lastName" autocomplete="off" [(ngModel)]="patientProfile.lastName">
+                </div>
+                <small class="text-muted">ex. Doe</small>
+              </fieldset>
+              <fieldset class="form-group">
+                <label>Date of Birth</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </span>
+                  <input type="text" class="form-control" name="dateOfBirth" [(ngModel)]="patientProfile.dateOfBirth">
+                </div>
+                <small class="text-muted">ex. 99/99/9999</small>
+              </fieldset>
+              <fieldset style="padding-bottom:17px;">
+                <label>Visiting Doctor Preference</label> <!-- Not yet implemented -->
+                <select id="select" name="select" class="form-control">
+                  <option value="adler">Adler</option>
+                  <option value="hampson">Hampson</option>
+                  <option value="patel">Patel</option>
+                </select>
+              </fieldset>
+              <fieldset>
+                <label>Reporter</label>
+                <input type="text" placeholder="Kunle" disabled="disabled" class="form-control" name="reporter" />
+              </fieldset>
+            </div>
+          </form>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <strong>Second Section</strong>
+            <small>Information here is to be determined</small>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+      <div class="col-md-6">
+        <div class="card">
+            <button (click)="createPatient()" class="btn btn-success btn-ladda ladda-button" >
+                <span class="ladda-label">Submit</span>
+            </button>
+        </div>
+      </div>
+    </div>
+    

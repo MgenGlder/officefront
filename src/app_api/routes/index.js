@@ -5,7 +5,7 @@ var ctrlPatients = require('../controllers/patients');
 var ctrlOrders = require('../controllers/orders');
 
 router.get('/patient', ctrlPatients.getPatient);
-router.post('/patient', ctrlPatients.createPatient);
+router.post('/patient/create', ctrlPatients.createPatient);
 router.get('/patients/all', ctrlPatients.getAllPatients);
 router.patch('/patient', ctrlPatients.updatePatient);
 
