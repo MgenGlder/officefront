@@ -8,7 +8,7 @@ export class Order {
     ) { }
 }
 export class SpecialistOrder extends Order {
-    public typeOfOrder: string = "specialist";
+    public typeOfOrder = 'specialist';
     constructor(
         public type: string,
         public reason: string,
@@ -21,7 +21,7 @@ export class SpecialistOrder extends Order {
 }
 
 export class TestOrder extends Order {
-    public typeOfOrder: string = "test";
+    public typeOfOrder = 'test';
     constructor(
         public testID: string,
         public reason: string,
@@ -36,7 +36,7 @@ export class TestOrder extends Order {
 }
 
 export class BloodworkOrder extends Order {
-    public typeOfOrder: string = "bloodwork";
+    public typeOfOrder = 'bloodwork';
     constructor(
         public bloodTests: Array<{value: string, text: string}>,
         public bloodTestsMappingArray: Array<any>,
@@ -51,7 +51,7 @@ export class BloodworkOrder extends Order {
     }
 }
 export class NurseOrder extends Order {
-    public typeOfOrder: string = "nurse";
+    public typeOfOrder = 'nurse';
     constructor(
         public nursePurpose: Array<{value: string, text: string}>,
         public reason: string,
@@ -59,7 +59,7 @@ export class NurseOrder extends Order {
         public readonly dateOfVisit: String,
         public readonly visitingDoctor: string,
         public readonly reporter: string
-    ){
+    ) {
         super(reason, notes, dateOfVisit, visitingDoctor, reporter);
     }
 }

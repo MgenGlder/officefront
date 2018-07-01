@@ -1,0 +1,136 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "Officefront": {
+      "root": "src",
+      "sourceRoot": "./src/app_client",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "./src/app_client/index.html",
+            "main": "./src/app_client/main.ts",
+            "tsConfig": "./src/app_client/tsconfig.app.json",
+            "polyfills": "./src/app_client/polyfills.ts",
+            "assets": [
+              "src/app_client/assets"
+            ],
+            "styles": [
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/simple-line-icons/css/simple-line-icons.css",
+              "src/app_client/scss/style.scss"
+            ],
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.bundle.min.js",
+              "node_modules/chart.js/dist/Chart.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "./src/app_client/environments/environment.ts",
+                  "with": "./src/app_client/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "Officefront:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "Officefront:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "Officefront:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "./src/app_client/test.ts",
+            "karmaConfig": "./karma.conf.js",
+            "polyfills": "./src/app_client/polyfills.ts",
+            "tsConfig": "./src/app_client/tsconfig.spec.json",
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.bundle.min.js",
+              "node_modules/chart.js/dist/Chart.min.js"
+            ],
+            "styles": [
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/simple-line-icons/css/simple-line-icons.css",
+              "src/app_client/scss/style.scss"
+            ],
+            "assets": [
+              "src/app_client/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/app_client/app/tsconfig.app.json",
+              "src/app_client/app/tsconfig.spec.json"
+            ],
+            "exclude": []
+          }
+        }
+      }
+    },
+    "Officefront-e2e": {
+      "root": "src",
+      "sourceRoot": "src/e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "./protractor.conf.js",
+            "devServerTarget": "Officefront:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "e2e/tsconfig.e2e.json"
+            ],
+            "exclude": []
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "Officefront",
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "app",
+      "styleext": "scss"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "app"
+    }
+  }
+}

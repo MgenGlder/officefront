@@ -10,11 +10,11 @@ export class DBService {
     saveCompletePatientOrder(orders: Array<any>, patientProfile): Promise<any> {
         console.log(patientProfile);
         console.log(orders);
-        let orderPromises = [];
+        const  orderPromises = [];
         let order = orders[0];
         for (order of orders) {
-            if (order.typeOfOrder == "nurse") {
-                this.http.post("http://localhost:8080/api/order", {
+            if (order.typeOfOrder === 'nurse') {
+                this.http.post('http://localhost:8080/api/order', {
                     patientFirstName: patientProfile.firstName,
                     patientLastName: patientProfile.lastName,
                     patientDateOfBirth: patientProfile.dateOfBirth,
@@ -27,10 +27,9 @@ export class DBService {
                     reporter: order.visitingDoctor,
                     location: order.location
                 }).toPromise()
-            }
-            else if (order.typeOfOrder == "test") {
+            } else if (order.typeOfOrder === 'test') {
                 orderPromises.push(
-                    this.http.post("http://localhost:8080/api/order", {
+                    this.http.post('http://localhost:8080/api/order', {
                         patientFirstName: patientProfile.firstName,
                         patientLastName: patientProfile.lastName,
                         patientDateOfBirth: patientProfile.dateOfBirth,
@@ -44,10 +43,9 @@ export class DBService {
                         location: order.location
                     }).toPromise()
                 )
-            }
-            else if (order.typeOfOrder == "bloodwork") {
+            } else if (order.typeOfOrder === 'bloodwork') {
                 orderPromises.push(
-                    this.http.post("http://localhost:8080/api/order", {
+                    this.http.post('http://localhost:8080/api/order', {
                         patientFirstName: patientProfile.firstName,
                         patientLastName: patientProfile.lastName,
                         patientDateOfBirth: patientProfile.dateOfBirth,
@@ -61,10 +59,9 @@ export class DBService {
                         location: order.location
                     }).toPromise()
                 )
-            }
-            else {
+            } else {
                 orderPromises.push(
-                    this.http.post("http://localhost:8080/api/order", {
+                    this.http.post('http://localhost:8080/api/order', {
                         patientFirstName: patientProfile.firstName,
                         patientLastName: patientProfile.lastName,
                         patientDateOfBirth: patientProfile.dateOfBirth,
@@ -79,52 +76,52 @@ export class DBService {
                 )
             }
         }
-        console.log("order saved");
+        console.log('order saved');
         return Promise.all(orderPromises);
     }
     saveCompletePatientTestOrder(orders, patientProfile) {
-        //TODO: Separate the different types of orders into their own functions.
+        // TODO: Separate the different types of orders into their own functions.
     }
 
     getBloodworkOptions() {
         return [
-            { value: "hgb-aic-level", text: "Hgb. AIC Level" },
-            { value: "bun-creat", text: "BUN, CREAT" },
-            { value: "cholesterol", text: "Cholesterol/PSA" },
-            { value: "lipid-profile", text: "Lipid Profile" },
-            { value: "cbc-with-diff", text: "CBC With Diff" },
-            { value: "comp-tsh-lft", text: "COMP TSH LFT" },
-            { value: "metabolic-panel", text: "Metabolic Panel" }
+            { value: 'hgb-aic-level', text: 'Hgb. AIC Level' },
+            { value: 'bun-creat', text: 'BUN, CREAT' },
+            { value: 'cholesterol', text: 'Cholesterol/PSA' },
+            { value: 'lipid-profile', text: 'Lipid Profile' },
+            { value: 'cbc-with-diff', text: 'CBC With Diff' },
+            { value: 'comp-tsh-lft', text: 'COMP TSH LFT' },
+            { value: 'metabolic-panel', text: 'Metabolic Panel' }
         ];
     }
     getNurseOptions() {
         return [
-            { value: "rn-monitor-bp", text: "Monitor BP" },
-            { value: "rn-monitor-bs", text: "Monitor BS" },
+            { value: 'rn-monitor-bp', text: 'Monitor BP' },
+            { value: 'rn-monitor-bs', text: 'Monitor BS' },
         ]
     }
     getTestOptions() {
         return [
-            { value: "x-ray", text: "X-Ray", location: true },
-            { value: "ekg", text: "EKG", location: true },
-            { value: "pft", text: "PFT", location: false },
-            { value: "eye-exam", text: "Eye Exam", location: false },
-            { value: "doppler", text: "Doppler (Pedal Or Carotid)", location: true },
-            { value: "ultrasound", text: "Ultrasound", location: true },
-            { value: "urology", text: "Urology/Urinalysis", location: false }
+            { value: 'x-ray', text: 'X-Ray', location: true },
+            { value: 'ekg', text: 'EKG', location: true },
+            { value: 'pft', text: 'PFT', location: false },
+            { value: 'eye-exam', text: 'Eye Exam', location: false },
+            { value: 'doppler', text: 'Doppler (Pedal Or Carotid)', location: true },
+            { value: 'ultrasound', text: 'Ultrasound', location: true },
+            { value: 'urology', text: 'Urology/Urinalysis', location: false }
         ];
     }
     getSpecialistOptions() {
         return [
-            { value: "podiatrist", text: "Podiatrist" },
-            { value: "optometrist", text: "Optometrist" },
-            { value: "cardiologist", text: "Cardiologist" },
-            { value: "neurologist", text: "Neurologist" },
-            { value: "dermatologist", text: "Dermatologist" },
-            { value: "pain-doctor", text: "Pain Doctor" },
-            { value: "psychiatrist", text: "Psychiatrist" },
-            { value: "ent", text: "ENT" },
-            { value: "physical-therapy", text: "Physical Therapy" }
+            { value: 'podiatrist', text: 'Podiatrist' },
+            { value: 'optometrist', text: 'Optometrist' },
+            { value: 'cardiologist', text: 'Cardiologist' },
+            { value: 'neurologist', text: 'Neurologist' },
+            { value: 'dermatologist', text: 'Dermatologist' },
+            { value: 'pain-doctor', text: 'Pain Doctor' },
+            { value: 'psychiatrist', text: 'Psychiatrist' },
+            { value: 'ent', text: 'ENT' },
+            { value: 'physical-therapy', text: 'Physical Therapy' }
         ]
     }
     /*  getPatientList() {
@@ -138,6 +135,6 @@ export class DBService {
              { firstName: "Adekunle", lastName: "Oshiyoye", dob: "01/05/1951" },
              { firstName: "Harold", lastName: "Pegues", dob: "06/20/1974" }
          ]
-     } 
+     }
      Depreciated, was used for testing purposes.*/
 }
