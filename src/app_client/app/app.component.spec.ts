@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { NO_ERRORS_SCHEMA } from '@angular/compiler/src/core'
 import { AppRoutingModule } from './app.routing'
 
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -107,11 +107,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('Officefront');
   }));
 
-  it('should render title in a header tag', async(() => {
+  it('should render router-outlet tag', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    console.log(compiled.textContent);
-    // expect(compiled.querySelector('body').textContent).toContain('Patient Order Tracking');
+    const compiled = fixture.debugElement.queryAll(By.css('router-outlet'));
+    expect(compiled).toBeTruthy();
   }));
 });
