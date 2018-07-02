@@ -8,7 +8,9 @@ describe('DBService', () => {
     beforeEach(() => {
         service = new DBService(new Http(new MockBackend(), new BaseRequestOptions()));
     })
-    it('should get bloodwork data from', () => {
+    it('should get bloodwork data from db', () => {
+    })
+    it('should get nursing data from db' () => {
     })
 
 })
