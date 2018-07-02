@@ -6,11 +6,7 @@ import { Order } from '../models/pending-order.model';
 export class DBService {
     constructor(private http: Http) {
     }
-
-
     saveCompletePatientOrder(orders: Array<any>, patientProfile): Promise<any> {
-        console.log(patientProfile);
-        console.log(orders);
         const  orderPromises = [];
         let order = orders[0];
         for (order of orders) {
