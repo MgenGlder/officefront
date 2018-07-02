@@ -59,7 +59,7 @@ export class DBService {
                         report: order.reporter,
                         location: order.location
                     }).toPromise()
-                )
+                ) // specialist orders 
             } else {
                 orderPromises.push(
                     this.http.post('http://localhost:8080/api/order', {

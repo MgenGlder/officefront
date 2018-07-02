@@ -12,5 +12,9 @@ describe('DBService', () => {
     })
     it('should get nursing data from db' () => {
     })
+    it('should get testing data from db' () => {
+    })
+    it('should get specialist data from db' () => {
+    })
 
 })
