@@ -15,12 +15,12 @@ describe('DBService', () => {
         expect(result).toBeTruthy();
         // TODO: Make this test alot better. My god.
     })
-    it('should save bloodwork data from db', () => {
+    xit('should save bloodwork data from db', () => {
     })
-    it('should save nursing data from db', () => {
+    xit('should save nursing data from db', () => {
     })
-    it('should save testing data from db', () => {
+    xit('should save testing data from db', () => {
     })
-    it('should save specialist data from db', () => {
+    xit('should save specialist data from db', () => {
     })
 })
