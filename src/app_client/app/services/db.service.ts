@@ -102,28 +102,30 @@ export class DBService {
         // ]
     }
     getTestOptions() {
-        return [
-            { value: 'x-ray', text: 'X-Ray', location: true },
-            { value: 'ekg', text: 'EKG', location: true },
-            { value: 'pft', text: 'PFT', location: false },
-            { value: 'eye-exam', text: 'Eye Exam', location: false },
-            { value: 'doppler', text: 'Doppler (Pedal Or Carotid)', location: true },
-            { value: 'ultrasound', text: 'Ultrasound', location: true },
-            { value: 'urology', text: 'Urology/Urinalysis', location: false }
-        ];
+        return this.http.get('localhost:8080/some-endpoint-for-tests');
+        // return [
+        //     { value: 'x-ray', text: 'X-Ray', location: true },
+        //     { value: 'ekg', text: 'EKG', location: true },
+        //     { value: 'pft', text: 'PFT', location: false },
+        //     { value: 'eye-exam', text: 'Eye Exam', location: false },
+        //     { value: 'doppler', text: 'Doppler (Pedal Or Carotid)', location: true },
+        //     { value: 'ultrasound', text: 'Ultrasound', location: true },
+        //     { value: 'urology', text: 'Urology/Urinalysis', location: false }
+        // ];
     }
     getSpecialistOptions() {
-        return [
-            { value: 'podiatrist', text: 'Podiatrist' },
-            { value: 'optometrist', text: 'Optometrist' },
-            { value: 'cardiologist', text: 'Cardiologist' },
-            { value: 'neurologist', text: 'Neurologist' },
-            { value: 'dermatologist', text: 'Dermatologist' },
-            { value: 'pain-doctor', text: 'Pain Doctor' },
-            { value: 'psychiatrist', text: 'Psychiatrist' },
-            { value: 'ent', text: 'ENT' },
-            { value: 'physical-therapy', text: 'Physical Therapy' }
-        ]
+        return this.http.get('localhost:8080/some-endpoint-for-specialists')
+        // return [
+        //     { value: 'podiatrist', text: 'Podiatrist' },
+        //     { value: 'optometrist', text: 'Optometrist' },
+        //     { value: 'cardiologist', text: 'Cardiologist' },
+        //     { value: 'neurologist', text: 'Neurologist' },
+        //     { value: 'dermatologist', text: 'Dermatologist' },
+        //     { value: 'pain-doctor', text: 'Pain Doctor' },
+        //     { value: 'psychiatrist', text: 'Psychiatrist' },
+        //     { value: 'ent', text: 'ENT' },
+        //     { value: 'physical-therapy', text: 'Physical Therapy' }
+        // ]
     }
     /*  getPatientList() {
          return [
