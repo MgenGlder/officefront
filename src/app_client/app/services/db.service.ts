@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Order } from '../models/pending-order.model';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class DBService {
@@ -80,16 +81,18 @@ export class DBService {
         // TODO: Separate the different types of orders into their own functions.
     }
 
-    getBloodworkOptions() {
-        return [
-            { value: 'hgb-aic-level', text: 'Hgb. AIC Level' },
-            { value: 'bun-creat', text: 'BUN, CREAT' },
-            { value: 'cholesterol', text: 'Cholesterol/PSA' },
-            { value: 'lipid-profile', text: 'Lipid Profile' },
-            { value: 'cbc-with-diff', text: 'CBC With Diff' },
-            { value: 'comp-tsh-lft', text: 'COMP TSH LFT' },
-            { value: 'metabolic-panel', text: 'Metabolic Panel' }
-        ];
+    getBloodworkOptions(): Observable<Response> {
+        // TODO: Set up to hit a real endpoint
+        return this.http.get('localhost:8080/some-endpoint');
+        // return [
+        //     { value: 'hgb-aic-level', text: 'Hgb. AIC Level' },
+        //     { value: 'bun-creat', text: 'BUN, CREAT' },
+        //     { value: 'cholesterol', text: 'Cholesterol/PSA' },
+        //     { value: 'lipid-profile', text: 'Lipid Profile' },
+        //     { value: 'cbc-with-diff', text: 'CBC With Diff' },
+        //     { value: 'comp-tsh-lft', text: 'COMP TSH LFT' },
+        //     { value: 'metabolic-panel', text: 'Metabolic Panel' }
+        // ];
     }
     getNurseOptions() {
         return [
