@@ -83,7 +83,7 @@ export class DBService {
 
     getBloodworkOptions(): Observable<Response> {
         // TODO: Set up to hit a real endpoint
-        return this.http.get('localhost:8080/some-endpoint');
+        return this.http.get('localhost:8080/some-endpoint-for-bloodwork');
         // return [
         //     { value: 'hgb-aic-level', text: 'Hgb. AIC Level' },
         //     { value: 'bun-creat', text: 'BUN, CREAT' },
@@ -94,11 +94,12 @@ export class DBService {
         //     { value: 'metabolic-panel', text: 'Metabolic Panel' }
         // ];
     }
-    getNurseOptions() {
-        return [
-            { value: 'rn-monitor-bp', text: 'Monitor BP' },
-            { value: 'rn-monitor-bs', text: 'Monitor BS' },
-        ]
+    getNurseOptions(): Observable<Response> {
+        return this.http.get('localhost:8080/some-endpoint-for-nursing');
+        // return [
+        //     { value: 'rn-monitor-bp', text: 'Monitor BP' },
+        //     { value: 'rn-monitor-bs', text: 'Monitor BS' },
+        // ]
     }
     getTestOptions() {
         return [
