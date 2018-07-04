@@ -59,26 +59,39 @@ describe('DBService get request calls', () => {
 describe('DBService post calls', () => {
     let newHttp;
     let service: DBService;
+    let orders: [{
+        location: string,
+        visitingDoctor: string,
+        reporter: string,
+        typeOfOrder?: string,
+        dateOfVisit: string,
+        notes: string,
+        reason: string,
+        nursePurpose?: string,
+        testID?: string
+    }];
+    const patientProfile = {
+        firstName: 'Kunle',
+        lastName: 'Oshiyoye',
+        dateOfBirth: '07/30/1993'
+    }
     beforeEach(() => {
         newHttp = new Http(new MockBackend(), new BaseRequestOptions());
-    })
-    it('should make post calls to push new nursing order', () => {
 
-        const orders = [{
+        orders = [{
             location: 'Right Arm',
             visitingDoctor: 'Adler',
             reporter: '',
             dateOfVisit: '07/03/2018',
             notes: 'Patient is very anxious',
-            reason: 'Sore throat',
-            typeOfOrder: 'nurse',
-            nursePurpose: 'rn-monitor-bp'
+            reason: 'Sore throat'
         }]
-        const patientProfile = {
-            firstName: 'Kunle',
-            lastName: 'Oshiyoye',
-            dateOfBirth: '07/30/1993'
-        }
+    })
+    it('should make post calls to push new nursing order', () => {
+
+        orders[0]['typeOfOrder'] = 'nurse';
+        orders[0]['nursePurpose'] = 'rn-monitor-bp';
+
         const postSpy = spyOn(newHttp, 'post');
         postSpy.and.returnValue(
             {
