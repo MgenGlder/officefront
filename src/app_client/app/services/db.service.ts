@@ -83,7 +83,7 @@ export class DBService {
 
     getBloodworkOptions(): Observable<Response> {
         // TODO: Set up to hit a real endpoint
-        return this.http.get('localhost:8080/some-endpoint');
+        return this.http.get('localhost:8080/some-endpoint-for-bloodwork');
         // return [
         //     { value: 'hgb-aic-level', text: 'Hgb. AIC Level' },
         //     { value: 'bun-creat', text: 'BUN, CREAT' },
@@ -94,35 +94,38 @@ export class DBService {
         //     { value: 'metabolic-panel', text: 'Metabolic Panel' }
         // ];
     }
-    getNurseOptions() {
-        return [
-            { value: 'rn-monitor-bp', text: 'Monitor BP' },
-            { value: 'rn-monitor-bs', text: 'Monitor BS' },
-        ]
+    getNurseOptions(): Observable<Response> {
+        return this.http.get('localhost:8080/some-endpoint-for-nursing');
+        // return [
+        //     { value: 'rn-monitor-bp', text: 'Monitor BP' },
+        //     { value: 'rn-monitor-bs', text: 'Monitor BS' },
+        // ]
     }
     getTestOptions() {
-        return [
-            { value: 'x-ray', text: 'X-Ray', location: true },
-            { value: 'ekg', text: 'EKG', location: true },
-            { value: 'pft', text: 'PFT', location: false },
-            { value: 'eye-exam', text: 'Eye Exam', location: false },
-            { value: 'doppler', text: 'Doppler (Pedal Or Carotid)', location: true },
-            { value: 'ultrasound', text: 'Ultrasound', location: true },
-            { value: 'urology', text: 'Urology/Urinalysis', location: false }
-        ];
+        return this.http.get('localhost:8080/some-endpoint-for-tests');
+        // return [
+        //     { value: 'x-ray', text: 'X-Ray', location: true },
+        //     { value: 'ekg', text: 'EKG', location: true },
+        //     { value: 'pft', text: 'PFT', location: false },
+        //     { value: 'eye-exam', text: 'Eye Exam', location: false },
+        //     { value: 'doppler', text: 'Doppler (Pedal Or Carotid)', location: true },
+        //     { value: 'ultrasound', text: 'Ultrasound', location: true },
+        //     { value: 'urology', text: 'Urology/Urinalysis', location: false }
+        // ];
     }
     getSpecialistOptions() {
-        return [
-            { value: 'podiatrist', text: 'Podiatrist' },
-            { value: 'optometrist', text: 'Optometrist' },
-            { value: 'cardiologist', text: 'Cardiologist' },
-            { value: 'neurologist', text: 'Neurologist' },
-            { value: 'dermatologist', text: 'Dermatologist' },
-            { value: 'pain-doctor', text: 'Pain Doctor' },
-            { value: 'psychiatrist', text: 'Psychiatrist' },
-            { value: 'ent', text: 'ENT' },
-            { value: 'physical-therapy', text: 'Physical Therapy' }
-        ]
+        return this.http.get('localhost:8080/some-endpoint-for-specialists')
+        // return [
+        //     { value: 'podiatrist', text: 'Podiatrist' },
+        //     { value: 'optometrist', text: 'Optometrist' },
+        //     { value: 'cardiologist', text: 'Cardiologist' },
+        //     { value: 'neurologist', text: 'Neurologist' },
+        //     { value: 'dermatologist', text: 'Dermatologist' },
+        //     { value: 'pain-doctor', text: 'Pain Doctor' },
+        //     { value: 'psychiatrist', text: 'Psychiatrist' },
+        //     { value: 'ent', text: 'ENT' },
+        //     { value: 'physical-therapy', text: 'Physical Therapy' }
+        // ]
     }
     /*  getPatientList() {
          return [
