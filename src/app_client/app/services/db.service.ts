@@ -17,6 +17,7 @@ interface OrderRequestObject {
     typeOfOrder: String;
     nursePurpose?: String;
     testID?: String;
+    typeOfSpecialist?: String;
 }
 
 @Injectable()
@@ -38,6 +39,8 @@ makePostCall(patientProfile, order) {
         typeOfOrder: order.typeOfOrder,
         reporter: order.reporter
     }
+    // TODO: Find a better way to handle this. If the order is of a type but doesn't contain the
+    // type specific property, this will throw errors. At least try catch this thing.
     switch (order.typeOfOrder) {
         case 'nurse':
             requestObject.nursePurpose = order.nursePurpose;
@@ -49,6 +52,7 @@ makePostCall(patientProfile, order) {
             requestObject.testID = order.testID;
             break;
         case 'specialist':
+            requestObject.typeOfSpecialist = order.typeOfSpecialist;
             break;
         default:
             break;
@@ -61,7 +65,6 @@ saveCompletePatientOrder(orders: Array < any > , patientProfile): Promise < any 
     for (order of orders) {
         orderPromises.push(this.makePostCall(patientProfile, order));
     }
-        console.log('order saved');
     return Promise.all(orderPromises);
 }
 
@@ -79,6 +82,7 @@ getBloodworkOptions(): Observable < Response > {
     // ];
 }
 getNurseOptions(): Observable < Response > {
+    // TODO: Set up to hit a real endpoint
     return this.http.get('localhost:8080/some-endpoint-for-nursing');
     // return [
     //     { value: 'rn-monitor-bp', text: 'Monitor BP' },
@@ -86,6 +90,7 @@ getNurseOptions(): Observable < Response > {
     // ]
 }
 getTestOptions() {
+    // TODO: Set up to hit a real endpoint
     return this.http.get('localhost:8080/some-endpoint-for-tests');
     // return [
     //     { value: 'x-ray', text: 'X-Ray', location: true },
@@ -98,6 +103,7 @@ getTestOptions() {
     // ];
 }
 getSpecialistOptions() {
+    // TODO: Set up to hit a real endpoint
     return this.http.get('localhost:8080/some-endpoint-for-specialists')
     // return [
     //     { value: 'podiatrist', text: 'Podiatrist' },

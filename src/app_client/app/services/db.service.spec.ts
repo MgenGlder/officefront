@@ -2,6 +2,7 @@ import { DBService } from './db.service'
 import { Http, BaseRequestOptions, Response, ResponseOptions } from '@angular/http'
 import { MockBackend } from '@angular/http/testing'
 import { Observable, of } from 'rxjs';
+import { dayOfYearFromWeeks } from 'ngx-bootstrap/chronos/units/week-calendar-utils';
 
 class SpyHttpAndClassToSpyOnClass {
 
@@ -56,7 +57,7 @@ describe('DBService get request calls', () => {
     })
 })
 
-describe('DBService post calls', () => {
+describe('DBService post request calls', () => {
     let newHttp;
     let service: DBService;
     let orders: [{
@@ -100,7 +101,7 @@ describe('DBService post calls', () => {
                 })
             })
         service = new DBService(newHttp);
-        const result = service.saveCompletePatientOrder(orders, patientProfile);
+        service.saveCompletePatientOrder(orders, patientProfile);
         expect(postSpy.calls.count()).toEqual(1);
         expect(postSpy.calls.argsFor(0)[1]).toEqual({
             location: 'Right Arm',
@@ -111,6 +112,90 @@ describe('DBService post calls', () => {
             reason: 'Sore throat',
             typeOfOrder: 'nurse',
             nursePurpose: 'rn-monitor-bp',
+            patientFirstName: 'Kunle',
+            patientLastName: 'Oshiyoye',
+            patientDateOfBirth: '07/30/1993'
+        })
+    })
+    it('should make post calls to push new test orders', () => {
+        orders[0]['typeOfOrder'] = 'test';
+        orders[0]['testID'] = 'MRI';
+
+        const postSpy = spyOn(newHttp, 'post');
+        postSpy.and.returnValue(
+            {
+                toPromise: () => Promise.resolve({
+                    message: 'Some successful response from post'
+                })
+            })
+        service = new DBService(newHttp);
+        service.saveCompletePatientOrder(orders, patientProfile);
+        expect(postSpy.calls.count()).toEqual(1);
+        expect(postSpy.calls.argsFor(0)[1]).toEqual({
+            location: 'Right Arm',
+            visitingDoctor: 'Adler',
+            reporter: '',
+            dateOfVisit: '07/03/2018',
+            notes: 'Patient is very anxious',
+            reason: 'Sore throat',
+            typeOfOrder: 'test',
+            testID: 'MRI',
+            patientFirstName: 'Kunle',
+            patientLastName: 'Oshiyoye',
+            patientDateOfBirth: '07/30/1993'
+        })
+    })
+    it('should make post calls to push new bloodwork orders', () => {
+        orders[0]['typeOfOrder'] = 'bloodwork';
+        orders[0]['testID'] = 'cholesterol';
+
+        const postSpy = spyOn(newHttp, 'post');
+        postSpy.and.returnValue(
+            {
+                toPromise: () => Promise.resolve({
+                    message: 'Some successful response from post'
+                })
+            })
+        service = new DBService(newHttp);
+        service.saveCompletePatientOrder(orders, patientProfile);
+        expect(postSpy.calls.count()).toEqual(1);
+        expect(postSpy.calls.argsFor(0)[1]).toEqual({
+            location: 'Right Arm',
+            visitingDoctor: 'Adler',
+            reporter: '',
+            dateOfVisit: '07/03/2018',
+            notes: 'Patient is very anxious',
+            reason: 'Sore throat',
+            testID: 'cholesterol',
+            typeOfOrder: 'bloodwork',
+            patientFirstName: 'Kunle',
+            patientLastName: 'Oshiyoye',
+            patientDateOfBirth: '07/30/1993'
+        })
+    })
+    it('should make post calls to push new specialist orders', () => {
+        orders[0]['typeOfOrder'] = 'specialist';
+        orders[0]['typeOfSpecialist'] = 'psychiatrist';
+
+        const postSpy = spyOn(newHttp, 'post');
+        postSpy.and.returnValue(
+            {
+                toPromise: () => Promise.resolve({
+                    message: 'Some successful response from post'
+                })
+            })
+        service = new DBService(newHttp);
+        service.saveCompletePatientOrder(orders, patientProfile);
+        expect(postSpy.calls.count()).toEqual(1);
+        expect(postSpy.calls.argsFor(0)[1]).toEqual({
+            location: 'Right Arm',
+            visitingDoctor: 'Adler',
+            reporter: '',
+            dateOfVisit: '07/03/2018',
+            notes: 'Patient is very anxious',
+            reason: 'Sore throat',
+            typeOfOrder: 'specialist',
+            typeOfSpecialist: 'psychiatrist',
             patientFirstName: 'Kunle',
             patientLastName: 'Oshiyoye',
             patientDateOfBirth: '07/30/1993'
