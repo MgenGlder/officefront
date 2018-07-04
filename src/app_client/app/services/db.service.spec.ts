@@ -1,27 +1,26 @@
 import { DBService } from './db.service'
-import { Http, BaseRequestOptions, ConnectionBackend } from '@angular/http'
+import { Http, BaseRequestOptions, Response, ResponseOptions } from '@angular/http'
 import { MockBackend } from '@angular/http/testing'
-import { Observable, of } from 'rxjs';
-import { fakeAsync, tick, flushMicrotasks, ComponentFixture } from '@angular/core/testing';
+import { of } from 'rxjs';
 
 
 describe('DBService', () => {
     let service: DBService;
-    let spy;
+    let spyHttp;
     beforeEach(() => {
-        service = new DBService(new Http(new MockBackend(), new BaseRequestOptions()));
+        const newHttp = new Http(new MockBackend(), new BaseRequestOptions());
+        spyHttp = spyOn(newHttp, 'get')
+            .and
+            .returnValues(of(new Response(new ResponseOptions({
+                body: [{value: 'podiatrist', text: 'Podiatrist'}]
+            }))));
+        service = new DBService(newHttp);
     })
-    it('should make call to get bloodwork data from db', () => {
-        const  bloodworkObservable: Observable<{value: String, text: String}> =
-        of<{value: string, text: string}>({ value: 'podiatrist', text: 'Podiatrist' });
-        spy = spyOn(service, 'getBloodworkOptions').and.returnValue(bloodworkObservable);
+    it('should make call to get bloodwork data from db', async() => {
         const result = service.getBloodworkOptions();
-        result.subscribe(((bloodworkOptions) => {
-            console.log(bloodworkOptions);
-            expect(bloodworkOptions.value).toEqual('podiatrist');
-        }))
-        // expect().toBe('podiatrist');
-        // TODO: Make this test alot better. My god.
+        await result.subscribe(((responseObject: Response) => {
+            expect(responseObject.json()[0].value).toEqual('podiatrist');
+        }));
     })
     xit('should save bloodwork data from db', () => {
     })

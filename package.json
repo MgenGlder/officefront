@@ -80,7 +80,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.6.8",
     "@types/jasmine": "2.6.0",
-    "@types/node": "8.0.46",
+    "@types/node": "^8.0.46",
     "chai": "^4.1.2",
     "codelyzer": "3.2.2",
     "jasmine-core": "2.8.0",
