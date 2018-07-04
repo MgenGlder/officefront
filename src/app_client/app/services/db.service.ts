@@ -2,83 +2,62 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Order } from '../models/pending-order.model';
 import { Observable } from 'rxjs';
+import { request } from 'https';
 
 @Injectable()
 export class DBService {
     constructor(private http: Http) {
     }
+
+    makePostCall(patientProfile, order) {
+        const requestObject: {
+            patientFirstName: String,
+            patientLastName: String,
+            patientDateOfBirth: String,
+            location: String,
+            visitingDoctor: String,
+            dateOfVisit: String,
+            notes: String,
+            reason: String,
+            type: String,
+            nursePurpose?: String,
+            testID?: String
+        } = {
+            patientFirstName: patientProfile.firstName,
+            patientLastName: patientProfile.lastName,
+            patientDateOfBirth: patientProfile.dateOfBirth,
+            location: order.location,
+            visitingDoctor: order.reporter,
+            dateOfVisit: order.dateOfVisit,
+            notes: order.notes,
+            reason: order.reason,
+            type: order.typeOfOrder,
+        }
+        switch (order.typeOfOrder) {
+            case 'nurse':
+                requestObject.nursePurpose = order.nursePurpose;
+                break;
+            case 'test':
+                requestObject.testID = order.testID;
+                break;
+            case 'bloodwork':
+                requestObject.testID = order.testID;
+                break;
+            case 'specialist':
+                break;
+            default:
+                break;
+        }
+        this.http.post('http://localhost:8080/api/order', requestObject).toPromise()
+    }
     saveCompletePatientOrder(orders: Array<any>, patientProfile): Promise<any> {
-        const  orderPromises = [];
+        const orderPromises = [];
         let order = orders[0];
         for (order of orders) {
-            if (order.typeOfOrder === 'nurse') {
-                this.http.post('http://localhost:8080/api/order', {
-                    patientFirstName: patientProfile.firstName,
-                    patientLastName: patientProfile.lastName,
-                    patientDateOfBirth: patientProfile.dateOfBirth,
-                    nursePurpose: order.nursePurpose,
-                    type: order.typeOfOrder,
-                    reason: order.reason,
-                    notes: order.notes,
-                    dateOfVisit: order.dateOfVisit,
-                    visitingDoctor: order.reporter,
-                    reporter: order.visitingDoctor,
-                    location: order.location
-                }).toPromise()
-            } else if (order.typeOfOrder === 'test') {
-                orderPromises.push(
-                    this.http.post('http://localhost:8080/api/order', {
-                        patientFirstName: patientProfile.firstName,
-                        patientLastName: patientProfile.lastName,
-                        patientDateOfBirth: patientProfile.dateOfBirth,
-                        type: order.type,
-                        testID: order.testID,
-                        reason: order.reason,
-                        notes: order.notes,
-                        dateOfVisit: order.dateOfVisit,
-                        visitingDoctor: order.visitingDoctor,
-                        reporter: order.reporter,
-                        location: order.location
-                    }).toPromise()
-                )
-            } else if (order.typeOfOrder === 'bloodwork') {
-                orderPromises.push(
-                    this.http.post('http://localhost:8080/api/order', {
-                        patientFirstName: patientProfile.firstName,
-                        patientLastName: patientProfile.lastName,
-                        patientDateOfBirth: patientProfile.dateOfBirth,
-                        type: order.typeOfOrder,
-                        testID: order.testID,
-                        reason: order.reason,
-                        notes: order.notes,
-                        dateOfVisit: order.dateOfVisit,
-                        visitingDoctor: order.visitingDoctor,
-                        report: order.reporter,
-                        location: order.location
-                    }).toPromise()
-                ) // specialist orders
-            } else {
-                orderPromises.push(
-                    this.http.post('http://localhost:8080/api/order', {
-                        patientFirstName: patientProfile.firstName,
-                        patientLastName: patientProfile.lastName,
-                        patientDateOfBirth: patientProfile.dateOfBirth,
-                        type: order.type,
-                        reason: order.reason,
-                        notes: order.notes,
-                        dateOfVisit: order.dateOfVisit,
-                        visitingDoctor: order.reporter,
-                        reporter: order.reporter,
-                        location: order.location
-                    }).toPromise()
-                )
-            }
+           this.makePostCall(patientProfile, order);
         }
         console.log('order saved');
         return Promise.all(orderPromises);
-    }
-    saveCompletePatientTestOrder(orders, patientProfile) {
-        // TODO: Separate the different types of orders into their own functions.
     }
 
     getBloodworkOptions(): Observable<Response> {
