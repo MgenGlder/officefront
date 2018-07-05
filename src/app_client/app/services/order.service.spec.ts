@@ -5,7 +5,7 @@ import { MockBackend } from '@angular/http/testing';
 import { Response } from '@angular/http';
 import { Observable, of } from 'rxjs';
 import { Order } from '../models/pending-order.model';
-fdescribe('OrderService', () => {
+describe('OrderService', () => {
     let dbService: DBService;
     let orderService: OrderService;
     let date;
