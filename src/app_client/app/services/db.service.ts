@@ -127,6 +127,9 @@ export class DBService {
         //     { value: 'physical-therapy', text: 'Physical Therapy' }
         // ]
     }
+    getAllOrders() {
+        return this.http.get('http://localhost:8080/api/orders/all')
+    }
     /*  getPatientList() {
          return [
              { firstName: "Joe", lastName: "Budden", dob: "09/11/1976" },
