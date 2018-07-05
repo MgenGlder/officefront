@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Order } from '../models/pending-order.model';
 import { Observable } from 'rxjs';
-import { request } from 'https';
+
 
 interface OrderRequestObject {
     patientFirstName: String;
@@ -67,7 +66,9 @@ saveCompletePatientOrder(orders: Array < any > , patientProfile): Promise < any 
     }
     return Promise.all(orderPromises);
 }
-
+getAllOrders() {
+    return this.http.get('http://localhost:8080/api/orders/all')
+}
 getBloodworkOptions(): Observable < Response > {
     // TODO: Set up to hit a real endpoint
     return this.http.get('localhost:8080/some-endpoint-for-bloodwork');
