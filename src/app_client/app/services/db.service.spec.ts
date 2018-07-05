@@ -2,7 +2,6 @@ import { DBService } from './db.service'
 import { Http, BaseRequestOptions, Response, ResponseOptions } from '@angular/http'
 import { MockBackend } from '@angular/http/testing'
 import { Observable, of } from 'rxjs';
-import { dayOfYearFromWeeks } from 'ngx-bootstrap/chronos/units/week-calendar-utils';
 
 class SpyHttpAndClassToSpyOnClass {
 

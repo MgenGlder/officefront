@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Order } from '../models/pending-order.model'
 import { DBService } from './db.service';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 @Injectable()
 export class OrderService {
     public orders: Array<Order> = [];
@@ -22,16 +22,14 @@ export class OrderService {
 
     removeOrder(toBeDeleted: Order) {
         // TODO: Might have to use string comparison
-        console.log('removing order...');
         for (let i = 0; i < this.orders.length; i++) {
             if (Object.is(this.orders[i], toBeDeleted)) {
                 this.orders.splice(i, 1);
-                console.log('order removed....');
             }
         }
     }
 
-    getOrders() {
+    getOrders(): Order[] {
         return this.orders;
     }
     submitOrder(patientProfile): Promise<any> {
