@@ -57,13 +57,19 @@ makePostCall(patientProfile, order) {
     }
     return this.http.post('http://localhost:8080/api/order', requestObject).toPromise();
 }
-saveCompletePatientOrder(orders: Array < any > , patientProfile): Promise < any > {
+postPatient(newPatient) {
+    return this.http.post('http://localhost:8080/api/patient/create', newPatient);
+}
+saveCompletePatientOrder(orders: Array <any>, patientProfile):  Promise<any> {
     const orderPromises = [];
     let order = orders[0];
     for (order of orders) {
         orderPromises.push(this.makePostCall(patientProfile, order));
     }
     return Promise.all(orderPromises);
+}
+getAllPatients() {
+    return this.http.get('http://localhost:8080/api/patients/all')
 }
 getAllOrders() {
     return this.http.get('http://localhost:8080/api/orders/all')

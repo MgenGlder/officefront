@@ -19,13 +19,13 @@ describe('OrderService', () => {
         dbService = new DBService(new Http(new MockBackend(), new BaseRequestOptions()));
         orderService = new OrderService(dbService);
         responseObservable = of(new Response(new ResponseOptions({ body: 'some message' })));
-        spyOn(dbService, 'getAllOrders').and.returnValues(responseObservable);
-    })
+        spyOn(dbService, 'getAllOrders').and.callThrough().and.returnValues(responseObservable);
+    });
     it('should get all orders ON construction', () => {
         orderService = new OrderService(dbService);
         orderService.getOrders();
         expect(orderService.fetchedOrders).toEqual(responseObservable);
-    })
+    });
     it('should get all orders', async () => {
         const orders: Observable<Response> = orderService.getAllOrders();
         await orders.subscribe((data) => {
