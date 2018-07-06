@@ -5,11 +5,13 @@ import { Observable, of } from 'rxjs';
 
 class SpyHttpAndClassToSpyOnClass {
 
-    public static createHttpGetSpy(http: Http, responseObject: [{ value: String, text: String, location?: Boolean }]) {
+    public static createHttpGetSpy(http: Http, responseObject: [{ value: String, text: String, location?: Boolean }]|
+        [{ firstName: string, lastName: string, dateOfBirth: string}]) {
         const responseObservable = this.createResponseObservable(responseObject);
         return spyOn(http, 'get').and.returnValues(responseObservable);
     }
-    public static createResponseObservable(responseObject: [{ value: String, text: String, location?: Boolean }]): Observable<Response> {
+    public static createResponseObservable(responseObject: [{ value: String, text: String, location?: Boolean }]|
+        [{ firstName: string, lastName: string, dateOfBirth: string}]): Observable<Response> {
         return of(new Response(new ResponseOptions({
             body: responseObject
         })));
@@ -98,7 +100,7 @@ describe('DBService post request calls', () => {
                 toPromise: () => Promise.resolve({
                     message: 'Some successful response from post'
                 })
-            })
+            });
         service = new DBService(newHttp);
         service.saveCompletePatientOrder(orders, patientProfile);
         expect(postSpy.calls.count()).toEqual(1);
@@ -199,5 +201,15 @@ describe('DBService post request calls', () => {
             patientLastName: 'Oshiyoye',
             patientDateOfBirth: '07/30/1993'
         })
+    })
+    it('should make a get call to get all patients', () => {
+        const getSpy = SpyHttpAndClassToSpyOnClass.createHttpGetSpy(newHttp, [{
+            firstName: 'Kunle',
+            lastName: 'Oshiyoye',
+            dateOfBirth: '07/30/1993'
+        }])
+        service = new DBService(newHttp);
+        service.getAllPatients();
+        expect(getSpy).toHaveBeenCalled();
     })
 })

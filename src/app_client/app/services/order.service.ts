@@ -9,8 +9,8 @@ export class OrderService {
     public visitingDoctor: string;
     public referrer: string;
     public fetchedOrders: Observable<Response>;
-    constructor(private db: DBService) {
-        this.fetchedOrders = db.getAllOrders();
+    constructor(private dbService: DBService) {
+        this.fetchedOrders = dbService.getAllOrders();
     }
     public getAllOrders(): Observable<Response> {
         return this.fetchedOrders;
@@ -33,6 +33,6 @@ export class OrderService {
         return this.orders;
     }
     submitOrder(patientProfile): Promise<any> {
-        return this.db.saveCompletePatientOrder(this.orders, patientProfile);
+        return this.dbService.saveCompletePatientOrder(this.orders, patientProfile);
     }
 }
