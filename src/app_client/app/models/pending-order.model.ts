@@ -1,10 +1,11 @@
 export class Order {
+    public typeOfOrder;
     public constructor(
         public reason: string, // using public, or any modifier, automatically instantiantes the parameter in the class for you.
         public notes: string,
         public dateOfVisit: String,
         public visitingDoctor: string,
-        public reporter: string
+        public reporter: string,
     ) { }
 }
 export class SpecialistOrder extends Order {
