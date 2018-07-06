@@ -6,6 +6,6 @@ describe('OrderNameTransformPipe', () => {
         pipe = new OrderNameTransformPipe();
     })
     it('should transform order names with dashes in them', () => {
-        expect(pipe.transform('order-name')).toEqual('order name');
+        expect(pipe.transform('order-name')).toEqual('Order Name');
     })
 })
