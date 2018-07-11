@@ -200,8 +200,8 @@ describe('DBService post request calls', () => {
             patientFirstName: 'Kunle',
             patientLastName: 'Oshiyoye',
             patientDateOfBirth: '07/30/1993'
-        })
-    })
+        });
+    });
     it('should make a get call to get all patients', () => {
         const getSpy = SpyHttpAndClassToSpyOnClass.createHttpGetSpy(newHttp, [{
             firstName: 'Kunle',
