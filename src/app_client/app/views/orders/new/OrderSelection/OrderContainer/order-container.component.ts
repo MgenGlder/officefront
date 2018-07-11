@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Order, SpecialistOrder, BloodworkOrder, TestOrder, NurseOrder } from '../../../../../models/pending-order.model';
+import { Order } from '../../../../../models/pending-order.model';
 import { OrderService } from '../../../../../services/order.service';
 @Component({
     // tslint:disable-next-line

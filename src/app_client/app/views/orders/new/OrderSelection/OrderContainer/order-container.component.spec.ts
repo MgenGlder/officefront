@@ -12,10 +12,12 @@ describe('OrderContainerComponent', () => {
     let fakeHttp;
     let testComp;
     let orderService;
+    let spyMockOrderService;
     beforeEach(() => {
         fakeHttp = new Http(new MockBackend(), new BaseRequestOptions());
         dbService = new DBService(fakeHttp);
         mockOrderService = new OrderService(dbService);
+        spyMockOrderService = spyOn(mockOrderService, 'removeOrder').and.returnValue('');
         TestBed.configureTestingModule({
             providers: [
                 OrderContainerComponent,
@@ -34,6 +36,11 @@ describe('OrderContainerComponent', () => {
         expect(testComp.type).toEqual('bloodwork');
     });
     it('should delete order', () => {
-        // TODO: Finish the delete order test
-    })
+        testComp.order = new Order('', '', '', '', '');
+
+        testComp.ngOnInit();
+        testComp.deleteOrder();
+
+        expect(spyMockOrderService).toHaveBeenCalled();
+    });
 })
