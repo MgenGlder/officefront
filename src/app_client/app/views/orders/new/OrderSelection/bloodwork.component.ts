@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { BloodworkOrder } from '../../../../models/pending-order.model';
 import { OrderService } from '../../../../services/order.service';
 import { OrderBuilderService } from '../../../../services/order-builder.service';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { DBService } from '../../../../services/db.service';
 @Component({
   templateUrl: 'bloodwork.component.html',
 })
 export class BloodworkComponent {
+  @ViewChild('staticTabs') staticTabs: TabsetComponent;
   order: BloodworkOrder;
   form: FormGroup;
   tests;
@@ -23,20 +24,27 @@ export class BloodworkComponent {
     public fb: FormBuilder,
     public router: Router,
     public db: DBService) {
-    let date = new Date();
-    this.order = new BloodworkOrder([], this.tests, "", "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+    const date = new Date();
+    this.order = new BloodworkOrder(
+      [],
+      this.tests,
+      '',
+      '',
+      '',
+      `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer
+    );
     this.tests = this.db.getBloodworkOptions();
     orderBuilderService.startBuildingSpecialistOrder();
     this.testData =
-    this.tests.map((test) => {
-      let newFormControl = new FormControl(false);
-      this.testAndFormControls.push(newFormControl);
-      return {
-        id: test.value,
-        text: test.text,
-        control: newFormControl
-      }
-    });
+      this.tests.map((test) => {
+        const newFormControl = new FormControl(false);
+        this.testAndFormControls.push(newFormControl);
+        return {
+          id: test.value,
+          text: test.text,
+          control: newFormControl
+        }
+      });
     this.form = fb.group({
       bloodTests: new FormArray(this.testAndFormControls),
       notes: '',
@@ -44,34 +52,37 @@ export class BloodworkComponent {
     });
   }
 
-  @ViewChild('staticTabs') staticTabs: TabsetComponent;
 
   selectTab(tab_id: number) {
     this.staticTabs.tabs[tab_id].active = true;
   }
   onSubmit() {
-    this.order.bloodTests = this.mapFormValues(this.form.get("bloodTests").value);
-    this.order.notes = this.form.get("notes").value;
-    this.order.reason = this.form.get("reason").value;
-    console.log(this.form.get("bloodTests").value);
+    this.order.bloodTests = this.mapFormValues(this.form.get('bloodTests').value);
+    this.order.notes = this.form.get('notes').value;
+    this.order.reason = this.form.get('reason').value;
     this.router.navigate(['orders/new/entered', 'bloodwork'], { skipLocationChange: true });
     this.save();
   }
   save() {
-    console.log("Saving the order...");
     this.orderService.addOrder(this.order);
-    console.log(this.orderService.getOrders());
-    let date = new Date();
-    this.order = new BloodworkOrder([], this.tests, "", "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+    const date = new Date();
+    this.order = new BloodworkOrder(
+      [],
+      this.tests,
+      '',
+      '',
+      '',
+      `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer
+    );
   }
   resetForm() {
     this.form.reset();
   }
 
-  mapFormValues(booleanFormValues: Array<boolean>) {
-      if (booleanFormValues.length !== this.tests.length) return;
-      return this.tests.filter((element, index) => {
-          return booleanFormValues[index];      
-      });
+  private mapFormValues(booleanFormValues: Array<boolean>) {
+    if (booleanFormValues.length !== this.tests.length) { return; }
+    return this.tests.filter((element, index) => {
+      return booleanFormValues[index];
+    });
   }
 }
