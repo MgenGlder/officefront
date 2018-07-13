@@ -1,20 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
+    // tslint:disable-next-line
     selector: 'entered-component',
     templateUrl: 'entered.component.html'
 })
 export class EnteredOrderComponent implements OnInit {
     public type: string;
-    private sub: Subscription;
-    constructor(private router: Router, private activatedRoute: ActivatedRoute) {
-
-    }
+    constructor(private activatedRoute: ActivatedRoute) {}
     ngOnInit() {
         this.activatedRoute.params.subscribe(params => {
-            this.type = params["order"];
+            this.type = params['order'];
         });
     }
 
