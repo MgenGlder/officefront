@@ -10,6 +10,7 @@ import { DBService } from '../../../../services/db.service';
   templateUrl: 'test.component.html',
 })
 export class TestComponent {
+  @ViewChild('staticTabs') staticTabs: TabsetComponent;
   order: TestOrder;
   orders: Array<any> = [];
   form: FormGroup;
@@ -24,13 +25,20 @@ export class TestComponent {
     public fb: FormBuilder,
     public router: Router,
     public db: DBService) {
-    let date = new Date();
-    this.order = new TestOrder("", "", "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+    const date = new Date();
+    this.order = new TestOrder(
+      '',
+      '',
+      '',
+      '',
+      `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
+      this.orderService.visitingDoctor,
+      this.orderService.referrer);
     this.tests = this.db.getTestOptions();
     orderBuilderService.startBuildingTestOrder();
     this.testData =
       this.tests.map((test) => {
-        let newFormControl = new FormControl(false);
+        const newFormControl = new FormControl(false);
         this.testAndFormControls.push(newFormControl);
         return {
           id: test.value,
@@ -38,7 +46,6 @@ export class TestComponent {
           control: newFormControl
         }
       });
-    console.log(this.testAndFormControls);
     this.form = fb.group({
       tests: new FormArray(this.testAndFormControls),
       reason: '',
@@ -47,21 +54,20 @@ export class TestComponent {
     });
   }
 
-  @ViewChild('staticTabs') staticTabs: TabsetComponent;
 
 
   loadInputsForExtraInfo(): void {
 
     let arrayMappedTests: Array<{ value: string, text: string, location: boolean }> = [];
-    let formArrayTestsNeedingInfo: Array<FormControl> = [];
+    const formArrayTestsNeedingInfo: Array<FormControl> = [];
     let arrayMappedTestsNeedingInfoWithControls: Array<{ value: string, text: string, control: FormControl }>;
-    arrayMappedTests = this.mapFormValues(this.form.get("tests").value);
+    arrayMappedTests = this.mapFormValues(this.form.get('tests').value);
     arrayMappedTestsNeedingInfoWithControls = arrayMappedTests
       .filter((input) => {
         return input.location;
       })
       .map((input) => {
-        let newControl = new FormControl('');
+        const newControl = new FormControl('');
         formArrayTestsNeedingInfo.push(newControl);
         return {
           value: input.value,
@@ -70,7 +76,7 @@ export class TestComponent {
         };
       })
 
-    this.form.controls["extraInfo"] = new FormArray(formArrayTestsNeedingInfo)
+    this.form.controls['extraInfo'] = new FormArray(formArrayTestsNeedingInfo)
     this.selectedInputs = arrayMappedTestsNeedingInfoWithControls;
   }
 
@@ -79,15 +85,22 @@ export class TestComponent {
   }
 
   onSubmit() {
-    this.order.notes = this.form.get("notes").value;
-    let testValues = this.mapFormValues(this.form.get("tests").value);
-    for (let value of testValues) {
-      let date = new Date();
-      console.log("value.value is equal too... " + value.value);
-      let newTestOrder = new TestOrder(value.value, this.form.get("reason").value, "", this.form.get("notes").value, `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer)
+    this.order.notes = this.form.get('notes').value;
+    const testValues = this.mapFormValues(this.form.get('tests').value);
+    for (const value of testValues) {
+      const date = new Date();
+      const newTestOrder = new TestOrder(
+        value.value,
+        this.form.get('reason').value,
+        '',
+        this.form.get('notes').value,
+        `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
+        this.orderService.visitingDoctor,
+        this.orderService.referrer
+      )
       if (value.location) {
-        for (let selectedValue of this.selectedInputs) {
-          if (selectedValue.value == value.value) {
+        for (const selectedValue of this.selectedInputs) {
+          if (selectedValue.value === value.value) {
             newTestOrder.location = selectedValue.control.value;
           }
         }
@@ -99,20 +112,24 @@ export class TestComponent {
     this.resetForm();
   }
   save() {
-    console.log("Saving the order...");
-    for (let singleOrder of this.orders) {
+    for (const singleOrder of this.orders) {
       this.orderService.addOrder(singleOrder);
     }
-    console.log(this.orderService.getOrders());
-    let date = new Date();
     this.orders = [];
   }
   resetForm() {
     this.form.reset();
   }
 
-  mapFormValues(booleanFormValues: Array<boolean>): Array<{ value: string, text: string, location: boolean, locationNotes?: string, reason?: string, notes?: string }> {
-    if (booleanFormValues.length !== this.tests.length) return;
+  mapFormValues(booleanFormValues: Array<boolean>): Array<{
+    value: string,
+    text: string,
+    location: boolean,
+    locationNotes?: string,
+    reason?: string,
+    notes?: string
+  }> {
+    if (booleanFormValues.length !== this.tests.length) { return; }
     return this.tests.filter((element, index) => {
       return booleanFormValues[index];
     });

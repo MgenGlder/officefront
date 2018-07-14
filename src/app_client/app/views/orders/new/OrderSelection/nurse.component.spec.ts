@@ -1,18 +1,17 @@
-import { BloodworkComponent } from './bloodwork.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NurseOrder } from '../../../../models/pending-order.model';
 import { DBService } from '../../../../services/db.service';
+import { OrderBuilderService } from '../../../../services/order-builder.service';
 import { OrderService } from '../../../../services/order.service';
 import { mock } from '../../../../utils/mock';
-import { OrderBuilderService } from '../../../../services/order-builder.service';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { BloodworkOrder } from '../../../../models/pending-order.model';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NurseComponent } from './nurse.component';
+describe('NurseComponent', () => {
 
-describe('BloodworkComponent', () => {
-
-    let fixture: ComponentFixture<BloodworkComponent>;
-    let bloodworkComponent;
+    let fixture: ComponentFixture<NurseComponent>;
+    let nurseComponent;
     let orderService: OrderService;
     beforeEach(() => {
         const fb = mock(FormBuilder.prototype, 'FormBuilder');
@@ -20,12 +19,19 @@ describe('BloodworkComponent', () => {
         const router = mock(Router.prototype, 'Router');
         const db = mock(DBService.prototype, 'DBService');
 
-        db.getBloodworkOptions.and.returnValue([new BloodworkOrder([], [], '', '', '', '', '', '')]);
+        db.getNurseOptions.and.returnValue([new NurseOrder(
+            [],
+            '',
+            '',
+            '',
+            '',
+            ''
+        )]);
 
         orderService = mock(OrderService.prototype, 'OrderService');
         TestBed.configureTestingModule({
             declarations: [
-                BloodworkComponent
+                NurseComponent
             ],
             providers: [
                 FormBuilder,
@@ -47,58 +53,62 @@ describe('BloodworkComponent', () => {
             ]
         })
         TestBed.compileComponents();
-        fixture = TestBed.createComponent(BloodworkComponent);
-        bloodworkComponent = fixture.componentInstance;
+        fixture = TestBed.createComponent(NurseComponent);
+        nurseComponent = fixture.componentInstance;
     })
     it('should submit on submit', () => {
         const date = new Date();
-        spyOn(bloodworkComponent.form, 'get').and.returnValues(
+        spyOn(nurseComponent.form, 'get').and.returnValues(
             { value: [true] },
             { value: 'someNotes' },
             { value: 'someReason' },
         )
-        bloodworkComponent.tests = [{ value: 'pfb', text: 'pfb' }];
-        bloodworkComponent.order = new BloodworkOrder(
+        nurseComponent.tests = [{ value: 'pfb', text: 'pfb' }];
+        nurseComponent.order = new NurseOrder(
             [],
-            [],
             '',
             '',
-            '',
-            `${ date.getMonth() + 1 }/${ date.getDate() }/${ date.getFullYear() }`,
+            `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
             '',
             ''
         )
-        bloodworkComponent.onSubmit();
+        nurseComponent.onSubmit();
         expect(orderService.addOrder).toHaveBeenCalledWith(
-            new BloodworkOrder(
+            new NurseOrder(
                 [{ value: 'pfb', text: 'pfb' }],
-                [],
                 'someReason',
-                '',
                 'someNotes',
                 `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
                 '',
-                ''))
+                '')
+        )
     }
     );
 
     it('should select tab', () => {
-        bloodworkComponent.staticTabs = {tabs: [{active: false}]};
-        bloodworkComponent.selectTab(0);
-        expect(bloodworkComponent.staticTabs.tabs[0].active).toBeTruthy();
+        nurseComponent.staticTabs = { tabs: [{ active: false }] };
+        nurseComponent.selectTab(0);
+        expect(nurseComponent.staticTabs.tabs[0].active).toBeTruthy();
     });
 
     it('should save', () => {
-        const newOrder = new BloodworkOrder([], [], '', '', '', '', '', '');
-        bloodworkComponent.order = newOrder;
-        bloodworkComponent.save();
-        expect(bloodworkComponent.orderService.addOrder).toHaveBeenCalledWith(newOrder);
+        const newOrder = new NurseOrder(
+            [],
+            '',
+            '',
+            '',
+            '',
+            ''
+        );
+        nurseComponent.order = newOrder;
+        nurseComponent.save();
+        expect(nurseComponent.orderService.addOrder).toHaveBeenCalledWith(newOrder);
     });
 
     it('should reset form', () => {
-        this.form = spyOn(bloodworkComponent.form, 'reset');
-        bloodworkComponent.resetForm();
-        expect(bloodworkComponent.form.reset).toHaveBeenCalled();
+        this.form = spyOn(nurseComponent.form, 'reset');
+        nurseComponent.resetForm();
+        expect(nurseComponent.form.reset).toHaveBeenCalled();
     });
     afterEach(() => {
         const element = fixture.debugElement.nativeElement;

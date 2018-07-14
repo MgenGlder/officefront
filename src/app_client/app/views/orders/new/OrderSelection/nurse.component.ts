@@ -1,15 +1,16 @@
-import { ViewChild, Component, Output, EventEmitter } from '@angular/core';
-import { TabsetComponent } from 'ngx-bootstrap';
+import { Component, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TabsetComponent } from 'ngx-bootstrap';
 import { NurseOrder } from '../../../../models/pending-order.model';
-import { OrderService } from '../../../../services/order.service';
-import { OrderBuilderService } from '../../../../services/order-builder.service';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { DBService } from '../../../../services/db.service';
+import { OrderBuilderService } from '../../../../services/order-builder.service';
+import { OrderService } from '../../../../services/order.service';
 @Component({
   templateUrl: 'nurse.component.html',
 })
 export class NurseComponent {
+  @ViewChild('staticTabs') staticTabs: TabsetComponent;
   form: FormGroup;
   selectedInputs: Array<{ value: string, text: string, control: FormControl }>;
   order: NurseOrder;
@@ -25,13 +26,19 @@ export class NurseComponent {
     public fb: FormBuilder,
     public router: Router,
     public db: DBService) {
-      let date = new Date();
-      this.order = new NurseOrder([], "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
-      this.tests = db.getNurseOptions();
-      orderBuilderService.startBuildingTestOrder();
-      this.testData =
+    const date = new Date();
+    this.order = new NurseOrder(
+      [],
+      '',
+      '',
+      `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
+      this.orderService.visitingDoctor,
+      this.orderService.referrer);
+    this.tests = db.getNurseOptions();
+    orderBuilderService.startBuildingTestOrder();
+    this.testData =
       this.tests.map((test) => {
-        let newFormControl = new FormControl(false);
+        const newFormControl = new FormControl(false);
         this.testAndFormControls.push(newFormControl);
         return {
           id: test.value,
@@ -39,41 +46,43 @@ export class NurseComponent {
           control: newFormControl
         }
       });
-      this.form = fb.group({
-        nursePurpose: new FormArray(this.testAndFormControls),
-        reason: '',
-        notes: '',
-      });
-    }
+    this.form = fb.group({
+      nursePurpose: new FormArray(this.testAndFormControls),
+      reason: '',
+      notes: '',
+    });
+  }
 
-  @ViewChild('staticTabs') staticTabs: TabsetComponent;
 
   selectTab(tab_id: number) {
     this.staticTabs.tabs[tab_id].active = true;
   }
 
   onSubmit() {
-    this.order.notes = this.form.get("notes").value;
-    this.order.nursePurpose = this.mapFormValues(this.form.get("nursePurpose").value);
-    console.log("the value being set for the nursing work");
-    console.log( this.mapFormValues(this.form.get("nursePurpose").value))
-    this.order.reason = this.form.get("reason").value;
+    this.order.nursePurpose = this.mapFormValues(this.form.get('nursePurpose').value);
+    this.order.notes = this.form.get('notes').value;
+    this.order.reason = this.form.get('reason').value;
     this.router.navigate(['orders/new/entered', 'nurse'], { skipLocationChange: true });
     this.save();
   }
   save() {
-    console.log("Saving the order...");
     this.orderService.addOrder(this.order);
-    console.log(this.orderService.getOrders());
-    let date = new Date();
-    this.order = new NurseOrder([], "", "", `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer);
+    const date = new Date();
+    this.order = new NurseOrder(
+      [],
+      '',
+      '',
+      `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
+      this.orderService.visitingDoctor,
+      this.orderService.referrer
+    );
   }
   resetForm() {
     this.form.reset();
   }
 
   mapFormValues(booleanFormValues: Array<boolean>): Array<{ value: string, text: string }> {
-    if (booleanFormValues.length !== this.tests.length) return;
+    if (booleanFormValues.length !== this.tests.length) { return; }
     return this.tests.filter((element, index) => {
       return booleanFormValues[index];
     });

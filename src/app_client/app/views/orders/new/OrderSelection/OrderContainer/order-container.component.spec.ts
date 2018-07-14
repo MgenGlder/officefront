@@ -1,10 +1,10 @@
-import { OrderContainerComponent } from './order-container.component';
-import { OrderService } from '../../../../../services/order.service';
-import { DBService } from '../../../../../services/db.service';
-import { Http, BaseRequestOptions } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { BaseRequestOptions, Http } from '@angular/http';
+import { MockBackend } from '@angular/http/testing';
 import { Order } from '../../../../../models/pending-order.model';
+import { DBService } from '../../../../../services/db.service';
+import { OrderService } from '../../../../../services/order.service';
+import { OrderContainerComponent } from './order-container.component';
 
 describe('OrderContainerComponent', () => {
     let mockOrderService: OrderService;
