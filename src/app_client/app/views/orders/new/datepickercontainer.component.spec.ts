@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { DatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DatePickerContainerComponent } from './datepickercontainer.component';
 
-fdescribe('DatePickerContainerComponent', () => {
+describe('DatePickerContainerComponent', () => {
     let datePickerContainer: DatePickerContainerComponent;
     let fixture: ComponentFixture<DatePickerContainerComponent>;
     beforeEach(async () => {
