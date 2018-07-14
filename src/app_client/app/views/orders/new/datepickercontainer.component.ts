@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: "datepickercontainer",
-    templateUrl: "datepickercontainer.component.html"
+    // tslint:disable-next-line
+    selector: 'datepickercontainer',
+    templateUrl: 'datepickercontainer.component.html'
 })
 export class DatePickerContainerComponent {
 
@@ -19,11 +20,11 @@ export class DatePickerContainerComponent {
         formatYear: 'YY',
         startingDay: 1
     };
-    private opened: boolean = false;
+    public opened = false;
 
     constructor() {
         (this.tomorrow = new Date()).setDate(this.tomorrow.getDate() + 1);
-        (this.afterTomorrow = new Date()).setDate(this.tomorrow.getDate() + 2);
+        (this.afterTomorrow = new Date()).setDate(this.tomorrow.getDate() + 1);
         (this.minDate = new Date()).setDate(this.minDate.getDate() - 1000);
         this.events = [
             { date: this.tomorrow, status: 'full' },
@@ -40,12 +41,12 @@ export class DatePickerContainerComponent {
     }
 
     // todo: implement custom class cases
-    public getDayClass(date: any, mode: string): string {
+    public getDayClass(date: Date, mode: string): string {
         if (mode === 'day') {
-            let dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+            const dayToCheck = new Date(date).setHours(0, 0, 0, 0);
 
             for (let i = 0; i < this.events.length; i++) {
-                let currentDay = new Date(this.events[i].date).setHours(0, 0, 0, 0);
+                const currentDay = new Date(this.events[i].date).setHours(0, 0, 0, 0);
 
                 if (dayToCheck === currentDay) {
                     return this.events[i].status;
@@ -57,7 +58,7 @@ export class DatePickerContainerComponent {
     }
 
     public disabled(date: Date, mode: string): boolean {
-        return (mode === 'day' && (date.getDate() === 0 || date.getDate() === 6));
+        return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
     }
     public open(): void {
         this.opened = !this.opened;

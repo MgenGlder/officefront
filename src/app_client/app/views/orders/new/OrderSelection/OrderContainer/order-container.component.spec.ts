@@ -11,7 +11,6 @@ describe('OrderContainerComponent', () => {
     let dbService;
     let fakeHttp;
     let testComp;
-    let orderService;
     let spyMockOrderService;
     beforeEach(() => {
         fakeHttp = new Http(new MockBackend(), new BaseRequestOptions());
@@ -27,7 +26,6 @@ describe('OrderContainerComponent', () => {
             ]
         });
         testComp = TestBed.get(OrderContainerComponent);
-        orderService = TestBed.get(OrderService);
     });
     it('should determine type of order on init', () => {
         testComp.order =  new Order('', '', '', '', '')
