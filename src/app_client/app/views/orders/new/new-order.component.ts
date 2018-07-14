@@ -11,11 +11,38 @@ import { Subscription } from 'rxjs/Subscription';
 import { Response } from '@angular/http';
 @Component({
   templateUrl: 'new-order.component.html',
-  styles: [`.btn.btn-primary { display: inline-block;width: 150px;margin-bottom: 0px;margin-bottom: 10px; margin-left: 5px;} 
+  styles: [`.btn.btn-primary { display: inline-block;width: 150px;margin-bottom: 0px;margin-bottom: 10px; margin-left: 5px;}
   #doctors-orders { display: flex; flex-direction: row; justify-content: center } `],
   encapsulation: ViewEncapsulation.Emulated
 })
 export class NewOrderComponent implements OnInit, OnDestroy {
+  // ng2-select
+
+  public items: Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
+    'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
+    'Budapest', 'Cologne', 'Copenhagen', 'Dortmund', 'Dresden', 'Dublin', 'Düsseldorf',
+    'Essen', 'Frankfurt', 'Genoa', 'Glasgow', 'Gothenburg', 'Hamburg', 'Hannover',
+    'Helsinki', 'Leeds', 'Leipzig', 'Lisbon', 'Łódź', 'London', 'Kraków', 'Madrid',
+    'Málaga', 'Manchester', 'Marseille', 'Milan', 'Munich', 'Naples', 'Palermo',
+    'Paris', 'Poznań', 'Prague', 'Riga', 'Rome', 'Rotterdam', 'Seville', 'Sheffield',
+    'Sofia', 'Stockholm', 'Stuttgart', 'The Hague', 'Turin', 'Valencia', 'Vienna',
+    'Vilnius', 'Warsaw', 'Wrocław', 'Zagreb', 'Zaragoza'];
+
+  private value: any = ['Athens'];
+
+
+  // Timepicker
+
+  public hstep = 1;
+  public mstep = 15;
+  public ismeridian = true;
+  public isEnabled = true;
+
+  public mytime: Date = new Date();
+  public options: any = {
+    hstep: [1, 2, 3],
+    mstep: [1, 5, 10, 15, 25, 30]
+  };
 
   public examplePatients;
   // Angular 2 Input Mask
@@ -81,14 +108,14 @@ export class NewOrderComponent implements OnInit, OnDestroy {
     this.patientProfile.dateOfBirth = data.dateOfBirth;
     this.patientProfile.firstName = data.firstName;
   }
-  autocompleteValueFormatter = (data: any) => { //might be able to just get rid of this since using ^^^^
+  autocompleteValueFormatter = (data: any) => { // might be able to just get rid of this since using ^^^^
     console.log(data.firstName);
     console.log(data);
     return data.firstName;
 
   }
   autocompleListFormatter = (data: any): SafeHtml => {
-    let html =
+    const html =
       `
       <span>${data.firstName} ${data.lastName}</span></br>
       <span>${data.dateOfBirth}</span>
@@ -98,23 +125,12 @@ export class NewOrderComponent implements OnInit, OnDestroy {
 
   // Timepicker
 
-  public hstep: number = 1;
-  public mstep: number = 15;
-  public ismeridian: boolean = true;
-  public isEnabled: boolean = true;
-
-  public mytime: Date = new Date();
-  public options: any = {
-    hstep: [1, 2, 3],
-    mstep: [1, 5, 10, 15, 25, 30]
-  };
-
   public toggleMode(): void {
     this.ismeridian = !this.ismeridian;
   };
 
   public update(): void {
-    let d = new Date();
+    const d = new Date();
     d.setHours(14);
     d.setMinutes(0);
     this.mytime = d;
@@ -129,18 +145,6 @@ export class NewOrderComponent implements OnInit, OnDestroy {
   };
 
   // ng2-select
-
-  public items: Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
-    'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
-    'Budapest', 'Cologne', 'Copenhagen', 'Dortmund', 'Dresden', 'Dublin', 'Düsseldorf',
-    'Essen', 'Frankfurt', 'Genoa', 'Glasgow', 'Gothenburg', 'Hamburg', 'Hannover',
-    'Helsinki', 'Leeds', 'Leipzig', 'Lisbon', 'Łódź', 'London', 'Kraków', 'Madrid',
-    'Málaga', 'Manchester', 'Marseille', 'Milan', 'Munich', 'Naples', 'Palermo',
-    'Paris', 'Poznań', 'Prague', 'Riga', 'Rome', 'Rotterdam', 'Seville', 'Sheffield',
-    'Sofia', 'Stockholm', 'Stuttgart', 'The Hague', 'Turin', 'Valencia', 'Vienna',
-    'Vilnius', 'Warsaw', 'Wrocław', 'Zagreb', 'Zaragoza'];
-
-  private value: any = ['Athens'];
 
   public selected(value: any): void {
     console.log('Selected value is: ', value);
