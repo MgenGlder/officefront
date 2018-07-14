@@ -75,21 +75,15 @@ export class NewOrderComponent implements OnInit, OnDestroy {
       .map(data => data.json())
       .subscribe((patientData) => {
         this.patientData = patientData;
-        console.log('Grabbed patient data while in the new-order component');
-        console.log(this.patientData);
       })
   }
 
   submitOrder() {
     this.orderService.submitOrder(this.patientProfile)
       .then((response) => {
-        console.log('Order save call was sent, the response to it was...');
-        console.log(response);
         this.router.navigateByUrl('/orders/new/submitted');
       })
       .catch((err) => {
-        console.log(err);
-        console.log('something went terribly wrong with the order creation');
         this.router.navigateByUrl('/orders/new/notsubmitted');
       })
   }
@@ -99,18 +93,14 @@ export class NewOrderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.patientsSubscription.unsubscribe();
-    console.log('destroyed in new order');
   }
 
   firstNameAutoCompleted(data: any) {
-    console.log(data);
     this.patientProfile.lastName = data.lastName;
     this.patientProfile.dateOfBirth = data.dateOfBirth;
     this.patientProfile.firstName = data.firstName;
   }
   autocompleteValueFormatter = (data: any) => { // might be able to just get rid of this since using ^^^^
-    console.log(data.firstName);
-    console.log(data);
     return data.firstName;
 
   }
