@@ -1,14 +1,15 @@
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Response } from '@angular/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { OrderBuilderService, } from '../../../services/order-builder.service'
-import { OrderService } from '../../../services/order.service';
-import { Order } from '../../../models/pending-order.model'
 import { Router } from '@angular/router';
-import { DBService } from '../../../services/db.service';
-import { PatientService } from '../../../services/patient.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Response } from '@angular/http';
+import { Order } from '../../../models/pending-order.model';
+import { DBService } from '../../../services/db.service';
+import { OrderBuilderService } from '../../../services/order-builder.service';
+import { OrderService } from '../../../services/order.service';
+import { PatientService } from '../../../services/patient.service';
+import { map } from 'rxjs/operators';
 @Component({
   templateUrl: 'new-order.component.html',
   styles: [`.btn.btn-primary { display: inline-block;width: 150px;margin-bottom: 0px;margin-bottom: 10px; margin-left: 5px;}
@@ -35,10 +36,10 @@ export class NewOrderComponent implements OnInit, OnDestroy {
 
   public hstep = 1;
   public mstep = 15;
-  public ismeridian = true;
+  public isMeridian = true;
   public isEnabled = true;
 
-  public mytime: Date = new Date();
+  public myTime: Date = new Date();
   public options: any = {
     hstep: [1, 2, 3],
     mstep: [1, 5, 10, 15, 25, 30]
@@ -62,20 +63,17 @@ export class NewOrderComponent implements OnInit, OnDestroy {
     private db: DBService) {
     this.orderService.visitingDoctor = 'Dr. Hampson';
     this.orderService.referrer = 'Dr. Hampson';
-    // this.examplePatients = db.getPatientList();
     this.patientProfile = {
       dateOfBirth: '',
       firstName: '',
       lastName: ''
     }
-
-    this.patientsObservable = patientService.getAllPatients();
-
-    this.patientsSubscription = this.patientsObservable
-      .map(data => data.json())
-      .subscribe((patientData) => {
-        this.patientData = patientData;
-      })
+    this.patientsObservable = patientService.getAllPatients().pipe(
+      map(data => data.json())
+    );
+    this.patientsSubscription = this.patientsObservable.subscribe((patientData) => {
+      this.patientData = patientData;
+    })
   }
 
   submitOrder() {
@@ -100,11 +98,12 @@ export class NewOrderComponent implements OnInit, OnDestroy {
     this.patientProfile.dateOfBirth = data.dateOfBirth;
     this.patientProfile.firstName = data.firstName;
   }
-  autocompleteValueFormatter = (data: any) => { // might be able to just get rid of this since using ^^^^
+  autocompleteValueFormatter(data: any) { // might be able to just get rid of this since using ^^^^
     return data.firstName;
 
   }
-  autocompleListFormatter = (data: any): SafeHtml => {
+
+  autocompleListFormatter(data: any): SafeHtml { // No good way to test below
     const html =
       `
       <span>${data.firstName} ${data.lastName}</span></br>
@@ -114,44 +113,7 @@ export class NewOrderComponent implements OnInit, OnDestroy {
   }
 
   // Timepicker
-
   public toggleMode(): void {
-    this.ismeridian = !this.ismeridian;
+    this.isMeridian = !this.isMeridian;
   };
-
-  public update(): void {
-    const d = new Date();
-    d.setHours(14);
-    d.setMinutes(0);
-    this.mytime = d;
-  };
-
-  public changed(): void {
-    console.log('Time changed to: ' + this.mytime);
-  };
-
-  public clear(): void {
-    this.mytime = void 0;
-  };
-
-  // ng2-select
-
-  public selected(value: any): void {
-    console.log('Selected value is: ', value);
-  }
-
-  public removed(value: any): void {
-    console.log('Removed value is: ', value);
-  }
-
-  public refreshValue(value: any): void {
-    this.value = value;
-  }
-
-  public itemsToString(value: Array<any> = []): string {
-    return value
-      .map((item: any) => {
-        return item.text;
-      }).join(',');
-  }
 }
