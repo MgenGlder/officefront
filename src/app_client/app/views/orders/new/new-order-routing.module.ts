@@ -25,17 +25,17 @@ const routes: Routes = [
     ]
   },
   {
-    path: "submitted",
+    path: 'submitted',
     component: OrderSubmittedComponent,
     data: {
       title: 'Order Submitted!'
     }
   },
   {
-    path: "notsubmitted",
+    path: 'notsubmitted',
     component: OrderNotSubmittedComponent,
     data: {
-      title: "Order was not submitted!"
+      title: 'Order was not submitted!'
     }
   }
 ];
