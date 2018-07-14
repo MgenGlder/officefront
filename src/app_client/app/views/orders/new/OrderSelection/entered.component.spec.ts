@@ -31,4 +31,8 @@ describe('EnteredOrderComponent', () => {
         enteredOrderComponent.ngOnInit();
         expect(enteredOrderComponent.type).toEqual('someOrder');
     });
+    afterEach(() => {
+        const element = fixture.debugElement.nativeElement;
+        element.remove();
+    })
 });

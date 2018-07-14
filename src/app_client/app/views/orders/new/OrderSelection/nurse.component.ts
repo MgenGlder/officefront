@@ -66,9 +66,7 @@ export class NurseComponent {
     this.save();
   }
   save() {
-    console.log('Saving the order...');
     this.orderService.addOrder(this.order);
-    console.log(this.orderService.getOrders());
     const date = new Date();
     this.order = new NurseOrder(
       [],

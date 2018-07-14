@@ -100,7 +100,7 @@ describe('BloodworkComponent', () => {
         bloodworkComponent.resetForm();
         expect(bloodworkComponent.form.reset).toHaveBeenCalled();
     });
-    afterAll(() => {
+    afterEach(() => {
         const element = fixture.debugElement.nativeElement;
         element.remove();
     })
