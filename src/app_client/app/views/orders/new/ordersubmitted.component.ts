@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-    templateUrl: 'ordersubmitted.component.html',
-    selector: 'order-submitted'
+    // tslint:disable-next-line
+    selector: 'order-submitted',
+    templateUrl: 'ordersubmitted.component.html'
 })
 export class OrderSubmittedComponent {
 }
