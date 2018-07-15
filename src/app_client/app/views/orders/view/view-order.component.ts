@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { OrderService } from '../../../services/order.service';
 import { PatientService } from '../../../services/patient.service';
-import { map } from '../../../../../../node_modules/rxjs/operators';
+import { map } from 'rxjs/operators';
 @Component({
   templateUrl: 'view-order.component.html'
 })
