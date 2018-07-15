@@ -7,7 +7,7 @@ import { DataTableModule } from 'angular2-datatable';
 import { HttpModule } from '@angular/http';
 import { DataFilterPipe } from './datafilterpipe';
 
-//Routing
+// Routing
 import { ViewOrderRoutingModule } from './view-order-routing.module';
 
 import { ViewOrderComponent } from './view-order.component';
