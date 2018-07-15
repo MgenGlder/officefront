@@ -1,6 +1,6 @@
 import { DataFilterPipe } from './datafilterpipe';
 
-fdescribe('DataFilterPipe', () => {
+describe('DataFilterPipe', () => {
     let pipe: DataFilterPipe;
     beforeEach(() => {
         pipe = new DataFilterPipe();
