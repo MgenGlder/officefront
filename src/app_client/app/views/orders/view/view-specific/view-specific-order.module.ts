@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { DataTableModule } from 'angular2-datatable';
 import { HttpModule } from '@angular/http';
 
-//Routing
+// Routing
 import { ViewSpecificOrderRoutingModule } from './view-specific-order-routing.module';
 
 import { ViewSpecificOrderComponent } from './view-specific-order.component';
