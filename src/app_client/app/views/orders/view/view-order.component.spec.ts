@@ -3,12 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Response, ResponseOptions } from '@angular/http';
 import { of } from 'rxjs';
+import { DataTableModule } from '../../../../../../node_modules/angular2-datatable';
 import { OrderService } from '../../../services/order.service';
+import { PatientService } from '../../../services/patient.service';
 import { DataFilterPipe } from '../../plugins/datatable/datafilterpipe';
 import { ViewOrderComponent } from './view-order.component';
-import { DataTableModule } from '../../../../../../node_modules/angular2-datatable';
-import { PatientService } from '../../../services/patient.service';
-import { differenceInCalendarQuarters } from 'date-fns';
 
 class MockPatientService {
     getAllPatients() {
@@ -34,7 +33,7 @@ class MockOrderService {
     }
 }
 
-fdescribe('ViewOrderComponent', () => {
+describe('ViewOrderComponent', () => {
     let viewOrderComponent: ViewOrderComponent;
     let fixture: ComponentFixture<ViewOrderComponent>;
     const mockPatientService: MockPatientService = new MockPatientService();

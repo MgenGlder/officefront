@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { PatientService } from '../../../services/patient.service';
-import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
-import 'rxjs/add/operator/map';
+import { PatientService } from '../../../services/patient.service';
+import { map } from 'rxjs/operators';
 
 @Component({
     templateUrl: 'new-patient.component.html'
@@ -19,15 +18,12 @@ export class NewPatientComponent {
     }
 
     public createPatient() {
-        console.log('creating the patient');
         this.patientSubscription = this.patientService.createPatient(this.patientProfile)
-            .map((data) => data.json())
+            .pipe(map(data => data.json()))
             .subscribe((data) => {
-                console.log('Data was recieved');
                 if (data) {
-                    this.router.navigateByUrl('/patients/new/successful')
+                    this.router.navigateByUrl('/patients/new/successful');
                 } else {
-                    console.log('data didn\'t work as planned');
                 }
             });
     }
