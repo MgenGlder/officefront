@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 interface OrderRequestObject {
     patientFirstName: String;
@@ -37,8 +38,6 @@ makePostCall(patientProfile, order) {
         typeOfOrder: order.typeOfOrder,
         reporter: order.reporter
     }
-    // TODO: Find a better way to handle this. If the order is of a type but doesn't contain the
-    // type specific property, this will throw errors. At least try catch this thing.
     switch (order.typeOfOrder) {
         case 'nurse':
             requestObject.nursePurpose = order.nursePurpose;
@@ -55,10 +54,10 @@ makePostCall(patientProfile, order) {
         default:
             break;
     }
-    return this.http.post('http://localhost:8080/api/order', requestObject).toPromise();
+    return this.http.post(environment.mongoDbUrl + '/api/order', requestObject).toPromise();
 }
 postPatient(newPatient) {
-    return this.http.post('http://localhost:8080/api/patient/create', newPatient);
+    return this.http.post(environment.mongoDbUrl + '/api/patient/create', newPatient);
 }
 saveCompletePatientOrder(orders: Array <any>, patientProfile):  Promise<any> {
     const orderPromises = [];
@@ -69,14 +68,14 @@ saveCompletePatientOrder(orders: Array <any>, patientProfile):  Promise<any> {
     return Promise.all(orderPromises);
 }
 getAllPatients() {
-    return this.http.get('http://localhost:8080/api/patients/all')
+    return this.http.get(environment.mongoDbUrl + '/api/patients/all')
 }
 getAllOrders() {
-    return this.http.get('http://localhost:8080/api/orders/all')
+    return this.http.get(environment.mongoDbUrl + '/api/orders/all')
 }
 getBloodworkOptions(): Observable < Response > {
     // TODO: Set up to hit a real endpoint
-    return this.http.get('localhost:8080/some-endpoint-for-bloodwork');
+    return this.http.get(environment.mongoDbUrl + '/some-endpoint-for-bloodwork');
     // return [
     //     { value: 'hgb-aic-level', text: 'Hgb. AIC Level' },
     //     { value: 'bun-creat', text: 'BUN, CREAT' },
@@ -89,7 +88,7 @@ getBloodworkOptions(): Observable < Response > {
 }
 getNurseOptions(): Observable < Response > {
     // TODO: Set up to hit a real endpoint
-    return this.http.get('localhost:8080/some-endpoint-for-nursing');
+    return this.http.get(environment.mongoDbUrl + '/some-endpoint-for-nursing');
     // return [
     //     { value: 'rn-monitor-bp', text: 'Monitor BP' },
     //     { value: 'rn-monitor-bs', text: 'Monitor BS' },
@@ -97,7 +96,7 @@ getNurseOptions(): Observable < Response > {
 }
 getTestOptions() {
     // TODO: Set up to hit a real endpoint
-    return this.http.get('localhost:8080/some-endpoint-for-tests');
+    return this.http.get(environment.mongoDbUrl + '/some-endpoint-for-tests');
     // return [
     //     { value: 'x-ray', text: 'X-Ray', location: true },
     //     { value: 'ekg', text: 'EKG', location: true },
@@ -110,7 +109,7 @@ getTestOptions() {
 }
 getSpecialistOptions() {
     // TODO: Set up to hit a real endpoint
-    return this.http.get('localhost:8080/some-endpoint-for-specialists')
+    return this.http.get(environment.mongoDbUrl + '/some-endpoint-for-specialists')
     // return [
     //     { value: 'podiatrist', text: 'Podiatrist' },
     //     { value: 'optometrist', text: 'Optometrist' },

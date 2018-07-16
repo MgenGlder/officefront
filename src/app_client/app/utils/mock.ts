@@ -1,5 +1,7 @@
 
 
+declare const jasmine;
+
 export function mock(constr, name?) {
         const keys = [];
         for ( const key of Object.keys(constr) ) {
