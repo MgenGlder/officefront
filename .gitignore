@@ -10,6 +10,7 @@ bower_components
 package-lock.json
 
 # IDEs and editors
+.vscode/settings.json
 .idea
 .project
 .classpath
