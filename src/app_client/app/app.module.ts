@@ -16,7 +16,6 @@ const APP_CONTAINERS = [
   FullLayoutComponent,
   SimpleLayoutComponent
 ]
-
 // Import components
 import {
   AppAsideComponent,
@@ -66,6 +65,7 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { AuthenticationService } from './services/auth/authentication.service';
 
 @NgModule({
   imports: [
@@ -86,7 +86,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }],
+  },
+  AuthenticationService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
