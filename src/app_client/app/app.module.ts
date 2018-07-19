@@ -1,3 +1,4 @@
+import { DBService } from './services/db.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -66,6 +67,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AuthenticationService } from './services/auth/authentication.service';
+import { PatientService } from './services/patient.service';
 
 @NgModule({
   imports: [
@@ -87,7 +89,9 @@ import { AuthenticationService } from './services/auth/authentication.service';
     provide: LocationStrategy,
     useClass: HashLocationStrategy
   },
-  AuthenticationService],
+  AuthenticationService,
+PatientService,
+DBService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
