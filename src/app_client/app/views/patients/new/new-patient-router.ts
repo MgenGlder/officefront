@@ -8,10 +8,10 @@ const routes: Routes = [
   {
     path: '',
     component: NewPatientComponent,
-    canActivate: [ AuthGuard ],
     data: {
       title: 'New Patient'
-    }
+    },
+    canActivate: [ AuthGuard ]
   },
   {
     path: 'successful',
