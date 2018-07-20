@@ -23,7 +23,6 @@ export class AuthenticationService {
         .pipe(map((res: any) => {
             if (res && res.token) {
                 localStorage.setItem('currentUser', JSON.stringify({ username, token: res.token }));
-
             }
         }))
     }

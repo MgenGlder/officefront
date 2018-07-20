@@ -1,3 +1,4 @@
+import { AuthGuard } from './../../../guard/auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NewPatientComponent } from './new-patient.component';
@@ -7,6 +8,7 @@ const routes: Routes = [
   {
     path: '',
     component: NewPatientComponent,
+    canActivate: [ AuthGuard ],
     data: {
       title: 'New Patient'
     }

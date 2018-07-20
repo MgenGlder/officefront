@@ -9,7 +9,6 @@ const routes: Routes = [
       title: 'Orders'
     },
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
     children: [
         {
           path: 'new',
