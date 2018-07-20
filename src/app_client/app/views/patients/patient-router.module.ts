@@ -9,7 +9,6 @@ const routes: Routes = [
     data: {
       title: 'Patients'
     },
-    canActivate: [AuthGuard],
   },
   {
     path: 'new',
