@@ -10,7 +10,6 @@ const routes: Routes = [
       title: 'Patients'
     },
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard]
   },
   {
     path: 'new',
