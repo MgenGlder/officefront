@@ -1,4 +1,4 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { P404Component } from './404.component';
@@ -11,7 +11,8 @@ import { PagesRoutingModule } from './pages-routing.module';
 @NgModule({
   imports: [
     PagesRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
    ],
   declarations: [
     P404Component,
