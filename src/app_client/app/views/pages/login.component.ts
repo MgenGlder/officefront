@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/auth/authentication.service';
@@ -34,7 +34,7 @@ constructor(
 ngOnInit() {
   this.loginForm = this.formBuilder.group({
     username: ['', Validators.required],
-    password: ['', Validators.required ]
+    password: ['', Validators.required]
   });
 
   this.authenticationService.logout();

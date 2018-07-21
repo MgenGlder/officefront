@@ -3,7 +3,7 @@ var router = express.Router();
 
 var ctrlPatients = require('../controllers/patients');
 var ctrlOrders = require('../controllers/orders');
-
+var ctrlAuth = require('../controllers/authentication');
 router.get('/patient', ctrlPatients.getPatient);
 router.post('/patient/create', ctrlPatients.createPatient);
 router.get('/patients/all', ctrlPatients.getAllPatients);
@@ -14,5 +14,5 @@ router.post('/order', ctrlOrders.createOrder);
 router.post('/order/update', ctrlOrders.updateOrder);
 router.get('/orders/all', ctrlOrders.getAllOrders);
 router.get('/orders/patient/all', ctrlOrders.getAllOrdersSpecificPatient);
-
+router.post('/authenticate', ctrlAuth.authenticate);
 module.exports = router;
