@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -21,7 +22,7 @@ interface OrderRequestObject {
 
 @Injectable()
 export class DBService {
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
 
@@ -75,7 +76,7 @@ getAllOrders() {
 }
 getBloodworkOptions(): Observable < Response > {
     // TODO: Set up to hit a real endpoint
-    return this.http.get(environment.mongoDbUrl + '/some-endpoint-for-bloodwork');
+    return this.http.get<Response>(environment.mongoDbUrl + '/some-endpoint-for-bloodwork');
     // return [
     //     { value: 'hgb-aic-level', text: 'Hgb. AIC Level' },
     //     { value: 'bun-creat', text: 'BUN, CREAT' },
@@ -88,7 +89,7 @@ getBloodworkOptions(): Observable < Response > {
 }
 getNurseOptions(): Observable < Response > {
     // TODO: Set up to hit a real endpoint
-    return this.http.get(environment.mongoDbUrl + '/some-endpoint-for-nursing');
+    return this.http.get<Response>(environment.mongoDbUrl + '/some-endpoint-for-nursing');
     // return [
     //     { value: 'rn-monitor-bp', text: 'Monitor BP' },
     //     { value: 'rn-monitor-bs', text: 'Monitor BS' },

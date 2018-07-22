@@ -16,12 +16,11 @@ export class AuthenticationService {
     //         }
     //     }))
     // }
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     login(username: string, password: string) {
         return this.http.post('http://localhost:8080/api/authenticate', { username: username, password: password })
         .pipe(map((res: any) => {
-            res = res.json();
             if (res && res.token) {
                 localStorage.setItem('currentUser', JSON.stringify({ username, token: res.token }));
             }

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
@@ -24,14 +25,14 @@ export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
         'completed': 'Completed',
         'awaitingSignature': 'Awaiting Signature',
     }
-    constructor(public route: ActivatedRoute, private http: Http) {
+    constructor(public route: ActivatedRoute, private http: HttpClient) {
     }
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.id = +params['id'];
             this.sub = this.http.get('./assets/singlePatientData.json')
                 .subscribe((data) => {
-                    this.data = data.json()[0];
+                    this.data = data[0];
                 })
         })
     }

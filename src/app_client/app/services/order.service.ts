@@ -8,11 +8,11 @@ export class OrderService {
     public orders: Array<Order> = [];
     public visitingDoctor: string;
     public referrer: string;
-    public fetchedOrders: Observable<Response>;
+    public fetchedOrders: Observable<Object>;
     constructor(private dbService: DBService) {
         this.fetchedOrders = dbService.getAllOrders();
     }
-    public getAllOrders(): Observable<Response> {
+    public getAllOrders(): Observable<Object> {
         return this.fetchedOrders;
     }
 

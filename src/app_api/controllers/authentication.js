@@ -8,7 +8,6 @@ var sendJsonResponse = function (res, status, content) {
 }
 
 function authenticate(req, res) {
-    
     sendJsonResponse(res, 200, {
         "token": "some-fake-token" + req.body.username + req.body.password
     });

@@ -54,7 +54,7 @@ export class NewOrderComponent implements OnInit, OnDestroy {
         lastName: ''
       }
       this.patientsSubscription = patientService.getAllPatients().pipe(
-        map(data => data.json()))
+        map((data: Response) => data))
         .subscribe((patientData) => {
           this.patientData = patientData;
         })

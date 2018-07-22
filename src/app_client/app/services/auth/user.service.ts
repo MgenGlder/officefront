@@ -13,7 +13,7 @@ export class UserService {
     // getAll() {
     //     return this.http.get<User[]>('/api/users');
     // }
-    constructor(private http: Http) {}
+    constructor(private http: HttpClient) {}
 
     getAll() {
         return this.http.get('/api/users');
