@@ -1,24 +1,35 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { OrderBuilderService } from './order-builder.service';
 import { OrderService } from './order.service';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { DBService } from './db.service';
 import { MockBackend } from '@angular/http/testing'
 import { SpecialistOrder, TestOrder, BloodworkOrder } from '../models/pending-order.model';
-
+import { TestBed, getTestBed } from '@angular/core/testing';
 describe('OrderBuilderService', () => {
-    let http: Http;
-    let dbService: DBService;
     let orderService: OrderService;
     let orderBuilder: OrderBuilderService;
     let date: Date;
     let dateString: string;
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientTestingModule,
+                HttpClientModule
+            ],
+            providers: [
+                OrderService,
+                OrderBuilderService,
+                DBService
+            ]
+        });
+
+        const injector = getTestBed();
+        orderService = injector.get(OrderService);
+        orderBuilder = injector.get(OrderBuilderService);
         date = new Date();
         dateString = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
-        http = new Http(new MockBackend(), new BaseRequestOptions());
-        dbService = new DBService(http);
-        orderService = new OrderService(dbService);
-        orderBuilder = new OrderBuilderService(orderService);
         orderService.referrer = 'Kunle Oshiyoye';
         orderService.visitingDoctor = 'Adler';
     })
