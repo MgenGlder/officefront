@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/auth/authentication.service';
@@ -8,16 +8,6 @@ import { AuthenticationService } from '../../services/auth/authentication.servic
   templateUrl: 'login.component.html'
 })
 export class LoginComponent implements OnInit {
-  // users: User[] = [];
-
-  // constructor(private userService: UserService) { }
-
-  // ngOnInit() {
-  //   this.userService.getAll().pipe(first()).subscribe(
-  //     users => {
-  //       this.users = users.json();
-  //     });
-  // }
 loginForm: FormGroup;
 loading = false;
 submitted = false;

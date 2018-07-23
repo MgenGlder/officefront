@@ -1,35 +1,50 @@
-import { OrderService } from './order.service';
-import { DBService } from './db.service';
-import { Http, BaseRequestOptions, ResponseOptions } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
-import { Response } from '@angular/http';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { async, inject, TestBed } from '@angular/core/testing';
+import { Observable } from 'rxjs';
 import { Order } from '../models/pending-order.model';
+import { DBService } from './db.service';
+import { OrderService } from './order.service';
 describe('OrderService', () => {
     let dbService: DBService;
     let orderService: OrderService;
     let date;
     let dateString;
     let newOrder;
-    let responseObservable;
     beforeEach(() => {
         date = new Date();
         dateString = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
         newOrder = new Order('', '', dateString, 'Adler', 'Kunle Oshiyoye');
-        dbService = new DBService(new Http(new MockBackend(), new BaseRequestOptions()));
-        orderService = new OrderService(dbService);
-        responseObservable = of(new Response(new ResponseOptions({ body: 'some message' })));
-        spyOn(dbService, 'getAllOrders').and.callThrough().and.returnValues(responseObservable);
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientModule,
+                HttpClientTestingModule
+            ],
+            providers: [
+                OrderService,
+                DBService
+            ]
+        });
+        dbService = TestBed.get(DBService);
+        orderService = TestBed.get(OrderService);
     });
-    it('should get all orders ON construction', () => {
-        orderService = new OrderService(dbService);
-        orderService.getOrders();
-        expect(orderService.fetchedOrders).toEqual(responseObservable);
-    });
+    it('should get all orders ON construction', async(
+        inject([HttpClient, HttpTestingController], (http: HttpClient, backend: HttpTestingController) => {
+            orderService.fetchedOrders.subscribe((data: { body: string }) => {
+                expect(data.body).toEqual('some message');
+            });
+            const req = backend.expectOne({
+                method: 'GET'
+            });
+            req.flush({
+                body: 'some message'
+            })
+            expect(req.request.url.endsWith('/api/orders/all')).toBeTruthy();
+        }))
+    )
     it('should get all orders', async () => {
-        const orders: Observable<Response> = orderService.getAllOrders();
+        const orders: Observable<Object> = orderService.getAllOrders();
         await orders.subscribe((data) => {
-            console.log(data);
             expect(data).toBeTruthy();
         });
     });
@@ -58,4 +73,4 @@ describe('OrderService', () => {
         orderService.submitOrder(patientProfile);
         expect(dbServiceSaveSpy).toHaveBeenCalled();
     });
-});
+})

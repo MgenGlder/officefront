@@ -5,9 +5,11 @@ const app = express();
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    // res.header('if-none-match','no-match-for-this'); // was a potential fix for 304s on get requests
     next();
-})
+});
+app.disable('etag'); // fix for 304s on get requests
 var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');

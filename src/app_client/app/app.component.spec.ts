@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import {
   FullLayoutComponent,
   SimpleLayoutComponent
@@ -83,6 +84,7 @@ describe('AppComponent', () => {
         BrowserAnimationsModule,
         AppRoutingModule,
         HttpModule,
+        HttpClientModule,
         BsDropdownModule.forRoot(),
         TabsModule.forRoot(),
         ChartsModule,

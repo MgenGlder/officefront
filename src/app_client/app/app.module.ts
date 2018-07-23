@@ -1,3 +1,4 @@
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { DBService } from './services/db.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -69,6 +70,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AuthenticationService } from './services/auth/authentication.service';
 import { PatientService } from './services/patient.service';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ErrorInterception } from './interceptors/error.interceptor';
 
 @NgModule({
   imports: [
@@ -80,7 +83,8 @@ import { PatientService } from './services/patient.service';
     ChartsModule,
     HttpModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,
@@ -92,6 +96,8 @@ import { PatientService } from './services/patient.service';
     provide: LocationStrategy,
     useClass: HashLocationStrategy
   },
+  { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+  // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterception, multi: true},
   AuthenticationService,
 PatientService,
 DBService],

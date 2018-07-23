@@ -1,10 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { OrderService } from '../../../services/order.service';
 import { PatientService } from '../../../services/patient.service';
-import { map } from 'rxjs/operators';
 @Component({
   templateUrl: 'view-order.component.html'
 })
@@ -13,22 +13,22 @@ export class ViewOrderComponent implements OnDestroy {
   public data;
   public filterQuery = '';
   public patientsSubscription: Subscription;
-  public patientsObservable: Observable<Response>;
+  public patientsObservable: Observable<Object>;
   public patientData;
-  public ordersObservable: Observable<Response>;
+  public ordersObservable: Observable<Object>;
   public ordersSubscription: Subscription;
   public orderData;
   constructor(patientService: PatientService, orderService: OrderService) {
     this.patientsObservable = patientService.getAllPatients();
     this.patientsSubscription = this.patientsObservable
-      .pipe(map(data => data.json())).subscribe(
+      .pipe(map((data: Response) => data)).subscribe(
         (patientData) => {
           this.patientData = patientData
         });
 
     this.ordersObservable = orderService.getAllOrders();
     this.ordersSubscription = this.ordersObservable
-      .pipe(map(data => data.json())).subscribe(
+      .pipe(map((data: Response) => data)).subscribe(
         (orderData) => {
           this.orderData = orderData;
         });
