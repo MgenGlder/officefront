@@ -1,42 +1,32 @@
+import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { DBService } from '../../../services/db.service';
 import { OrderBuilderService } from '../../../services/order-builder.service';
 import { OrderService } from '../../../services/order.service';
 import { PatientService } from '../../../services/patient.service';
 import { mock } from '../../../utils/mock';
 import { NewOrderComponent } from './new-order.component';
-import { OrderNotSubmittedComponent } from './ordernotsubmitted.component';
-class MockRouter {
-    navigateByUrl(url: String) { return url }
-}
-describe('NewOrderComponent', () => {
-    const mockOrderService = mock(OrderService.prototype);
-    const mockDbService = mock(DBService.prototype);
-    let mockRouter;
+fdescribe('NewOrderComponent', () => {
     let httpMock;
-    const mockOrderSubmittedComponent = mock(OrderNotSubmittedComponent);
-    const mockOrderBuilderService = mock(OrderBuilderService.prototype);
     let fixture: ComponentFixture<NewOrderComponent>;
     let newOrderComponent: NewOrderComponent;
     beforeEach(() => {
-        mockRouter = new MockRouter();
-        mockOrderService.submitOrder = () => void 0;
-        spyOn(mockOrderService, 'submitOrder').and.returnValue(Promise.resolve())
         TestBed.configureTestingModule({
             imports: [
                 FormsModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                HttpClientModule,
+                RouterTestingModule
             ],
             providers: [
-                { provide: OrderBuilderService, useValue: mockOrderBuilderService },
-                { provide: OrderService, useValue: mockOrderService },
-                { provide: PatientService, useClass: PatientService },
-                { provide: DBService, useValue: mockDbService },
-                { provide: Router, useValue: mockRouter }
+                OrderBuilderService,
+                OrderService,
+                PatientService,
+                DBService
             ],
             declarations: [
                 NewOrderComponent
@@ -45,29 +35,42 @@ describe('NewOrderComponent', () => {
                 NO_ERRORS_SCHEMA
             ]
         })
+        .compileComponents();
         httpMock = TestBed.get(HttpTestingController);
         fixture = TestBed.createComponent(NewOrderComponent);
         newOrderComponent = fixture.componentInstance;
     });
 
     it('should get patients from patientService on load', () => {
-        expect(httpMock.expectOne('./some-place'));
+        const req = httpMock.expectOne({
+            method: 'GET'
+        });
+        expect(req.request.url.endsWith('/api/patients/all')).toBeTruthy();
     });
 
     it('should submit orders on submit', () => {
+        fixture.detectChanges();
         newOrderComponent.patientProfile = {
             dateOfBirth: '07/30/1993',
             firstName: 'Kunle',
             lastName: 'Oshi'
         }
+        spyOn(newOrderComponent.orderService, 'submitOrder');
         newOrderComponent.submitOrder();
-
-        expect(newOrderComponent.orderService.submitOrder).toHaveBeenCalled();
         expect(newOrderComponent.orderService.submitOrder).toHaveBeenCalledWith({
             dateOfBirth: '07/30/1993',
             firstName: 'Kunle',
             lastName: 'Oshi'
         });
+
+        const req = httpMock.expectOne({
+            method: 'POST'
+        });
+
+        req.flush({
+            body: 'some message'
+        })
+
     });
     it('should call getOrders on app init', () => {
         newOrderComponent.ngOnInit();
