@@ -68,6 +68,7 @@ saveCompletePatientOrder(orders: Array <any>, patientProfile):  Promise<any> {
     }
     return Promise.all(orderPromises);
 }
+// TODO: Change mongoDbUrl to apiUrl or something like that, it's not just for mongo.
 getAllPatients() {
     return this.http.get(environment.mongoDbUrl + '/api/patients/all')
 }

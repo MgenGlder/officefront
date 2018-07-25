@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Order } from '../models/pending-order.model'
-import { DBService } from './db.service';
-import { Response } from '@angular/http';
 import { Observable } from 'rxjs';
+import { Order } from '../models/pending-order.model';
+import { DBService } from './db.service';
 @Injectable()
 export class OrderService {
     public orders: Array<Order> = [];
