@@ -1,19 +1,20 @@
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DBService } from '../../../services/db.service';
 import { OrderBuilderService } from '../../../services/order-builder.service';
 import { OrderService } from '../../../services/order.service';
-import { PatientService } from '../../../services/patient.service';
-import { mock } from '../../../utils/mock';
+import { PatientService } from './../../../services/patient.service';
 import { NewOrderComponent } from './new-order.component';
-fdescribe('NewOrderComponent', () => {
+import { Order } from '../../../models/pending-order.model';
+describe('NewOrderComponent', () => {
     let httpMock;
     let fixture: ComponentFixture<NewOrderComponent>;
     let newOrderComponent: NewOrderComponent;
+    let orderService: OrderService;
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -35,10 +36,10 @@ fdescribe('NewOrderComponent', () => {
                 NO_ERRORS_SCHEMA
             ]
         })
-        .compileComponents();
         httpMock = TestBed.get(HttpTestingController);
         fixture = TestBed.createComponent(NewOrderComponent);
         newOrderComponent = fixture.componentInstance;
+        orderService = TestBed.get(OrderService);
     });
 
     it('should get patients from patientService on load', () => {
@@ -48,15 +49,18 @@ fdescribe('NewOrderComponent', () => {
         expect(req.request.url.endsWith('/api/patients/all')).toBeTruthy();
     });
 
-    it('should submit orders on submit', () => {
+    it('should submit orders on form submit', async(() => {
         fixture.detectChanges();
         newOrderComponent.patientProfile = {
             dateOfBirth: '07/30/1993',
             firstName: 'Kunle',
             lastName: 'Oshi'
         }
-        spyOn(newOrderComponent.orderService, 'submitOrder');
+        orderService.addOrder(new Order('', '', '', '', ''));
+        fixture.detectChanges();
+        spyOn(newOrderComponent.orderService, 'submitOrder').and.callThrough();
         newOrderComponent.submitOrder();
+        fixture.detectChanges();
         expect(newOrderComponent.orderService.submitOrder).toHaveBeenCalledWith({
             dateOfBirth: '07/30/1993',
             firstName: 'Kunle',
@@ -71,8 +75,9 @@ fdescribe('NewOrderComponent', () => {
             body: 'some message'
         })
 
-    });
+    }));
     it('should call getOrders on app init', () => {
+        spyOn(newOrderComponent.orderService, 'getOrders');
         newOrderComponent.ngOnInit();
         expect(newOrderComponent.orderService.getOrders).toHaveBeenCalled();
     });

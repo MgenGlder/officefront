@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Response } from '@angular/http';
-import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { Order } from '../../../models/pending-order.model';
 import { DBService } from '../../../services/db.service';
@@ -45,29 +44,29 @@ export class NewOrderComponent implements OnInit, OnDestroy {
     private patientService: PatientService,
     public router: Router,
     private db: DBService) {
-      this.sanitizer = _sanitizer;
-      this.orderService.visitingDoctor = 'Dr. Hampson';
-      this.orderService.referrer = 'Dr. Hampson';
-      this.patientProfile = {
-        dateOfBirth: '',
-        firstName: '',
-        lastName: ''
-      }
-      this.patientsSubscription = patientService.getAllPatients().pipe(
-        map((data: Response) => data))
-        .subscribe((patientData) => {
-          this.patientData = patientData;
-        })
+    this.sanitizer = _sanitizer;
+    this.orderService.visitingDoctor = 'Dr. Hampson';
+    this.orderService.referrer = 'Dr. Hampson';
+    this.patientProfile = {
+      dateOfBirth: '',
+      firstName: '',
+      lastName: ''
+    }
+    this.patientsSubscription = patientService.getAllPatients()
+      .subscribe((patientData) => {
+        this.patientData = patientData;
+      })
   }
 
   submitOrder() {
-    this.orderService.submitOrder(this.patientProfile)
-      .then((response) => {
-        this.router.navigateByUrl('/orders/new/submitted');
-      })
-      .catch((err) => {
-        this.router.navigateByUrl('/orders/new/notsubmitted');
-      })
+    this.orderService.submitOrder(this.patientProfile);
+
+      // .then((response) => {
+      //   this.router.navigateByUrl('/orders/new/submitted');
+      // })
+      // .catch((err) => {
+      //   this.router.navigateByUrl('/orders/new/notsubmitted');
+      // })
   }
   ngOnInit() {
     this.orders = this.orderService.getOrders();

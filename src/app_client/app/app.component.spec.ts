@@ -1,25 +1,15 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-import { RouterModule, Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing'
-import { NO_ERRORS_SCHEMA } from '@angular/compiler/src/core'
-import { AppRoutingModule } from './app.routing'
-
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { async, TestBed } from '@angular/core/testing';
+import { HttpModule } from '@angular/http';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
-import {
-  FullLayoutComponent,
-  SimpleLayoutComponent
-} from './containers';
-
+import { RouterModule } from '@angular/router';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
-
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing';
 import {
   AppAsideComponent,
   AppBreadcrumbsComponent,
@@ -30,8 +20,13 @@ import {
   AppSidebarFormComponent,
   AppSidebarHeaderComponent,
   AppSidebarMinimizerComponent,
-  APP_SIDEBAR_NAV
-} from './components';
+  APP_SIDEBAR_NAV } from './components';
+import { FullLayoutComponent, SimpleLayoutComponent } from './containers';
+// Import directives
+import { AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES } from './directives';
+
+
+
 
 const APP_COMPONENTS = [
   AppAsideComponent,
@@ -46,13 +41,6 @@ const APP_COMPONENTS = [
   APP_SIDEBAR_NAV
 ]
 
-// Import directives
-import {
-  AsideToggleDirective,
-  NAV_DROPDOWN_DIRECTIVES,
-  ReplaceDirective,
-  SIDEBAR_TOGGLE_DIRECTIVES
-} from './directives';
 
 const APP_DIRECTIVES = [
   AsideToggleDirective,
