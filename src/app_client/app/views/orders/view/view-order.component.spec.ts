@@ -1,54 +1,30 @@
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { Response, ResponseOptions } from '@angular/http';
-import { of } from 'rxjs';
 import { DataTableModule } from '../../../../../../node_modules/angular2-datatable';
 import { OrderService } from '../../../services/order.service';
 import { PatientService } from '../../../services/patient.service';
 import { DataFilterPipe } from '../../plugins/datatable/datafilterpipe';
+import { DBService } from './../../../services/db.service';
 import { ViewOrderComponent } from './view-order.component';
-
-class MockPatientService {
-    getAllPatients() {
-        return of(new Response(
-            new ResponseOptions({
-                body: {
-                    data: 'somePatientData'
-                }
-            })
-        ))
-    }
-}
-
-class MockOrderService {
-    getAllOrders() {
-        return of(new Response(
-            new ResponseOptions({
-                body: {
-                    data: 'someOrderData'
-                }
-            })
-        ))
-    }
-}
 
 describe('ViewOrderComponent', () => {
     let viewOrderComponent: ViewOrderComponent;
     let fixture: ComponentFixture<ViewOrderComponent>;
-    const mockPatientService: MockPatientService = new MockPatientService();
-    const mockOrderService: MockOrderService = new MockOrderService();
-
     beforeEach(() => {
 
         TestBed.configureTestingModule({
             imports: [
                 FormsModule,
-                DataTableModule
+                DataTableModule,
+                HttpClientTestingModule
             ],
             providers: [
-                { provide: OrderService, useValue: mockOrderService },
-                { provide: PatientService, useValue: mockPatientService }
+                OrderService,
+                PatientService,
+                DBService
             ],
             declarations: [
                 ViewOrderComponent,
@@ -62,17 +38,47 @@ describe('ViewOrderComponent', () => {
         fixture = TestBed.createComponent(ViewOrderComponent);
         viewOrderComponent = fixture.componentInstance;
     });
-    it('should get order data on init', () => {
-        expect(viewOrderComponent.orderData).toEqual({
-            data: 'someOrderData'
-        });
-    });
+    it('should get order data on init', async(inject([HttpClient, HttpTestingController],
+        (httpClient: HttpClient, backend: HttpTestingController) => {
+            let orderRequest: TestRequest = null;
+            const req = backend.match({
+                method: 'GET',
+            });
+            for (const requestObject of req) {
+                if (requestObject.request.url.endsWith('/api/orders/all')) {
+                    orderRequest = requestObject;
+                }
+            }
+            expect(orderRequest).not.toBeNull();
+            orderRequest.flush({
+                body: 'testData'
+            });
+            expect(viewOrderComponent.orderData).toEqual({
+                body: 'testData'
+            });
+        })));
 
-    it('should get patient data on init', () => {
-        expect(viewOrderComponent.patientData).toEqual({
-            data: 'somePatientData'
-        });
-    });
+    it('should get patient data on init', async(inject([HttpClient, HttpTestingController],
+        (httpClient: HttpClient, backend: HttpTestingController) => {
+
+            let patientRequest: TestRequest = null;
+            const req = backend.match({
+                method: 'GET',
+            });
+            for (const requestObject of req) {
+                if (requestObject.request.url.endsWith('/api/patients/all')) {
+                    patientRequest = requestObject;
+                }
+            }
+            expect(patientRequest).not.toBeNull();
+            patientRequest.flush({
+                body: 'testData'
+            });
+            expect(viewOrderComponent.patientData).toEqual({
+                body: 'testData'
+            });
+        })
+    ));
     it('should unsubscribe from patient subscription and order subscription', () => {
         spyOn(viewOrderComponent.patientsSubscription, 'unsubscribe')
         spyOn(viewOrderComponent.ordersSubscription, 'unsubscribe')
