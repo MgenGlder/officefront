@@ -25,4 +25,4 @@ app.use("/api", routesApi);
 app.use(express.static(__dirname + '/dist'));
 
 
-app.listen(process.env.PORT || 8080);
+module.exports = app.listen(process.env.PORT || 8080);
