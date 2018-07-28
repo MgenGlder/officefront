@@ -15,16 +15,19 @@ function authenticate(req, res) {
 }
 
 function register(req, res) {
-    // bcrypt.genSalt(11, function(err, salt){
-    //     if (err) return next(err);
-    //     bcrypt.hash(req.body.password, salt, function(err, hash){
-    //         if (err) return next(err);
-    //         newUser.password = hash;
-    //     });
-    // });
-    sendJsonResponse(res, 200,{
-        "response": "added salt to password"
+    let createdHash;
+    bcrypt.genSalt(11, function(err, salt){
+        if (err) return;
+        bcrypt.hash(req.body.password, salt, function(err, hash){
+            console.log("Created hash is... \n" + hash);
+            if (err) return;
+            createdHash = hash; 
+            sendJsonResponse(res, 200,{
+                "hash": createdHash
+            });
+        });
     });
+
 }
 module.exports = {
     authenticate: authenticate,
