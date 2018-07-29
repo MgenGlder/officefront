@@ -18,21 +18,21 @@ var userSchema = new mongoose.Schema({
 
 userSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString("hex");
-  this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString("hex"); //using this in a mongoose method refers to the model itself
+  this.hash = crypto.pbkdf2Sync(password, this.salt, 100000, 64, 'sha512').toString("hex"); //using this in a mongoose method refers to the model itself
   //password, salt thing, iterations, key length
   //because mongoose, the hash and salt is automatically added to the model
 };
 
 
 userSchema.methods.validPassowrd = function (password ){
-  var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString("hex");
+  var hash = crypto.pbkdf2Sync(password, this.salt, 100000, 64, 'sha512').toString("hex");
   return this.hash === hash;
   //will create a new hash from the password given and test it against the hash already in the model/database
 };
 
 userSchema.methods.generateJwt = function() {
   var expiry = new Date();
-  expiry.setDate(expiry.getDate() + 7);
+  expiry.setDate(expiry.getDate() + 7); // expires in 7 days
 
   return jwt.sign({
     _id: this._id,
