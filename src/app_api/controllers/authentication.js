@@ -18,44 +18,50 @@ function register(req, res) {
     let createdHash;
     let newUser;
     // TODO: Refactor this bad boy at some point
-    User.findOne(req.body.username, (err, res) => {
+    // User.findOne(req.body.username, (err, res) => {
         // Maybe we could use async await here??? Find out.
-        if(err) {
-            return;
-        } else if (!res) { 
+        // if(err) {
+        //     return;
+        // } else if (!res) { 
             bcrypt.genSalt(11, function(err, salt){
                 if (err) return;
                 bcrypt.hash(req.body.password, salt, function(err, hash){
+                    let hashCreated = false;
                     console.log("Created hash is... \n" + hash);
-                    if (err) return;
+                    if (hash) hashCreated = true;
                     createdHash = hash; 
-                    newUser = new User({
-                        name: req.body.username,
-                        hash: hash,
+                    sendJsonResponse(res, 200, {
+                        response: {
+                            registered: hashCreated
+                        }
                     });
-                    newUser.save((err) => {
-                        if (err) {
-                            sendJsonResponse(res, 200, {
-                                response: "There was an error creating the user"
-                            });
-                        };
-                        sendJsonResponse(res, 200, {
-                            response: "User created successfully"
-                        });
-                    });
-                    // Can get rid of the below. Not going to send the hash
+                    // newUser = new User({
+                    //     name: req.body.username,
+                    //     passwordHash: hash,
+                    // });
+                    // // newUser.save((err) => {
+                    //     if (err) {
+                    //         sendJsonResponse(res, 200, {
+                    //             response: "There was an error creating the user"
+                    //         });
+                    //     };
+                    //     sendJsonResponse(res, 200, {
+                    //         response: "User created successfully"
+                    //     });
+                    // });
+                    // // Can get rid of the below. Not going to send the hash
                     // back to the user, that's wierd.
-                    sendJsonResponse(res, 200,{
-                        "hash": createdHash
-                    });
+                    // sendJsonResponse(res, 200,{
+                    //     "hash": createdHash
+                    // });
                 });
             });
-        } else {
-            sendJsonResponse(res, 200, {
-                response: 'Username taken'
-            })
-        }
-    });
+        // } else {
+        //     sendJsonResponse(res, 200, {
+        //         response: 'Username taken'
+        //     })
+        //}
+    // });
 
 
 }
