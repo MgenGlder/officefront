@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var crypto = require("crypto");
 var jwt = require("jsonwebtoken");
+var bcrypt = require("bcrypt");
 
 var userSchema = new mongoose.Schema({
   email: {
@@ -12,7 +13,10 @@ var userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  hash: String,
+  hash: {
+    type: String,
+    required: true
+  },
   salt: String
 });
 
@@ -24,8 +28,12 @@ userSchema.methods.setPassword = function (password) {
 };
 
 
-userSchema.methods.validPassowrd = function (password ){
-  var hash = crypto.pbkdf2Sync(password, this.salt, 100000, 64, 'sha512').toString("hex");
+userSchema.methods.validPassword = function (password ){
+  // var hash = crypto.pbkdf2Sync(password, this.salt, 100000, 64, 'sha512').toString("hex");
+  // TODO: Get rid of these comments and console logs.
+  let hash = bcrypt.hashSync(password, this.salt);
+  console.log('old hash ' + this.hash );
+  console.log('new hash ' + hash);
   return this.hash === hash;
   //will create a new hash from the password given and test it against the hash already in the model/database
 };
@@ -40,7 +48,9 @@ userSchema.methods.generateJwt = function() {
     name: this.name,
     // ^ payload v
     exp: parseInt(expiry.getTime() / 1000),
-  }, process.env.JWT_SECRET); //secret key
+  }, 
+  // process.env.JWT_SECRET); //secret key
+  "secret");
 };
 
 mongoose.model("User", userSchema)
