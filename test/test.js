@@ -22,7 +22,7 @@ describe('Our server', function () {
                 .end((err, res) => {
                     expect(res.status).to.equal(200);
                     expect(res.body).to.be.a('object');
-                    expect(res.body['hash']).to.exist;
+                    expect(res.body['response']['registered']).to.exist;
                     done();
                 });
         });
