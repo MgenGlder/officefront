@@ -16,8 +16,10 @@ export class AuthGuard implements CanActivate {
             const expiredDate = helper.getTokenExpirationDate(token);
             const isExpired = helper.isTokenExpired(token);
             console.log(expiredDate);
-            console.log(isExpired);
-            console.log(decodedToken);
+            if (isExpired) {
+                localStorage.setItem('currentUser', null);
+                return false;
+            }
             return true;
         }
         this.router.navigate(['/pages/login'], { queryParams: { returnUrl: state.url }});
