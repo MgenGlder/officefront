@@ -37,6 +37,7 @@
     "@angular/platform-browser-dynamic": "6.0.7",
     "@angular/router": "6.0.7",
     "@angular/upgrade": "6.0.7",
+    "@auth0/angular-jwt": "^2.0.0",
     "@ngui/auto-complete": "^2.0.0",
     "angular-calendar": "^0.25.2",
     "angular2-datatable": "0.6.0",

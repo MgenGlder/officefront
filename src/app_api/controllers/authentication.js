@@ -10,14 +10,12 @@ var sendJsonResponse = function (res, status, content) {
 function authenticate(req, res) {
     if (req.body.username && req.body.password) {
         User.findOne({username: req.body.username}, function (err, data) {
-            if (data.validPassword(req.body.password)) {
+            if (data && data.validPassword(req.body.password)) {
                 let token = data.generateJwt();
                 sendJsonResponse(res, 200, {
-                    "token": "some-fake-token" + req.body.username + req.body.password,
-                    jwtToken: token
+                    "token": token
                 })
             }
-            data.validPassword(req.body.password);
         });
     }
 }
