@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const helper = new JwtHelperService();
-        if (localStorage.getItem('currentUser') || localStorage.getItem('currentUser') == 'null') {
+        if (localStorage.getItem('currentUser') && localStorage.getItem('currentUser') !== 'null') {
             const token = JSON.parse(localStorage.getItem('currentUser')).token;
             const decodedToken = helper.decodeToken(token);
             const expiredDate = helper.getTokenExpirationDate(token);
@@ -20,7 +20,6 @@ export class AuthGuard implements CanActivate {
             console.log(decodedToken);
             return true;
         }
-
         this.router.navigate(['/pages/login'], { queryParams: { returnUrl: state.url }});
         return false;
     }

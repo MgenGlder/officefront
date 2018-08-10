@@ -54,9 +54,3 @@ userSchema.methods.generateJwt = function() {
 };
 
 mongoose.model("User", userSchema)
-// var User = mongoose.model("User");
-// var user = new User();
-// user.name = "User's Name";
-// user.email = "test@example.com";
-// user.setPassword("myPassword");
-// user.save();
