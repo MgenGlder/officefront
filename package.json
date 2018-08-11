@@ -17,7 +17,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "server": "node server.js",
-    "postinstall": "ng build --aot -prod"
+    "postinstall": "ng build --aot --prod"
   },
   "engines": {
     "node": "8.9.0",
