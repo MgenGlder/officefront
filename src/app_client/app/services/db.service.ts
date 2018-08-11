@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs';
@@ -97,32 +97,14 @@ getNurseOptions(): Observable < Response > {
     // ]
 }
 getTestOptions() {
-    // TODO: Set up to hit a real endpoint
-    return this.http.get(environment.mongoDbUrl + '/some-endpoint-for-tests');
-    // return [
-    //     { value: 'x-ray', text: 'X-Ray', location: true },
-    //     { value: 'ekg', text: 'EKG', location: true },
-    //     { value: 'pft', text: 'PFT', location: false },
-    //     { value: 'eye-exam', text: 'Eye Exam', location: false },
-    //     { value: 'doppler', text: 'Doppler (Pedal Or Carotid)', location: true },
-    //     { value: 'ultrasound', text: 'Ultrasound', location: true },
-    //     { value: 'urology', text: 'Urology/Urinalysis', location: false }
-    // ];
+    return this.http.get(environment.mongoDbUrl + '/api/orderOptions', {
+        params: new HttpParams().set('type', 'test')
+    });
 }
 getSpecialistOptions() {
-    // TODO: Set up to hit a real endpoint
-    return this.http.get(environment.mongoDbUrl + '/some-endpoint-for-specialists')
-    // return [
-    //     { value: 'podiatrist', text: 'Podiatrist' },
-    //     { value: 'optometrist', text: 'Optometrist' },
-    //     { value: 'cardiologist', text: 'Cardiologist' },
-    //     { value: 'neurologist', text: 'Neurologist' },
-    //     { value: 'dermatologist', text: 'Dermatologist' },
-    //     { value: 'pain-doctor', text: 'Pain Doctor' },
-    //     { value: 'psychiatrist', text: 'Psychiatrist' },
-    //     { value: 'ent', text: 'ENT' },
-    //     { value: 'physical-therapy', text: 'Physical Therapy' }
-    // ]
+    return this.http.get(environment.mongoDbUrl + '/api/orderOptions', {
+        params: new HttpParams().set('type', 'specialist')
+    })
 }
     /*  getPatientList() {
          return [

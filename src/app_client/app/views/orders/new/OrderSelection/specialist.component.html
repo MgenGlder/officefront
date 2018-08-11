@@ -7,7 +7,7 @@
                     <span class="badge badge-success">New</span>
                 </ng-template>
                 <div class="form-group-row">
-                    <ng-container *ngFor="let specialist of specialistData">
+                    <ng-container *ngFor="let specialist of specialistData | async">
                         <div class="col-md-3" style="float: left;">
                             <div class="radio">
                                 <label for="{{specialist.value}}">

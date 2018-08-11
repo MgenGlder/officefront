@@ -1,4 +1,5 @@
-import { ViewChild, Component, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ViewChild, Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { TabsetComponent } from 'ngx-bootstrap';
 import { Router } from '@angular/router';
 import { TestOrder } from '../../../../models/pending-order.model';
@@ -9,7 +10,7 @@ import { DBService } from '../../../../services/db.service';
 @Component({
   templateUrl: 'test.component.html',
 })
-export class TestComponent {
+export class TestComponent implements OnInit {
   @ViewChild('staticTabs') staticTabs: TabsetComponent;
   order: TestOrder;
   orders: Array<any> = [];
@@ -34,27 +35,44 @@ export class TestComponent {
       `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
       this.orderService.visitingDoctor,
       this.orderService.referrer);
-    this.tests = this.db.getTestOptions();
-    orderBuilderService.startBuildingTestOrder();
-    this.testData =
-      this.tests.map((test) => {
-        const newFormControl = new FormControl(false);
-        this.testAndFormControls.push(newFormControl);
-        return {
-          id: test.value,
-          text: test.text,
-          control: newFormControl
-        }
+      this.form = this.fb.group({
+        tests: '',
+        reason: '',
+        notes: '',
+        extraInfo: new FormArray([])
       });
-    this.form = fb.group({
-      tests: new FormArray(this.testAndFormControls),
-      reason: '',
-      notes: '',
-      extraInfo: new FormArray([])
-    });
+    orderBuilderService.startBuildingTestOrder();
+
   }
 
 
+  async ngOnInit() {
+    try {
+      await this.db.getTestOptions().subscribe((data) => {
+        this.tests = data;
+        this.testData =
+        this.tests.map((test) => {
+          const newFormControl = new FormControl(false);
+          this.testAndFormControls.push(newFormControl);
+          return {
+            id: test.value,
+            text: test.text,
+            control: newFormControl
+          }
+        });
+        this.form = this.fb.group({
+          tests: new FormArray(this.testAndFormControls),
+          reason: '',
+          notes: '',
+          extraInfo: new FormArray([])
+        });
+      });
+    } catch (e) {
+      console.log(e);
+    }
+
+
+  }
 
   loadInputsForExtraInfo(): void {
 

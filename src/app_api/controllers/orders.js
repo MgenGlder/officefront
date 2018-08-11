@@ -34,13 +34,44 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
                     createOrderSchemaTest(patient, req, res);
                 }
                 else if (req.body.nursePurpose) {
-                    createOrderSchemaNurse(patient,req,res);
+                    createOrderSchemaNurse(patient, req, res);
                 }
                 else {
                     createOrderSchema(patient, req, res);
                 }
             }
         })
+}
+
+function orderOptions(req, res) {
+    console.log(req.query);
+    switch (req.query.type) {
+        case "specialist":
+            sendJsonResponse(res, 200, [
+                { value: 'podiatrist', text: 'Podiatrist' },
+                { value: 'optometrist', text: 'Optometrist' },
+                { value: 'cardiologist', text: 'Cardiologist' },
+                { value: 'neurologist', text: 'Neurologist' },
+                { value: 'dermatologist', text: 'Dermatologist' },
+                { value: 'pain-doctor', text: 'Pain Doctor' },
+                { value: 'psychiatrist', text: 'Psychiatrist' },
+                { value: 'ent', text: 'ENT' },
+                { value: 'physical-therapy', text: 'Physical Therapy' }
+            ])
+            break;
+        case "test":
+            sendJsonResponse(res, 200, [
+                { value: 'x-ray', text: 'X-Ray', location: true },
+                { value: 'ekg', text: 'EKG', location: true },
+                { value: 'pft', text: 'PFT', location: false },
+                { value: 'eye-exam', text: 'Eye Exam', location: false },
+                { value: 'doppler', text: 'Doppler (Pedal Or Carotid)', location: true },
+                { value: 'ultrasound', text: 'Ultrasound', location: true },
+                { value: 'urology', text: 'Urology/Urinalysis', location: false }
+            ])
+            break;
+    }
+
 }
 
 function createOrderSchema(lookedUpPatient, req, res) {
@@ -218,5 +249,6 @@ module.exports = {
     getAllOrders: getAllOrders,
     createOrder: createOrder,
     getAllOrdersSpecificPatient: getAllOrdersSpecificPatient,
-    updateOrder: updateOrder
+    updateOrder: updateOrder,
+    orderOptions: orderOptions
 }
