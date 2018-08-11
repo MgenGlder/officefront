@@ -55,10 +55,10 @@ makePostCall(patientProfile, order) {
         default:
             break;
     }
-    return this.http.post(environment.mongoDbUrl + '/api/order', requestObject).toPromise();
+    return this.http.post(environment.apiUrl + '/api/order', requestObject).toPromise();
 }
 postPatient(newPatient) {
-    return this.http.post(environment.mongoDbUrl + '/api/patient/create', newPatient);
+    return this.http.post(environment.apiUrl + '/api/patient/create', newPatient);
 }
 saveCompletePatientOrder(orders: Array <any>, patientProfile):  Promise<any> {
     const orderPromises = [];
@@ -68,16 +68,16 @@ saveCompletePatientOrder(orders: Array <any>, patientProfile):  Promise<any> {
     }
     return Promise.all(orderPromises);
 }
-// TODO: Change mongoDbUrl to apiUrl or something like that, it's not just for mongo.
+// TODO: Change apiUrl to apiUrl or something like that, it's not just for mongo.
 getAllPatients() {
-    return this.http.get(environment.mongoDbUrl + '/api/patients/all')
+    return this.http.get(environment.apiUrl + '/api/patients/all')
 }
 getAllOrders() {
-    return this.http.get(environment.mongoDbUrl + '/api/orders/all')
+    return this.http.get(environment.apiUrl + '/api/orders/all')
 }
 getBloodworkOptions(): Observable < Response > {
     // TODO: Set up to hit a real endpoint
-    return this.http.get<Response>(environment.mongoDbUrl + '/some-endpoint-for-bloodwork');
+    return this.http.get<Response>(environment.apiUrl + '/some-endpoint-for-bloodwork');
     // return [
     //     { value: 'hgb-aic-level', text: 'Hgb. AIC Level' },
     //     { value: 'bun-creat', text: 'BUN, CREAT' },
@@ -90,19 +90,19 @@ getBloodworkOptions(): Observable < Response > {
 }
 getNurseOptions(): Observable < Response > {
     // TODO: Set up to hit a real endpoint
-    return this.http.get<Response>(environment.mongoDbUrl + '/some-endpoint-for-nursing');
+    return this.http.get<Response>(environment.apiUrl + '/some-endpoint-for-nursing');
     // return [
     //     { value: 'rn-monitor-bp', text: 'Monitor BP' },
     //     { value: 'rn-monitor-bs', text: 'Monitor BS' },
     // ]
 }
 getTestOptions() {
-    return this.http.get(environment.mongoDbUrl + '/api/orderOptions', {
+    return this.http.get(environment.apiUrl + '/api/orderOptions', {
         params: new HttpParams().set('type', 'test')
     });
 }
 getSpecialistOptions() {
-    return this.http.get(environment.mongoDbUrl + '/api/orderOptions', {
+    return this.http.get(environment.apiUrl + '/api/orderOptions', {
         params: new HttpParams().set('type', 'specialist')
     })
 }

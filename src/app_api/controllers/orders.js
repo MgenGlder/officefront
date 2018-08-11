@@ -70,6 +70,8 @@ function orderOptions(req, res) {
                 { value: 'urology', text: 'Urology/Urinalysis', location: false }
             ])
             break;
+        case "bloodwork":
+            break;
     }
 
 }
