@@ -37,6 +37,10 @@ keyUpFunction(event) {
     this.onSubmit();
   }
 }
+
+onRegister() {
+  this.router.navigate(['/pages/register']);
+}
 get f() { return this.loginForm.controls; }
 
 onSubmit() {
