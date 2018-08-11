@@ -32,6 +32,11 @@ ngOnInit() {
   this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 }
 
+keyUpFunction(event) {
+  if (event.keyCode === 13) {
+    this.onSubmit();
+  }
+}
 get f() { return this.loginForm.controls; }
 
 onSubmit() {
