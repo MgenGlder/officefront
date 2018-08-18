@@ -1,8 +1,7 @@
-var mongoose = require("mongoose");
-var User = mongoose.model("User");
-var bcrypt = require("bcrypt");
-
-var sendJsonResponse = function (res, status, content) {
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
+const bcrypt = require('bcrypt');
+const sendJsonResponse = function (res, status, content) {
     res.status(status);
     res.json(content);
 }

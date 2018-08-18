@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit();">
+<form [formGroup]="form" (ngSubmit)="onSubmit();" *ngIf="testData">
     <div style="padding-top: 40px">
         <tabset #staticTabs>
             <tab>

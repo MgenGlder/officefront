@@ -1,11 +1,13 @@
-import { ViewChild, Component, Output, EventEmitter } from '@angular/core';
-import { TabsetComponent } from 'ngx-bootstrap';
+import { Component, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TabsetComponent } from 'ngx-bootstrap';
+import { Observable } from 'rxjs';
 import { BloodworkOrder } from '../../../../models/pending-order.model';
-import { OrderService } from '../../../../services/order.service';
-import { OrderBuilderService } from '../../../../services/order-builder.service';
-import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { DBService } from '../../../../services/db.service';
+import { OrderService } from '../../../../services/order.service';
+import OrderOptions from '../../../models/OrderOptions';
+
 @Component({
   templateUrl: 'bloodwork.component.html',
 })
@@ -13,43 +15,45 @@ export class BloodworkComponent {
   @ViewChild('staticTabs') staticTabs: TabsetComponent;
   order: BloodworkOrder;
   form: FormGroup;
-  tests;
+  testsMappingArray: Array<OrderOptions>;
+  testObservable: Observable<Object>;
 
   testAndFormControls = new Array<FormControl>();
 
   testData: Array<{ id: string, text: string, control: FormControl }>;
   constructor(
     public orderService: OrderService,
-    public orderBuilderService: OrderBuilderService,
     public fb: FormBuilder,
     public router: Router,
     public db: DBService) {
     const date = new Date();
     this.order = new BloodworkOrder(
       [],
-      this.tests,
+      this.testsMappingArray,
       '',
       '',
       '',
       `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`, this.orderService.visitingDoctor, this.orderService.referrer
     );
-    this.tests = this.db.getBloodworkOptions();
-    orderBuilderService.startBuildingSpecialistOrder();
-    this.testData =
-      this.tests.map((test) => {
-        const newFormControl = new FormControl(false);
-        this.testAndFormControls.push(newFormControl);
-        return {
-          id: test.value,
-          text: test.text,
-          control: newFormControl
-        }
+    this.db.getBloodworkOptions().toPromise().then((data: Array<OrderOptions>) => {
+      this.testsMappingArray = data;
+      this.testData =
+        this.testsMappingArray.map((test) => {
+          const newFormControl = new FormControl(false);
+          this.testAndFormControls.push(newFormControl);
+          return {
+            id: test.value,
+            text: test.text,
+            control: newFormControl
+          }
+        });
+      this.form = fb.group({
+        bloodTests: new FormArray(this.testAndFormControls),
+        notes: '',
+        reason: ''
       });
-    this.form = fb.group({
-      bloodTests: new FormArray(this.testAndFormControls),
-      notes: '',
-      reason: ''
     });
+
   }
 
 
@@ -68,7 +72,7 @@ export class BloodworkComponent {
     const date = new Date();
     this.order = new BloodworkOrder(
       [],
-      this.tests,
+      this.testsMappingArray,
       '',
       '',
       '',
@@ -80,8 +84,8 @@ export class BloodworkComponent {
   }
 
   private mapFormValues(booleanFormValues: Array<boolean>) {
-    if (booleanFormValues.length !== this.tests.length) { return; }
-    return this.tests.filter((element, index) => {
+    if (booleanFormValues.length !== this.testsMappingArray.length) { return; }
+    return this.testsMappingArray.filter((element, index) => {
       return booleanFormValues[index];
     });
   }

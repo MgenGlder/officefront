@@ -34,25 +34,26 @@ export class NurseComponent {
       `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
       this.orderService.visitingDoctor,
       this.orderService.referrer);
-    this.tests = db.getNurseOptions();
-    orderBuilderService.startBuildingTestOrder();
-    this.testData =
-      this.tests.map((test) => {
-        const newFormControl = new FormControl(false);
-        this.testAndFormControls.push(newFormControl);
-        return {
-          id: test.value,
-          text: test.text,
-          control: newFormControl
-        }
+    db.getNurseOptions().toPromise().then((data) => {
+      this.tests = data;
+      this.testData =
+        data.map((test) => {
+          const newFormControl = new FormControl(false);
+          this.testAndFormControls.push(newFormControl);
+          return {
+            id: test.value,
+            text: test.text,
+            control: newFormControl
+          }
+        });
+      this.form = fb.group({
+        nursePurpose: new FormArray(this.testAndFormControls),
+        reason: '',
+        notes: '',
       });
-    this.form = fb.group({
-      nursePurpose: new FormArray(this.testAndFormControls),
-      reason: '',
-      notes: '',
     });
+    orderBuilderService.startBuildingTestOrder();
   }
-
 
   selectTab(tab_id: number) {
     this.staticTabs.tabs[tab_id].active = true;

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import OrderOptions from '../views/models/OrderOptions';
 
 interface OrderRequestObject {
     patientFirstName: String;
@@ -26,86 +27,73 @@ export class DBService {
     }
 
 
-makePostCall(patientProfile, order) {
-    const requestObject: OrderRequestObject = {
-        patientFirstName: patientProfile.firstName,
-        patientLastName: patientProfile.lastName,
-        patientDateOfBirth: patientProfile.dateOfBirth,
-        location: order.location,
-        visitingDoctor: order.visitingDoctor,
-        dateOfVisit: order.dateOfVisit,
-        notes: order.notes,
-        reason: order.reason,
-        typeOfOrder: order.typeOfOrder,
-        reporter: order.reporter
+    makePostCall(patientProfile, order) {
+        const requestObject: OrderRequestObject = {
+            patientFirstName: patientProfile.firstName,
+            patientLastName: patientProfile.lastName,
+            patientDateOfBirth: patientProfile.dateOfBirth,
+            location: order.location,
+            visitingDoctor: order.visitingDoctor,
+            dateOfVisit: order.dateOfVisit,
+            notes: order.notes,
+            reason: order.reason,
+            typeOfOrder: order.typeOfOrder,
+            reporter: order.reporter
+        }
+        switch (order.typeOfOrder) {
+            case 'nurse':
+                requestObject.nursePurpose = order.nursePurpose;
+                break;
+            case 'test':
+                requestObject.testID = order.testID;
+                break;
+            case 'bloodwork':
+                requestObject.testID = order.testID;
+                break;
+            case 'specialist':
+                requestObject.typeOfSpecialist = order.typeOfSpecialist;
+                break;
+            default:
+                break;
+        }
+        return this.http.post(environment.apiUrl + '/api/order', requestObject).toPromise();
     }
-    switch (order.typeOfOrder) {
-        case 'nurse':
-            requestObject.nursePurpose = order.nursePurpose;
-            break;
-        case 'test':
-            requestObject.testID = order.testID;
-            break;
-        case 'bloodwork':
-            requestObject.testID = order.testID;
-            break;
-        case 'specialist':
-            requestObject.typeOfSpecialist = order.typeOfSpecialist;
-            break;
-        default:
-            break;
+    postPatient(newPatient) {
+        return this.http.post(environment.apiUrl + '/api/patient/create', newPatient);
     }
-    return this.http.post(environment.apiUrl + '/api/order', requestObject).toPromise();
-}
-postPatient(newPatient) {
-    return this.http.post(environment.apiUrl + '/api/patient/create', newPatient);
-}
-saveCompletePatientOrder(orders: Array <any>, patientProfile):  Promise<any> {
-    const orderPromises = [];
-    let order = orders[0];
-    for (order of orders) {
-        orderPromises.push(this.makePostCall(patientProfile, order));
+    saveCompletePatientOrder(orders: Array<any>, patientProfile): Promise<any> {
+        const orderPromises = [];
+        for (const order of orders) {
+            orderPromises.push(this.makePostCall(patientProfile, order));
+        }
+        return Promise.all(orderPromises);
     }
-    return Promise.all(orderPromises);
-}
-// TODO: Change apiUrl to apiUrl or something like that, it's not just for mongo.
-getAllPatients() {
-    return this.http.get(environment.apiUrl + '/api/patients/all')
-}
-getAllOrders() {
-    return this.http.get(environment.apiUrl + '/api/orders/all')
-}
-getBloodworkOptions(): Observable < Response > {
-    // TODO: Set up to hit a real endpoint
-    return this.http.get<Response>(environment.apiUrl + '/some-endpoint-for-bloodwork');
-    // return [
-    //     { value: 'hgb-aic-level', text: 'Hgb. AIC Level' },
-    //     { value: 'bun-creat', text: 'BUN, CREAT' },
-    //     { value: 'cholesterol', text: 'Cholesterol/PSA' },
-    //     { value: 'lipid-profile', text: 'Lipid Profile' },
-    //     { value: 'cbc-with-diff', text: 'CBC With Diff' },
-    //     { value: 'comp-tsh-lft', text: 'COMP TSH LFT' },
-    //     { value: 'metabolic-panel', text: 'Metabolic Panel' }
-    // ];
-}
-getNurseOptions(): Observable < Response > {
-    // TODO: Set up to hit a real endpoint
-    return this.http.get<Response>(environment.apiUrl + '/some-endpoint-for-nursing');
-    // return [
-    //     { value: 'rn-monitor-bp', text: 'Monitor BP' },
-    //     { value: 'rn-monitor-bs', text: 'Monitor BS' },
-    // ]
-}
-getTestOptions() {
-    return this.http.get(environment.apiUrl + '/api/orderOptions', {
-        params: new HttpParams().set('type', 'test')
-    });
-}
-getSpecialistOptions() {
-    return this.http.get(environment.apiUrl + '/api/orderOptions', {
-        params: new HttpParams().set('type', 'specialist')
-    })
-}
+    getAllPatients() {
+        return this.http.get(environment.apiUrl + '/api/patients/all')
+    }
+    getAllOrders() {
+        return this.http.get(environment.apiUrl + '/api/orders/all')
+    }
+    getBloodworkOptions(): Observable<Array<OrderOptions>> {
+        return this.http.get<Array<OrderOptions>>(environment.apiUrl + '/api/orderOptions', {
+            params: new HttpParams().set('type', 'bloodwork')
+        });
+    }
+    getNurseOptions(): Observable<Array<OrderOptions>> {
+        return this.http.get<Array<OrderOptions>>(environment.apiUrl + '/api/orderOptions', {
+            params: new HttpParams().set('type', 'nurse')
+        });
+    }
+    getTestOptions(): Observable<Array<OrderOptions>> {
+        return this.http.get<Array<OrderOptions>>(environment.apiUrl + '/api/orderOptions', {
+            params: new HttpParams().set('type', 'test')
+        });
+    }
+    getSpecialistOptions(): Observable<Array<OrderOptions>> {
+        return this.http.get<Array<OrderOptions>>(environment.apiUrl + '/api/orderOptions', {
+            params: new HttpParams().set('type', 'specialist')
+        })
+    }
     /*  getPatientList() {
          return [
              { firstName: "Joe", lastName: "Budden", dob: "09/11/1976" },

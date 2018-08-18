@@ -8,8 +8,7 @@ var sendJsonResponse = function (res, status, content) {
 }
 
 function createOrder(req, res) { //generic, TODO: create a unique function for each type of test.
-    var associatedPatient;
-    var cursor = Patient
+    Patient
         .findOne({
             firstName: req.body.patientFirstName,
             lastName: req.body.patientLastName,
@@ -68,10 +67,24 @@ function orderOptions(req, res) {
                 { value: 'doppler', text: 'Doppler (Pedal Or Carotid)', location: true },
                 { value: 'ultrasound', text: 'Ultrasound', location: true },
                 { value: 'urology', text: 'Urology/Urinalysis', location: false }
-            ])
+            ]);
             break;
         case "bloodwork":
+            sendJsonResponse(res, 200, [
+                { value: 'hgb-aic-level', text: 'Hgb. AIC Level' },
+                { value: 'bun-creat', text: 'BUN, CREAT' },
+                { value: 'cholesterol', text: 'Cholesterol/PSA' },
+                { value: 'lipid-profile', text: 'Lipid Profile' },
+                { value: 'cbc-with-diff', text: 'CBC With Diff' },
+                { value: 'comp-tsh-lft', text: 'COMP TSH LFT' },
+                { value: 'metabolic-panel', text: 'Metabolic Panel' }
+            ]);
             break;
+        case 'nurse':
+            sendJsonResponse(res, 200, [
+                { value: 'rn-monitor-bp', text: 'Monitor BP' },
+                { value: 'rn-monitor-bs', text: 'Monitor BS' },
+            ])
     }
 
 }
@@ -80,7 +93,7 @@ function createOrderSchema(lookedUpPatient, req, res) {
     Order
         .create({
             "patient": lookedUpPatient._id,
-            "type": req.body.type,
+            "type": req.body.typeOfOrder,
             "reason": req.body.reason,
             "location": req.body.location,
             "notes": req.body.notes,
@@ -99,7 +112,7 @@ function createOrderSchemaTest(lookedUpPatient, req, res) {
     Order
         .create({
             "patient": lookedUpPatient._id,
-            "type": req.body.type,
+            "type": req.body.typeOfOrder,
             "reason": req.body.reason,
             "location": req.body.location,
             "notes": req.body.notes,
@@ -119,7 +132,7 @@ function createOrderSchemaNurse(lookedUpPatient, req, res) {
     Order
         .create({
             "patient": lookedUpPatient._id,
-            "type": req.body.type,
+            "type": req.body.typeOfOrder,
             "reason": req.body.reason,
             "location": req.body.location,
             "notes": req.body.notes,
@@ -129,7 +142,7 @@ function createOrderSchemaNurse(lookedUpPatient, req, res) {
             "nursePurpose": req.body.nursePurpose,
             "status": "new"
         }).then((order) => {
-            sendJsonResponse(req, 200, {
+            sendJsonResponse(res, 200, {
                 "status": "ok",
                 "message": order
             });

@@ -59,14 +59,13 @@ export class NewOrderComponent implements OnInit, OnDestroy {
   }
 
   submitOrder() {
-    this.orderService.submitOrder(this.patientProfile);
-
-      // .then((response) => {
-      //   this.router.navigateByUrl('/orders/new/submitted');
-      // })
-      // .catch((err) => {
-      //   this.router.navigateByUrl('/orders/new/notsubmitted');
-      // })
+    this.orderService.submitOrder(this.patientProfile)
+      .then((response) => {
+        this.router.navigateByUrl('/orders/new/submitted');
+      })
+      .catch((err) => {
+        this.router.navigateByUrl('/orders/new/notsubmitted');
+      })
   }
   ngOnInit() {
     this.orders = this.orderService.getOrders();

@@ -1,3 +1,5 @@
+import OrderOptions from "../views/models/OrderOptions";
+
 export class Order {
     public typeOfOrder;
     public constructor(
@@ -39,7 +41,7 @@ export class TestOrder extends Order {
 export class BloodworkOrder extends Order {
     public typeOfOrder = 'bloodwork';
     constructor(
-        public bloodTests: Array<{value: string, text: string}>,
+        public bloodTests: Array<OrderOptions>,
         public bloodTestsMappingArray: Array<any>,
         public reason: string,
         public location: string,

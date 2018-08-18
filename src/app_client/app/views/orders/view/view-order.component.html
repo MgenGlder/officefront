@@ -24,11 +24,11 @@
             <th style="width:10%">
               <mfDefaultSorter by="patient.type">Type of Order</mfDefaultSorter>
             </th>
-            <th style="width: 10%">
-              <mfDefaultSorter by="patient.dateOfBirth">Date Of Birth</mfDefaultSorter>
-            </th>
             <th style="width:10%">
               <mfDefaultSorter by="dateOfVisit">Date of Visit</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+              <mfDefaultSorter by="patient.dateOfBirth">Date Of Birth</mfDefaultSorter>
             </th>
             <th style="width: 20%">
               <mfDefaultSorter by="ordersStatus">Orders Status</mfDefaultSorter>
@@ -42,16 +42,14 @@
               <td>{{item.patient.lastName}}</td>
               <td>
                 <ng-container *ngIf="item.type">
-                  {{item.type}} 
+                  {{item.type}} <br/>
                 </ng-container>
                 <ng-container *ngIf="item.testID">
                     {{item.testID}}
                 </ng-container>
-                
-            
             </td>
+            <td>{{item.dateOfVisit}}</td>
               <td class="text-right">{{item.patient.dateOfBirth}}</td>
-              <td>{{item.dateOfVisit}}</td>
               <td>
                 {{item.status}}
                 <!--
