@@ -13,7 +13,7 @@ function authenticate(req, res) {
                 let token = data.generateJwt();
                 sendJsonResponse(res, 200, {
                     "token": token
-                })
+                });
             }
         });
     }
@@ -24,7 +24,7 @@ function register(req, res) {
     let createdHash;
     let newUser;
 
-    if (req.body.username == undefined || req.body.email == undefined || req.body.password == undefined) {
+    if (req.body.username == undefined || req.body.email == undefined || req.body.password == undefined || req.body.firstName == undefined || req.body.lastName == undefined) {
         sendJsonResponse(res, 404, {
             response: "Need to send all parameters, username, email, and password"
         })
@@ -44,6 +44,8 @@ function register(req, res) {
                     newUser = new User({
                         username: req.body.username,
                         email: req.body.email,
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
                         hash: createdHash,
                         salt: salt
                     });

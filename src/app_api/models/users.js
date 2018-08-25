@@ -17,6 +17,14 @@ var userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
   salt: String
 });
 
@@ -43,7 +51,7 @@ userSchema.methods.generateJwt = function() {
   return jwt.sign({
     _id: this._id,
     email: this.email,
-    name: this.name,
+    name: this.firstName + " " + this.lastName,
     // ^ payload v
     exp: parseInt(expiry/ 1000),
   }, 
