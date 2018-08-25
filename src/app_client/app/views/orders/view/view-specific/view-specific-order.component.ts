@@ -4,7 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
 
 @Component({
-    templateUrl: 'view-specific-order.component.html'
+    templateUrl: 'view-specific-order.component.html',
+    styles: ['.steps .disabled .icon { color: rgba(190,0,0,.3);  }',
+             '.steps .finished .icon { color: rgba(0,140,0); }',
+             '.steps .inprogress .icon { color: rgb(255,165,0); }',
+             '.steps .attached .message .icon { color: rgba(0,140,0); }']
 })
 export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
     id: number;

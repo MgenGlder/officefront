@@ -48,15 +48,19 @@
             </fieldset>
             <fieldset style="padding-bottom:17px;">
               <label>Visiting Doctor</label>
-              <select id="select" name="select" class="form-control" disabled>
-                <option value="adler">Coming Soon(tm)</option>
-                <option value="hampson">Coming Soon(tm)</option>
-                <option value="patel">Coming Soon(tm)</option>
+              <select id="select" name="select" class="form-control" [(ngModel)]="visitingDoctor">
+                <option [value]="''">Select a doctor...</option>
+                <option value="adler">Dr. Adler</option>
+                <option value="patel">Dr. Patel</option>
+                <option value="hampson">Dr. Hampson</option>
               </select>
             </fieldset>
             <fieldset>
               <label>Reporter</label>
-              <input type="text" placeholder="Coming Soon(tm)" disabled="disabled" class="form-control" [(ngModel)]="patientProfile.reporter" name="reporter" />
+              <select *ngIf="orderService.referrer != ''" id="select" name="select" class="form-control" disabled>
+                <option>{{orderService.referrer}}</option>
+              </select>
+              <!-- <input *ngIf="orderService.referrer != ''" type="text" placeholder="{{orderService.referrer}}"disabled="disabled" class="form-control" name="reporter" /> -->
             </fieldset>
           </div>
         </form>
