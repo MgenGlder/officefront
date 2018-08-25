@@ -51,7 +51,9 @@
             <td>{{item.dateOfVisit}}</td>
               <td class="text-right">{{item.patient.dateOfBirth}}</td>
               <td>
-                {{item.status}}
+                <span *ngIf="item.status == 'new'" class="badge badge-danger">{{item.status}}</span>
+                <span *ngIf="item.status == 'In Progress'" class="badge badge-warning">{{item.status}}</span>
+                <span *ngIf="item.status == 'Completed'" class="badge badge-success">{{item.status}}</span>
                 <!--
                 <span *ngIf="item.ordersStatus == 1" class="badge badge-success">Completed</span>
                 <span *ngIf="item.ordersStatus == 2" class="badge badge-danger">Not started</span>

@@ -1,3 +1,4 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Response } from '@angular/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -38,15 +39,20 @@ export class NewOrderComponent implements OnInit, OnDestroy {
   public patientsSubscription: Subscription;
   public patientData;
   public sanitizer;
+  public visitingDoctor;
   public constructor(public orderBuilderService: OrderBuilderService,
     public _sanitizer: DomSanitizer,
     public orderService: OrderService,
     private patientService: PatientService,
     public router: Router,
     private db: DBService) {
-    this.sanitizer = _sanitizer;
-    this.orderService.visitingDoctor = 'Dr. Hampson';
-    this.orderService.referrer = 'Dr. Hampson';
+      this.visitingDoctor = '';
+    const helper = new JwtHelperService();
+    const token = JSON.parse(localStorage.getItem('currentUser')).token;
+    const name = helper.decodeToken(token).name;
+    this.sanitizer = _sanitizer
+    this.orderService.visitingDoctor = 'adler';
+    this.orderService.referrer = name;
     this.patientProfile = {
       dateOfBirth: '',
       firstName: '',
@@ -59,6 +65,7 @@ export class NewOrderComponent implements OnInit, OnDestroy {
   }
 
   submitOrder() {
+    this.orderService.visitingDoctor = this.visitingDoctor;
     this.orderService.submitOrder(this.patientProfile)
       .then((response) => {
         this.router.navigateByUrl('/orders/new/submitted');
