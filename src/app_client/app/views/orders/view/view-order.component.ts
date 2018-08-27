@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { OrderService } from '../../../services/order.service';
 import { PatientService } from '../../../services/patient.service';
+import { Router } from '@angular/router';
 @Component({
   templateUrl: 'view-order.component.html'
 })
@@ -18,7 +19,7 @@ export class ViewOrderComponent implements OnDestroy {
   public ordersObservable: Observable<Object>;
   public ordersSubscription: Subscription;
   public orderData;
-  constructor(patientService: PatientService, orderService: OrderService) {
+  constructor(patientService: PatientService, orderService: OrderService, public router: Router) {
     this.patientsObservable = patientService.getAllPatients();
     this.patientsSubscription = this.patientsObservable
       .pipe(map((data: Response) => data)).subscribe(
@@ -41,6 +42,10 @@ export class ViewOrderComponent implements OnDestroy {
 
   public toInt(num: string) {
     return +num;
+  }
+
+  public routeToOrderPage (id) {
+    this.router.navigateByUrl('/orders/view/' + id);
   }
 
   public sortByWordLength(a: any) {
