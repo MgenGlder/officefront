@@ -36,7 +36,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of mf.data">
+         
+          <tr *ngFor="let item of mf.data" (click)="routeToOrderPage(item._id)">
             <ng-container *ngIf="item.patient">
               <td>{{item.patient.firstName}}</td>
               <td>{{item.patient.lastName}}</td>
@@ -71,6 +72,51 @@
           </tr>
         </tfoot>
       </table>
+
+      <!-- <table class="ui sortable celled table">
+        <thead>
+          <tr>
+            <th class="sorted descending">First Name</th>
+            <th class="">Last Name</th>
+            <th class="">Date Of Birth</th>
+            <th class="">Type of Order</th>
+            <th class="">Date of Visit</th>
+            <th class="">Orders Status</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>John</td>
+            <td>Smith</td>
+            <td>07/30/1993</td>
+            <td>EKG</td>
+            <td>09/02/2018</td>
+            <td>Completed</td>
+          </tr><tr>
+            <td>John</td>
+            <td>Smith</td>
+            <td>07/30/1993</td>
+            <td>EKG</td>
+            <td>09/02/2018</td>
+            <td>Completed</td>
+          </tr><tr>
+            <td>John</td>
+            <td>Smith</td>
+            <td>07/30/1993</td>
+            <td>EKG</td>
+            <td>09/02/2018</td>
+            <td>Completed</td>
+          </tr></tbody>
+        <tfoot>
+          <tr>
+          <th>3 People</th>
+          <th>2 Approved</th>
+          <th>None</th>
+          <th>None</th>
+          <th>None</th>
+          <th>None</th>
+        </tr></tfoot>
+      </table> -->
     </div>
   </div>
 </div>
