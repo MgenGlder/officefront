@@ -55,6 +55,13 @@ export class BloodworkOrder extends Order {
 }
 export class NurseOrder extends Order {
     public typeOfOrder = 'nurse';
+    public statuses = [
+    {name: 'Order Reviewed', user: null, timeCompleted: null},
+    {name: 'CPC Created', user: null, timeCompleted: null},
+    {name: 'Sent To MD', user: null, timeCompleted: null},
+    {name: 'Received From MD', user: null, timeCompleted: null},
+    {name: 'Sent To Agency', user: null, timeCompleted: null},
+    {name: 'Completed', user: null, timeCompleted: null}]
     constructor(
         public nursePurpose: Array<{value: string, text: string}>,
         public reason: string,
