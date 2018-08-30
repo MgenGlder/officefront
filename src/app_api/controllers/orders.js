@@ -100,7 +100,8 @@ function createOrderSchema(lookedUpPatient, req, res) {
             "dateOfVisit": req.body.dateOfVisit,
             "visitingDoctor": req.body.visitingDoctor,
             "reporter": req.body.reporter,
-            "status": "new"
+            "status": "new",
+            "statuses": req.body.statuses
         }).then((order) => {
             sendJsonResponse(res, 200, {
                 "status": "ok",
@@ -109,6 +110,7 @@ function createOrderSchema(lookedUpPatient, req, res) {
         })
 }
 function createOrderSchemaTest(lookedUpPatient, req, res) {
+    // TODO: If the order doesnt contain statuses (because its optional), then dont throw a null pointer
     Order
         .create({
             "patient": lookedUpPatient._id,
@@ -120,7 +122,8 @@ function createOrderSchemaTest(lookedUpPatient, req, res) {
             "visitingDoctor": req.body.visitingDoctor,
             "reporter": req.body.reporter,
             "testID": req.body.testID,
-            "status": "new"
+            "status": "new",
+            "statuses": req.body.statuses
         }).then((order) => {
             sendJsonResponse(res, 200, {
                 "status": "ok",
@@ -140,7 +143,8 @@ function createOrderSchemaNurse(lookedUpPatient, req, res) {
             "visitingDoctor": req.body.visitingDoctor,
             "reporter": req.body.reporter,
             "nursePurpose": req.body.nursePurpose,
-            "status": "new"
+            "status": "new",
+            "statuses": req.body.statuses
         }).then((order) => {
             sendJsonResponse(res, 200, {
                 "status": "ok",
