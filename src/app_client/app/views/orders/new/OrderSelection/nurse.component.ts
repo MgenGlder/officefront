@@ -34,6 +34,7 @@ export class NurseComponent {
       `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
       this.orderService.visitingDoctor,
       this.orderService.referrer);
+      console.log(this.order);
     db.getNurseOptions().toPromise().then((data) => {
       this.tests = data;
       this.testData =
@@ -77,6 +78,8 @@ export class NurseComponent {
       this.orderService.visitingDoctor,
       this.orderService.referrer
     );
+    console.log('this is the saved order');
+    console.log(this.order);
   }
   resetForm() {
     this.form.reset();

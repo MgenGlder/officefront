@@ -19,6 +19,7 @@ interface OrderRequestObject {
     nursePurpose?: String;
     testID?: String;
     typeOfSpecialist?: String;
+    statuses?: Array<String>;
 }
 
 @Injectable()
@@ -38,7 +39,8 @@ export class DBService {
             notes: order.notes,
             reason: order.reason,
             typeOfOrder: order.typeOfOrder,
-            reporter: order.reporter
+            reporter: order.reporter,
+            statuses: order.statuses
         }
         switch (order.typeOfOrder) {
             case 'nurse':
@@ -64,6 +66,8 @@ export class DBService {
     saveCompletePatientOrder(orders: Array<any>, patientProfile): Promise<any> {
         const orderPromises = [];
         for (const order of orders) {
+            console.log('in the db service');
+            console.log(order);
             orderPromises.push(this.makePostCall(patientProfile, order));
         }
         return Promise.all(orderPromises);

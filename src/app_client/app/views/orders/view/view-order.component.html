@@ -36,7 +36,6 @@
           </tr>
         </thead>
         <tbody>
-         
           <tr *ngFor="let item of mf.data" (click)="routeToOrderPage(item._id)">
             <ng-container *ngIf="item.patient">
               <td>{{item.patient.firstName}}</td>

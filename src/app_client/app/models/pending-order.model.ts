@@ -1,4 +1,4 @@
-import OrderOptions from "../views/models/OrderOptions";
+import OrderOptions from '../views/models/OrderOptions';
 
 export class Order {
     public typeOfOrder;
@@ -12,6 +12,13 @@ export class Order {
 }
 export class SpecialistOrder extends Order {
     public typeOfOrder = 'specialist';
+    public statuses = [
+        {name: 'Order Reviewed', user: null, timeCompleted: null},
+        {name: 'CPC Created', user: null, timeCompleted: null},
+        {name: 'Sent To MD', user: null, timeCompleted: null},
+        {name: 'Received From MD', user: null, timeCompleted: null},
+        {name: 'Sent To Agency', user: null, timeCompleted: null},
+        {name: 'Completed', user: null, timeCompleted: null}]
     constructor(
         public type: string,
         public reason: string,
@@ -25,6 +32,13 @@ export class SpecialistOrder extends Order {
 
 export class TestOrder extends Order {
     public typeOfOrder = 'test';
+    public statuses = [
+        {name: 'Order Reviewed', user: null, timeCompleted: null},
+        {name: 'CPC Created', user: null, timeCompleted: null},
+        {name: 'Sent To MD', user: null, timeCompleted: null},
+        {name: 'Received From MD', user: null, timeCompleted: null},
+        {name: 'Sent To Agency', user: null, timeCompleted: null},
+        {name: 'Completed', user: null, timeCompleted: null}]
     constructor(
         public testID: string,
         public reason: string,
@@ -40,6 +54,13 @@ export class TestOrder extends Order {
 
 export class BloodworkOrder extends Order {
     public typeOfOrder = 'bloodwork';
+    public statuses = [
+        {name: 'Order Reviewed', user: null, timeCompleted: null},
+        {name: 'CPC Created', user: null, timeCompleted: null},
+        {name: 'Sent To MD', user: null, timeCompleted: null},
+        {name: 'Received From MD', user: null, timeCompleted: null},
+        {name: 'Sent To Agency', user: null, timeCompleted: null},
+        {name: 'Completed', user: null, timeCompleted: null}]
     constructor(
         public bloodTests: Array<OrderOptions>,
         public bloodTestsMappingArray: Array<any>,
