@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
     <div class="view-specific-order" *ngIf="data">
-        <h3>Orders for {{data.firstName}} {{data.lastName}}</h3>
+        <h3>Orders for {{data.message.name}}</h3>
         <div>
             <div class="ui three top attached steps">
                 <!-- <div class="finished step">
@@ -26,54 +26,19 @@
                 </div>
             </div>
             <div class="ui attached segment">
-                <div class="ui icon message">
-                    <i class="check icon"></i>
+                <div *ngFor="let status of data.message.statuses" class="ui icon message">
+                    <i *ngIf="status.timeCompleted !== null" class="check icon"></i>
                     <div class="content">
                         <div class="header">
-                            Order reviewed
+                            {{status.name}}
                         </div>
-                        <p>Reviewed by: Kunle Oshiyoye @ 8/18/18</p>
+                        <p *ngIf="status.timeCompleted !== null" else timeNotCompleted>By: {{status.user}} {{status.timeCompleted}}</p>
+                        <p #timeNotCompleted><i class="notched circle loading icon"></i>Step not completed</p>
                     </div>
                 </div>
-                <div class="ui icon message">
-                    <i class="check icon"></i>
-                    <div class="content">
-                        <div class="header">
-                            Create CPC
-                        </div>
-                        <p>Created by: Kunle Oshiyoye @ 8/18/18</p>
-                    </div>
-                </div>
-                <div class="ui icon message">
-                    <i class="check icon"></i>
-                    <div class="content">
-                        <div class="header">
-                            Sent to MD for review
-                        </div>
-                        <p>Sent by: Kunle Oshiyoye @ 8/18/18</p>
-                    </div>
-                </div>
-                <div class="ui icon message">
-                        <i class="check icon"></i>
-                        <div class="content">
-                            <div class="header">
-                                Received back from MD
-                            </div>
-                            <p>Received by: Kunle Oshiyoye @ 8/18/18</p>
-                        </div>
-                    </div>
-                <div class="ui icon message">
-                    <i class="notched circle loading icon"></i>
-                    <div class="content">
-                        <div class="header">
-                            Sent to the agency
-                        </div>
-                        <p>Sent by: Kunle Oshiyoye @ 8/18/18</p>
-                    </div>
-                </div>
-                <div class="ui steps">
+                <!-- <div class="ui steps">
                     <div class="step">Some button</div>
-                </div>
+                </div> -->
             </div>
         </div>
         <!-- <div class="whole">
