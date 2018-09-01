@@ -155,14 +155,14 @@ function createOrderSchemaNurse(lookedUpPatient, req, res) {
 
 function getOrder(req, res) {
     Order
-        .findById(req.query.uniqueID, (err, orders) => {
+        .findById(req.query.uniqueID, (err, order) => {
             if (err) {
                 sendJsonResponse(res, 400, {
                     "status": "error",
                     "message": err
                 })
             }
-            else if (!patient) {
+            else if (!order) {
                 sendJsonResponse(res, 400, {
                     "status": "error",
                     "message": "Order was not found"
@@ -171,7 +171,7 @@ function getOrder(req, res) {
             else {
                 sendJsonResponse(res, 200, {
                     "status": "ok",
-                    "message": orders
+                    "message": order
                 })
             }
         })

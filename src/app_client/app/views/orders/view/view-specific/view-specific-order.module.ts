@@ -1,16 +1,16 @@
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { HttpModule } from '@angular/http';
 // Angular 2 Input Mask
 import { DataTableModule } from 'angular2-datatable';
-import { HttpModule } from '@angular/http';
-
+import { OrderService } from './../../../../services/order.service';
 // Routing
 import { ViewSpecificOrderRoutingModule } from './view-specific-order-routing.module';
-
 import { ViewSpecificOrderComponent } from './view-specific-order.component';
+
+
+
 
 @NgModule({
   imports: [
@@ -19,6 +19,9 @@ import { ViewSpecificOrderComponent } from './view-specific-order.component';
     ViewSpecificOrderRoutingModule,
     DataTableModule,
     HttpModule
+  ],
+  providers: [
+    OrderService
   ],
   declarations: [
     ViewSpecificOrderComponent,
