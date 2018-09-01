@@ -27,7 +27,11 @@ export class DBService {
     constructor(private http: HttpClient) {
     }
 
-
+    getOrder(orderId: string) {
+        return this.http.get(environment.apiUrl + '/api/order', {
+            params: new HttpParams().set('uniqueID', orderId)
+        });
+    }
     makePostCall(patientProfile, order) {
         const requestObject: OrderRequestObject = {
             patientFirstName: patientProfile.firstName,
@@ -66,8 +70,6 @@ export class DBService {
     saveCompletePatientOrder(orders: Array<any>, patientProfile): Promise<any> {
         const orderPromises = [];
         for (const order of orders) {
-            console.log('in the db service');
-            console.log(order);
             orderPromises.push(this.makePostCall(patientProfile, order));
         }
         return Promise.all(orderPromises);

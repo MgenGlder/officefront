@@ -15,6 +15,10 @@ export class OrderService {
         return this.fetchedOrders;
     }
 
+    public getOrder(orderId: string): Observable<Object> {
+        return this.dbService.getOrder(orderId);
+    }
+
     addOrder(order: Order) {
         this.orders.push(order);
     }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
+import { OrderService } from './../../../../services/order.service';
 
 @Component({
     templateUrl: 'view-specific-order.component.html',
@@ -11,7 +12,7 @@ import 'rxjs/add/operator/toPromise';
              '.steps .attached .message .icon { color: rgba(0,140,0); }']
 })
 export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
-    id: number;
+    id: string;
     public sub: any;
     public data: any;
     public specificPatient: any;
@@ -28,16 +29,20 @@ export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
         'completed': 'Completed',
         'awaitingSignature': 'Awaiting Signature',
     }
-    constructor(public route: ActivatedRoute, private http: HttpClient) {
+    constructor(public route: ActivatedRoute, private http: HttpClient, private orderService: OrderService) {
     }
-    ngOnInit() {
-        this.route.params.subscribe(params => {
-            this.id = +params['id'];
+    async ngOnInit() {
+        // Observable.forkJoin()
+        await this.route.params.subscribe(params => {
+            this.id = params['id'];
             this.sub = this.http.get('./assets/singlePatientData.json')
                 .subscribe((data) => {
                     this.data = data[0];
                 })
         })
+        this.orderService.getOrder(this.id).subscribe(order => {
+            // TODO: use the data in here, or await the call. Either or.
+        });
     }
     ngOnDestroy() {
         this.sub.unsubscribe();
