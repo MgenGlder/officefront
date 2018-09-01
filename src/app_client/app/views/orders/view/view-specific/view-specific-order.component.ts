@@ -7,9 +7,11 @@ import { OrderService } from './../../../../services/order.service';
 @Component({
     templateUrl: 'view-specific-order.component.html',
     styles: ['.steps .disabled .icon { color: rgba(190,0,0,.3);  }',
-             '.steps .finished .icon { color: rgba(0,140,0); }',
-             '.steps .inprogress .icon { color: rgb(255,165,0); }',
-             '.steps .attached .message .icon { color: rgba(0,140,0); }']
+        '.steps .finished .icon { color: rgba(0,140,0); }',
+        '.steps .inprogress .icon { color: rgb(255,165,0); }',
+        '.steps .attached .message .icon { color: rgba(0,140,0); }',
+        '.ui.icon.message { height: 70px; }'
+    ]
 })
 export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
     id: string;
@@ -40,8 +42,8 @@ export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
                     this.data = data[0];
                 })
         })
-        this.orderService.getOrder(this.id).subscribe(order => {
-            // TODO: use the data in here, or await the call. Either or.
+        await this.orderService.getOrder(this.id).subscribe(order => {
+            this.data = order;
         });
     }
     ngOnDestroy() {
