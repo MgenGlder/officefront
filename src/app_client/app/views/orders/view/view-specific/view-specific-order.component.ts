@@ -18,6 +18,7 @@ export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
     public sub: any;
     public data: any;
     public specificPatient: any;
+    public allCompleted: boolean;
 
     public mappingsForOrders: {} = {
         'XRay': 'X-Ray',
@@ -37,14 +38,22 @@ export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
         // Observable.forkJoin()
         await this.route.params.subscribe(params => {
             this.id = params['id'];
-            this.sub = this.http.get('./assets/singlePatientData.json')
-                .subscribe((data) => {
-                    this.data = data[0];
-                })
+            // this.sub = this.http.get('./assets/singlePatientData.json')
+            //     .subscribe((data) => {
+            //         this.data = data[0];
+            //     })
         })
-        await this.orderService.getOrder(this.id).subscribe(order => {
+        await this.orderService.getOrder(this.id).toPromise().then(order => {
             this.data = order;
         });
+
+        this.allCompleted = true;
+        for (const status in this.data.message.statuses) {
+            if (this.data.message.statuses[status].timeCompleted == null) {
+                this.allCompleted = false;
+                break;
+            }
+        }
     }
     ngOnDestroy() {
         this.sub.unsubscribe();
