@@ -27,13 +27,15 @@
             </div>
             <div class="ui attached segment">
                 <div *ngFor="let status of data.message.statuses" class="ui icon message">
-                    <i *ngIf="status.timeCompleted !== null" class="check icon"></i>
+                    <i *ngIf="status['timeCompleted']" class="check icon"></i>
                     <div class="content">
                         <div class="header">
-                            {{status.name}}
+                        {{status.name}}
                         </div>
-                        <p *ngIf="status.timeCompleted !== null" else timeNotCompleted>By: {{status.user}} {{status.timeCompleted}}</p>
-                        <p #timeNotCompleted><i class="notched circle loading icon"></i>Step not completed</p>
+                        <p *ngIf="status['timeCompleted'] != null; else timeNotCompleted">By: {{status.user}} @ {{status.timeCompleted}}</p>
+                        <ng-template #timeNotCompleted>
+                            <p><i class="notched circle loading icon"></i>Step not completed</p>
+                        </ng-template>
                     </div>
                 </div>
                 <!-- <div class="ui steps">
