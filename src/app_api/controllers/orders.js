@@ -174,7 +174,7 @@ function getOrder(req, res) {
                     "message": order
                 })
             }
-        })
+        }).populate("patient");
     // .exec((err, orders) => {
 
     // });

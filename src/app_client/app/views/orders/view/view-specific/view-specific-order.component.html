@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
-    <div class="view-specific-order" *ngIf="data">
-        <h3>Orders for {{data.message.name}}</h3>
+    <div class="view-specific-order" *ngIf="data && data.message && data.message.statuses">
+        <h3>Orders for {{data.message.patient.firstName}} {{data.message.patient.lastName}}</h3>
         <div>
             <div class="ui three top attached steps">
                 <!-- <div class="finished step">
@@ -10,14 +10,14 @@
                         <div class="description">Order request was submitted</div>
                     </div>
                 </div> -->
-                <div class="active inprogress step">
+                <div [ngClass]="{'active': allCompleted == false, 'disabled': allCompleted == true}" class="inprogress step">
                     <i class="payment icon"></i>
                     <div class="content">
                         <div class="title">Order In Progress</div>
                         <div class="description">Order is currently being worked on</div>
                     </div>
                 </div>
-                <div class="disabled step">
+                <div [ngClass]="{'active': allCompleted == true, 'disabled' : allCompleted == false}" class="disabled step">
                     <i class="check circle icon"></i>
                     <div class="content">
                         <div class="title">Completed</div>
@@ -27,13 +27,15 @@
             </div>
             <div class="ui attached segment">
                 <div *ngFor="let status of data.message.statuses" class="ui icon message">
-                    <i *ngIf="status.timeCompleted !== null" class="check icon"></i>
+                    <i *ngIf="status['timeCompleted']" class="check icon"></i>
                     <div class="content">
                         <div class="header">
-                            {{status.name}}
+                        {{status.name}}
                         </div>
-                        <p *ngIf="status.timeCompleted !== null" else timeNotCompleted>By: {{status.user}} {{status.timeCompleted}}</p>
-                        <p #timeNotCompleted><i class="notched circle loading icon"></i>Step not completed</p>
+                        <p *ngIf="status['timeCompleted'] != null; else timeNotCompleted">By: {{status.user}} @ {{status.timeCompleted}}</p>
+                        <ng-template #timeNotCompleted>
+                            <p><i class="notched circle loading icon"></i>Step not completed</p>
+                        </ng-template>
                     </div>
                 </div>
                 <!-- <div class="ui steps">
