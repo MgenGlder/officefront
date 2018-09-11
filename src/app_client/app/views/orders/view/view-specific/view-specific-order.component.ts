@@ -15,10 +15,10 @@ import { OrderService } from './../../../../services/order.service';
 })
 export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
     id: string;
-    public sub: any;
     public data: any;
     public specificPatient: any;
     public allCompleted: boolean;
+    public paramSubscription;
 
     public mappingsForOrders: {} = {
         'XRay': 'X-Ray',
@@ -35,14 +35,9 @@ export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
     constructor(public route: ActivatedRoute, private http: HttpClient, private orderService: OrderService) {
     }
     async ngOnInit() {
-        // Observable.forkJoin()
-        await this.route.params.subscribe(params => {
+        this.paramSubscription = await this.route.params.subscribe(params => {
             this.id = params['id'];
-            // this.sub = this.http.get('./assets/singlePatientData.json')
-            //     .subscribe((data) => {
-            //         this.data = data[0];
-            //     })
-        })
+        });
         await this.orderService.getOrder(this.id).toPromise().then(order => {
             this.data = order;
         });
@@ -55,7 +50,8 @@ export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
             }
         }
     }
+
     ngOnDestroy() {
-        this.sub.unsubscribe();
+        this.paramSubscription.unsubscribe();
     }
 }
