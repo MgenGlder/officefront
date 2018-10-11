@@ -1,7 +1,6 @@
 // server to be run on heroku
 // require("dotenv").load();
 const express = require('express');
-const jwt = require('express-jwt');
 const app = express();
 
 app.use(function(req, res, next) {

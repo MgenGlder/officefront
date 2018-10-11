@@ -6,12 +6,6 @@
     "configurations": [
         {
             "type": "node",
-            "request": "attach",
-            "name": "Attach",
-            "port": 8080,
-        },
-        {
-            "type": "node",
             "protocol": "inspector",
             "request": "launch",
             "name": "Officefront Backend",

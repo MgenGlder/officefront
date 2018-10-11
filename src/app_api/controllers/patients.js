@@ -1,8 +1,9 @@
 var mongoose = require("mongoose");
 var Patient = mongoose.model("Patient");
-var jwt = require("jsonwebtoken");
+const { refreshToken } = require('../utils/refreshToken');
 
-var sendJsonResponse = function (res, status, content) {
+var sendJsonResponse = function(req, res, status, content) {
+    content.refreshedToken = refreshToken(req);
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.status(status);
@@ -16,13 +17,13 @@ function createPatient(req, res) {
         dateOfBirth: req.body.dateOfBirth
     }, (err, location) => {
         if (err) {
-            sendJsonResponse(res, 400, {
+            sendJsonResponse(req, res, 400, {
                 "status": "ok",
                 "data": "Patient creation failed"
             })
         }
         else {
-            sendJsonResponse(res, 200, {
+            sendJsonResponse(req, res, 200, {
                 "status": "ok",
                 "data": "Patient created successfully"
             })
@@ -38,10 +39,10 @@ function updatePatient(req, res) {
             dateOfBirth: req.body.dateOfBirth
         }, (err, patient) => {
             if (err) {
-                sendJsonResponse(res, 400, err)
+                sendJsonResponse(req, res, 400, err)
             }
             else if (!patient) {
-                sendJsonResponse(res, 404, {
+                sendJsonResponse(req, res, 404, {
                     "status" : "error",
                     "message": "Patient was not found"
                 })
@@ -57,14 +58,14 @@ function updatePatient(req, res) {
                 //TODO: Allow to edit the orders assigned to the particular patient.
                 patient.save((err, patient) => {
                     if (err || !patient) {
-                        sendJsonResponse(res, 400, {
+                        sendJsonResponse(req, res, 400, {
                             "status" : "error",
                             "message": "There was an error saving the patient",
                             "error"  : err
                         });
                     }
                     else {
-                        sendJsonResponse(res, 200, {
+                        sendJsonResponse(req, res, 200, {
                             "status" : "ok",
                             "message": "Patient was updated successfully"
                         })
@@ -79,7 +80,7 @@ function getAllPatients(req, res) {
     Patient
         .find({}, (err, patients) => {
             if (!err && patients.length >= 1) {
-                sendJsonResponse(res, 200, patients);
+                sendJsonResponse(req, res, 200, patients);
             }
         })
 }
@@ -93,29 +94,18 @@ function getPatient(req, res) {
         })
         .exec((err, patient) => {
             if (!patient) {
-                sendJsonResponse(res, 404, {
+                sendJsonResponse(req, res, 404, {
                     "message": "Patient not found"
                 })
                 return;
             }
             else if (err) {
                 console.log(err);
-                sendJsonResponse(res, 400, err);
+                sendJsonResponse(req, res, 400, err);
                 return;
             }
             else {
-                // TODO: Don't hard code this. That's pretty bad. Make sure that you use real values as well.
-                // Abstract it out so that it all makes sense.
-                let newToken = jwt.sign({
-                    _id: 'someId',
-                    email: 'someEmail',
-                    name: 'some first and last name',
-                    // ^ payload v
-                    exp: (new Date().getTime()/ 1000)
-                  },
-                  'secret',)
-                sendJsonResponse(res, 200, {
-                    newToken,
+                sendJsonResponse(req, res, 200, {
                     status: "ok",
                     message: patient
                 });
