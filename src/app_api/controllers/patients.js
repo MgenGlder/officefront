@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var Patient = mongoose.model("Patient");
+var jwt = require("jsonwebtoken");
 
 var sendJsonResponse = function (res, status, content) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -72,7 +73,6 @@ function updatePatient(req, res) {
 
             }
         })
-
 }
 
 function getAllPatients(req, res) {
@@ -104,7 +104,16 @@ function getPatient(req, res) {
                 return;
             }
             else {
+                let newToken = jwt.sign({
+                    _id: 'someId',
+                    email: 'someEmail',
+                    name: 'some first and last name',
+                    // ^ payload v
+                    exp: (new Date().getTime()/ 1000)
+                  },
+                  'secret',)
                 sendJsonResponse(res, 200, {
+                    newToken,
                     status: "ok",
                     message: patient
                 });

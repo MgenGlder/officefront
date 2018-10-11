@@ -12,8 +12,9 @@
         },
         {
             "type": "node",
+            "protocol": "inspector",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Officefront Backend",
             "program": "${workspaceFolder}/server.js",
             "cwd": "${workspaceFolder}"
         }
