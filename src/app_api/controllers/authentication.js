@@ -23,11 +23,11 @@ function register(req, res) {
     // Use crypto for JWT, use bcrypt for password stuff. Bcrypt is more secure.
     let createdHash;
     let newUser;
-
     if (req.body.username == undefined || req.body.email == undefined || req.body.password == undefined || req.body.firstName == undefined || req.body.lastName == undefined) {
         sendJsonResponse(res, 404, {
             response: "Need to send all parameters, username, email, and password"
         })
+        return null;
     }
     // TODO: Refactor this bad boy at some point
     User.findOne({ username: req.body.username }, (err, data) => {

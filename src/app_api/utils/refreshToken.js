@@ -1,5 +1,3 @@
-var mongoose = require("mongoose");
-var User = mongoose.model("User");
 const jwt = require("jsonwebtoken");
 
 function refreshToken(req, userID) {

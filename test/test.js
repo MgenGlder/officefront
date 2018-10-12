@@ -6,6 +6,8 @@ let chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
 
+let appUrl = 'http://localhost:8080';
+
 
 
 
@@ -17,7 +19,10 @@ describe('Our server', function () {
                 .type('form')
                 .send({
                     'password': "password",
-                    'username': "mgenglder"
+                    'username': "mgengslder",
+                    'email': 'test@test.com',
+                    'firstName': 'Sally',
+                    'lastName': 'Mae'
                 })
                 .end((err, res) => {
                     expect(res.status).to.equal(200);
@@ -26,5 +31,18 @@ describe('Our server', function () {
                     done();
                 });
         });
+
+        xit('should add salt to pwd', async function () {
+            await request(server)
+                .get('/api/register')
+                .send({
+                    'password': 'password',
+                    'username': 'mgenglder'
+                })
+                .type('form')
+                .expect(res.status).to.equal(200)
+                .expect(res.body).to.be.a('object')
+                .expect(res.body['response']['registered']).to.exist
+        })
     });
 });
