@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 var Order = mongoose.model("Order");
 var Patient = mongoose.model("Patient");
-import { refreshToken } from '../utils/refreshToken';
+const { refreshToken } = require('../utils/refreshToken');
 
 var sendJsonResponse = function (req, res, status, content) {
     refreshToken(req);
