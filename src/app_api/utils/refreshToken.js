@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-function refreshToken(req, userID) {
+function refreshToken(req) {
     let token;
     if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer')
         token = req.headers.authorization.split(' ')[1];
