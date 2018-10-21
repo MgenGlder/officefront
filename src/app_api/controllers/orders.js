@@ -1,8 +1,10 @@
 var mongoose = require("mongoose");
 var Order = mongoose.model("Order");
 var Patient = mongoose.model("Patient");
+import { refreshToken } from '../utils/refreshToken';
 
-var sendJsonResponse = function (res, status, content) {
+var sendJsonResponse = function (req, res, status, content) {
+    refreshToken(req);
     res.status(status);
     res.json(content);
 }
@@ -15,14 +17,14 @@ function createOrder(req, res) { //generic, TODO: create a unique function for e
             dateOfBirth: req.body.patientDateOfBirth
         }, (err, patient) => {
             if (err) {
-                sendJsonResponse(res, 400, {
+                sendJsonResponse(req, res, 400, {
                     "status": "error",
                     "message": err
                 })
                 return;
             }
             else if (!patient) {
-                sendJsonResponse(res, 404, {
+                sendJsonResponse(req, res, 404, {
                     "status": "error",
                     "message": "Patient was not found"
                 })
@@ -46,7 +48,7 @@ function orderOptions(req, res) {
     console.log(req.query);
     switch (req.query.type) {
         case "specialist":
-            sendJsonResponse(res, 200, [
+            sendJsonResponse(req, res, 200, [
                 { value: 'podiatrist', text: 'Podiatrist' },
                 { value: 'optometrist', text: 'Optometrist' },
                 { value: 'cardiologist', text: 'Cardiologist' },
@@ -59,7 +61,7 @@ function orderOptions(req, res) {
             ])
             break;
         case "test":
-            sendJsonResponse(res, 200, [
+            sendJsonResponse(req, res, 200, [
                 { value: 'x-ray', text: 'X-Ray', location: true },
                 { value: 'ekg', text: 'EKG', location: true },
                 { value: 'pft', text: 'PFT', location: false },
@@ -70,7 +72,7 @@ function orderOptions(req, res) {
             ]);
             break;
         case "bloodwork":
-            sendJsonResponse(res, 200, [
+            sendJsonResponse(req, res, 200, [
                 { value: 'hgb-aic-level', text: 'Hgb. AIC Level' },
                 { value: 'bun-creat', text: 'BUN, CREAT' },
                 { value: 'cholesterol', text: 'Cholesterol/PSA' },
@@ -81,7 +83,7 @@ function orderOptions(req, res) {
             ]);
             break;
         case 'nurse':
-            sendJsonResponse(res, 200, [
+            sendJsonResponse(req, res, 200, [
                 { value: 'rn-monitor-bp', text: 'Monitor BP' },
                 { value: 'rn-monitor-bs', text: 'Monitor BS' },
             ])
@@ -103,7 +105,7 @@ function createOrderSchema(lookedUpPatient, req, res) {
             "status": "new",
             "statuses": req.body.statuses
         }).then((order) => {
-            sendJsonResponse(res, 200, {
+            sendJsonResponse(req, res, 200, {
                 "status": "ok",
                 "message": order
             });
@@ -125,7 +127,7 @@ function createOrderSchemaTest(lookedUpPatient, req, res) {
             "status": "new",
             "statuses": req.body.statuses
         }).then((order) => {
-            sendJsonResponse(res, 200, {
+            sendJsonResponse(req, res, 200, {
                 "status": "ok",
                 "message": order
             });
@@ -146,7 +148,7 @@ function createOrderSchemaNurse(lookedUpPatient, req, res) {
             "status": "new",
             "statuses": req.body.statuses
         }).then((order) => {
-            sendJsonResponse(res, 200, {
+            sendJsonResponse(req, res, 200, {
                 "status": "ok",
                 "message": order
             });
@@ -157,19 +159,19 @@ function getOrder(req, res) {
     Order
         .findById(req.query.uniqueID, (err, order) => {
             if (err) {
-                sendJsonResponse(res, 400, {
+                sendJsonResponse(req, res, 400, {
                     "status": "error",
                     "message": err
                 })
             }
             else if (!order) {
-                sendJsonResponse(res, 400, {
+                sendJsonResponse(req, res, 400, {
                     "status": "error",
                     "message": "Order was not found"
                 })
             }
             else {
-                sendJsonResponse(res, 200, {
+                sendJsonResponse(req, res, 200, {
                     "status": "ok",
                     "message": order
                 })
@@ -184,13 +186,13 @@ function updateOrder(req, res) {
     let fields = ["type", "dateOfVisit", "visitingDoctor", "visitingDoctor", "location", "notes", "reporter", "reason", "patient", "status"];
     Order.findById(req.body.uniqueID, (err, order) => {
         if (err) {
-            sendJsonResponse(res, 400, {
+            sendJsonResponse(req, res, 400, {
                 "status": "error",
                 "message": err
             })
         }
         else if (!order) {
-            sendJsonResponse(res, 404, {
+            sendJsonResponse(req, res, 404, {
                 "status": "error",
                 "message": "Patient could not be found"
             })
@@ -205,13 +207,13 @@ function updateOrder(req, res) {
             }
             order.save((err, order) => {
                 if (err || !order) {
-                    sendJsonResponse(res, 400, {
+                    sendJsonResponse(req, res, 400, {
                         "status": "error",
                         "message": "Error saving the order"
                     })
                 }
                 else {
-                    sendJsonResponse(res, 200, {
+                    sendJsonResponse(req, res, 200, {
                         "status": "ok",
                         "message": "Patient updated successfully"
                     })
@@ -237,7 +239,7 @@ function getAllOrders(req, res) {
             //         "message": orders
             //     })
             // }
-            sendJsonResponse(res, 200, orders);
+            sendJsonResponse(req, res, 200, orders);
         })
         .populate("patient");
 }
@@ -250,13 +252,13 @@ function getAllOrdersSpecificPatient(req, res) {
             'patient.dateOfBirth': req.body.patientDateOfBirth
         }, (err, allPatientOrders) => {
             if (err) {
-                sendJsonResponse(res, 400, {
+                sendJsonResponse(req, res, 400, {
                     "status": "error",
                     "message": err
                 })
             }
             else {
-                sendJsonResponse(res, 200, {
+                sendJsonResponse(req, res, 200, {
                     "status": "ok",
                     "message": allPatientOrders
                 });
