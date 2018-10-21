@@ -1,6 +1,9 @@
 <div class="animated fadeIn">
     <div class="view-specific-order" *ngIf="data && data.message && data.message.statuses">
-        <h3>Orders for {{data.message.patient.firstName}} {{data.message.patient.lastName}}</h3>
+        <div class="view-specific-order-header">
+            <h3 class="view-specific-order-text">Orders for {{data.message.patient.firstName}} {{data.message.patient.lastName}}</h3>
+            <span class="view-specific-order-edit-order">Edit order</span>
+        </div>
         <div>
             <div class="ui three top attached steps">
                 <!-- <div class="finished step">
