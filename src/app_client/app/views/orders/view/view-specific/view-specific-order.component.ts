@@ -10,7 +10,7 @@ import { OrderService } from './../../../../services/order.service';
         '.steps .finished .icon { color: rgba(0,140,0); }',
         '.steps .inprogress .icon { color: rgb(255,165,0); }',
         '.steps .attached .message .icon { color: rgba(0,140,0); }',
-        '.ui.icon.message { height: 70px; }'
+        '.ui.icon.message { height: 70px; }',
         '.view-specific-order-text { float: left; }',
         '.view-specific-order-edit-order { float: right }'
     ]

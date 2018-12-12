@@ -19,7 +19,9 @@ export class NewPatientComponent {
 
     public createPatient() {
         this.patientSubscription = this.patientService.createPatient(this.patientProfile)
-            .pipe(map((data: Response) => data.json()))
+            .pipe(map((data: any) => {
+                return data.data;
+            }))
             .subscribe((data) => {
                 if (data) {
                     this.router.navigateByUrl('/patients/new/successful');

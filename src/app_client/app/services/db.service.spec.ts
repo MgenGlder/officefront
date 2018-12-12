@@ -1,5 +1,5 @@
 import { DBService } from './db.service'
-import { Http, BaseRequestOptions, Response, ResponseOptions } from '@angular/http'
+import { Http, BaseRequestOptions } from '@angular/http'
 import { MockBackend } from '@angular/http/testing'
 import { Observable, of } from 'rxjs';
 
@@ -11,10 +11,9 @@ class SpyHttpAndClassToSpyOnClass {
         return spyOn(http, 'get').and.returnValues(responseObservable);
     }
     public static createResponseObservable(responseObject: [{ value: String, text: String, location?: Boolean }]|
-        [{ firstName: string, lastName: string, dateOfBirth: string}]): Observable<Response> {
-        return of(new Response(new ResponseOptions({
-            body: responseObject
-        })));
+        [{ firstName: string, lastName: string, dateOfBirth: string}]): Observable<[{ value: String, text: String, location?: Boolean }]|
+        [{ firstName: string, lastName: string, dateOfBirth: string}]> {
+        return of(responseObject);
     }
 }
 
@@ -27,34 +26,26 @@ describe('DBService get request calls', () => {
     it('should make call to get bloodwork data from db', async () => {
         SpyHttpAndClassToSpyOnClass.createHttpGetSpy(newHttp, [{ value: 'hgb-aic-level', text: 'Hgb. AIC Level' }])
         service = new DBService(newHttp);
-        const result = service.getBloodworkOptions();
-        await result.subscribe(((responseObject: Response) => {
-            expect(responseObject.json()[0].value).toEqual('hgb-aic-level');
-        }));
+        const result = await service.getBloodworkOptions().toPromise();
+        expect(result[0].value).toEqual('hgb-aic-level');
     })
     it('should make call to get nursing data from db', async () => {
         SpyHttpAndClassToSpyOnClass.createHttpGetSpy(newHttp, [{ value: 'rn-monitor-bp', text: 'Monitor BP' }])
         service = new DBService(newHttp);
-        const result = service.getNurseOptions();
-        await result.subscribe(((responseObject: Response) => {
-            expect(responseObject.json()[0].value).toEqual('rn-monitor-bp');
-        }))
+        const result = await service.getNurseOptions().toPromise();
+        expect(result[0].value).toEqual('rn-monitor-bp');
     })
     it('should make call to get testing data from db', async () => {
         SpyHttpAndClassToSpyOnClass.createHttpGetSpy(newHttp, [{ value: 'x-ray', text: 'X-Ray', location: true }])
         service = new DBService(newHttp);
-        const result = service.getTestOptions();
-        await result.subscribe(((responseObject: Response) => {
-            expect(responseObject.json()[0].value).toEqual('x-ray');
-        }))
+        const result = await service.getTestOptions().toPromise();
+        expect(result[0].value).toEqual('x-ray');
     })
     it('should make call to get specialist data from db', async () => {
         SpyHttpAndClassToSpyOnClass.createHttpGetSpy(newHttp, [{ value: 'podiatrist', text: 'Podiatrist' }]);
         service = new DBService(newHttp);
-        const result = service.getTestOptions();
-        await result.subscribe(((responseObject: Response) => {
-            expect(responseObject.json()[0].value).toEqual('podiatrist')
-        }))
+        const result = await service.getTestOptions().toPromise();
+        expect(result[0].value).toEqual('podiatrist')
     })
 })
 
@@ -70,7 +61,8 @@ describe('DBService post request calls', () => {
         notes: string,
         reason: string,
         nursePurpose?: string,
-        testID?: string
+        testID?: string,
+        statuses: any[]
     }];
     const patientProfile = {
         firstName: 'Kunle',
@@ -86,7 +78,8 @@ describe('DBService post request calls', () => {
             reporter: '',
             dateOfVisit: '07/03/2018',
             notes: 'Patient is very anxious',
-            reason: 'Sore throat'
+            reason: 'Sore throat',
+            statuses: []
         }]
     })
     it('should make post calls to push new nursing order', () => {
@@ -115,7 +108,8 @@ describe('DBService post request calls', () => {
             nursePurpose: 'rn-monitor-bp',
             patientFirstName: 'Kunle',
             patientLastName: 'Oshiyoye',
-            patientDateOfBirth: '07/30/1993'
+            patientDateOfBirth: '07/30/1993',
+            statuses: []
         })
     })
     it('should make post calls to push new test orders', () => {
@@ -143,7 +137,8 @@ describe('DBService post request calls', () => {
             testID: 'MRI',
             patientFirstName: 'Kunle',
             patientLastName: 'Oshiyoye',
-            patientDateOfBirth: '07/30/1993'
+            patientDateOfBirth: '07/30/1993',
+            statuses: []
         })
     })
     it('should make post calls to push new bloodwork orders', () => {
@@ -171,7 +166,8 @@ describe('DBService post request calls', () => {
             typeOfOrder: 'bloodwork',
             patientFirstName: 'Kunle',
             patientLastName: 'Oshiyoye',
-            patientDateOfBirth: '07/30/1993'
+            patientDateOfBirth: '07/30/1993',
+            statuses: []
         })
     })
     it('should make post calls to push new specialist orders', () => {
@@ -199,9 +195,10 @@ describe('DBService post request calls', () => {
             typeOfSpecialist: 'psychiatrist',
             patientFirstName: 'Kunle',
             patientLastName: 'Oshiyoye',
-            patientDateOfBirth: '07/30/1993'
+            patientDateOfBirth: '07/30/1993',
+            statuses: []
         });
-    });
+    })
     it('should make a get call to get all patients', () => {
         const getSpy = SpyHttpAndClassToSpyOnClass.createHttpGetSpy(newHttp, [{
             firstName: 'Kunle',

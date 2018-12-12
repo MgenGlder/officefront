@@ -36,13 +36,13 @@ describe('ViewSpecificOrderComponent', () => {
     });
     it('should get correct route params on init', () => {
         viewSpecificOrderComponent.ngOnInit();
-        expect(viewSpecificOrderComponent.id).toEqual(+'244');
+        expect(viewSpecificOrderComponent.id).toEqual('244');
     });
 
     it('should unsubscribe on destroy event', () => {
         viewSpecificOrderComponent.ngOnInit();
-        spyOn(viewSpecificOrderComponent.sub, 'unsubscribe');
+        spyOn(viewSpecificOrderComponent.paramSubscription, 'unsubscribe');
         viewSpecificOrderComponent.ngOnDestroy();
-        expect(viewSpecificOrderComponent.sub.unsubscribe).toHaveBeenCalled();
+        expect(viewSpecificOrderComponent.paramSubscription.unsubscribe).toHaveBeenCalled();
     })
 })

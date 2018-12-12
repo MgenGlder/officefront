@@ -1,5 +1,4 @@
 var mongoose = require("mongoose");
-var patientSchema = require("./patients");
 var Schema = mongoose.Schema;
 
 var orderSchema = new mongoose.Schema({
@@ -10,7 +9,7 @@ var orderSchema = new mongoose.Schema({
     notes         : String,
     reporter      : String,
     reason        : String,
-    patient       : {type: Schema.Types. ObjectId, ref: 'Patient'},
+    patient       : {type: Schema.Types.ObjectId, ref: 'Patient'},
     status        : String,
     testID        : String,
     nursePurpose  : String,
