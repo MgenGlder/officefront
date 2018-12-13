@@ -14,13 +14,20 @@ describe('BloodworkComponent', () => {
     let fixture: ComponentFixture<BloodworkComponent>;
     let bloodworkComponent;
     let orderService: OrderService;
-    beforeEach(() => {
+    beforeEach(async () => {
         const fb = mock(FormBuilder.prototype, 'FormBuilder');
         const orderBuilderService = mock(OrderBuilderService.prototype, 'OrderBuilderService');
         const router = mock(Router.prototype, 'Router');
         const db = mock(DBService.prototype, 'DBService');
+        db.getBloodworkOptions.toPromise = jasmine.createSpy('bloodworkOptionsSpy');
 
-        db.getBloodworkOptions.and.returnValue([new BloodworkOrder([], [], '', '', '', '', '', '')]);
+        db.getBloodworkOptions = () => {
+            return {
+                toPromise: () => {
+                    return Promise.resolve([{ value: 'pfb', text: 'pfb'}]);
+                }
+            }
+        };
 
         orderService = mock(OrderService.prototype, 'OrderService');
         TestBed.configureTestingModule({
@@ -46,7 +53,7 @@ describe('BloodworkComponent', () => {
                 NO_ERRORS_SCHEMA
             ]
         })
-        TestBed.compileComponents();
+        await TestBed.compileComponents();
         fixture = TestBed.createComponent(BloodworkComponent);
         bloodworkComponent = fixture.componentInstance;
     })
