@@ -77,8 +77,6 @@ export class NurseComponent {
       this.orderService.visitingDoctor,
       this.orderService.referrer
     );
-    console.log('this is the saved order');
-    console.log(this.order);
   }
   resetForm() {
     this.form.reset();

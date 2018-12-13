@@ -1,3 +1,6 @@
+import { mock } from './../../../../utils/mock';
+import { DBService } from './../../../../services/db.service';
+import { OrderService } from './../../../../services/order.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -6,10 +9,21 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { ViewSpecificOrderComponent } from './view-specific-order.component';
 
+
 describe('ViewSpecificOrderComponent', () => {
+    const dbMock = mock(DBService);
+    const orderMock = mock(OrderService);
     let fixture: ComponentFixture<ViewSpecificOrderComponent>;
     let viewSpecificOrderComponent: ViewSpecificOrderComponent;
-    beforeEach(() => {
+    beforeEach(async () => {
+
+        orderMock.getOrder = () => {
+            return {
+                toPromise: () => {
+                    return Promise.resolve({})
+                }
+            }
+        }
         TestBed.configureTestingModule({
             providers: [
                 {
@@ -20,7 +34,9 @@ describe('ViewSpecificOrderComponent', () => {
                             }
                         )
                     }
-                }
+                },
+                {provide: OrderService, useValue: orderMock},
+                {provide: DBService,  useValue: dbMock}
             ],
             imports: [
                 RouterTestingModule,
@@ -31,6 +47,7 @@ describe('ViewSpecificOrderComponent', () => {
                 ViewSpecificOrderComponent
             ]
         })
+        await TestBed.compileComponents();
         fixture = TestBed.createComponent(ViewSpecificOrderComponent);
         viewSpecificOrderComponent = fixture.componentInstance;
     });

@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
 import { OrderService } from './../../../../services/order.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     templateUrl: 'view-specific-order.component.html',
@@ -20,7 +21,7 @@ export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
     public data: any;
     public specificPatient: any;
     public allCompleted: boolean;
-    public paramSubscription;
+    public paramSubscription: Subscription;
 
     public mappingsForOrders: {} = {
         'XRay': 'X-Ray',
@@ -37,7 +38,7 @@ export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
     constructor(public route: ActivatedRoute, private http: HttpClient, private orderService: OrderService) {
     }
     async ngOnInit() {
-        this.paramSubscription = await this.route.params.subscribe(params => {
+        this.paramSubscription = this.route.params.subscribe(params => {
             this.id = params['id'];
         });
         await this.orderService.getOrder(this.id).toPromise().then(order => {
@@ -45,10 +46,14 @@ export class ViewSpecificOrderComponent implements OnInit, OnDestroy {
         });
 
         this.allCompleted = true;
-        for (const status in this.data.message.statuses) {
-            if (this.data.message.statuses[status].timeCompleted == null) {
-                this.allCompleted = false;
-                break;
+        if (this.data.message === undefined || this.data.message.statuses === undefined) {
+            return null;
+        } else {
+            for (const status in this.data.message.statuses) {
+                if (this.data.message.statuses[status].timeCompleted == null) {
+                    this.allCompleted = false;
+                    break;
+                }
             }
         }
     }
