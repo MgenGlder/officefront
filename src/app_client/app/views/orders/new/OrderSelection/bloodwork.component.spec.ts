@@ -15,11 +15,9 @@ describe('BloodworkComponent', () => {
     let bloodworkComponent;
     let orderService: OrderService;
     beforeEach(async () => {
-        const fb = mock(FormBuilder.prototype, 'FormBuilder');
         const orderBuilderService = mock(OrderBuilderService.prototype, 'OrderBuilderService');
         const router = mock(Router.prototype, 'Router');
         const db = mock(DBService.prototype, 'DBService');
-        db.getBloodworkOptions.toPromise = jasmine.createSpy('bloodworkOptionsSpy');
 
         db.getBloodworkOptions = () => {
             return {

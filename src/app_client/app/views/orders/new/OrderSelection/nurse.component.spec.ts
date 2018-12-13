@@ -13,20 +13,17 @@ describe('NurseComponent', () => {
     let fixture: ComponentFixture<NurseComponent>;
     let nurseComponent;
     let orderService: OrderService;
-    beforeEach(() => {
-        const fb = mock(FormBuilder.prototype, 'FormBuilder');
+    beforeEach(async () => {
         const orderBuilderService = mock(OrderBuilderService.prototype, 'OrderBuilderService');
         const router = mock(Router.prototype, 'Router');
         const db = mock(DBService.prototype, 'DBService');
-
-        db.getNurseOptions.and.returnValue([new NurseOrder(
-            [],
-            '',
-            '',
-            '',
-            '',
-            ''
-        )]);
+        db.getNurseOptions = () => {
+            return {
+                toPromise: () => {
+                    return Promise.resolve([{ value: 'pfb', text: 'pfb'}])
+                }
+            }
+        }
 
         orderService = mock(OrderService.prototype, 'OrderService');
         TestBed.configureTestingModule({
@@ -52,7 +49,7 @@ describe('NurseComponent', () => {
                 NO_ERRORS_SCHEMA
             ]
         })
-        TestBed.compileComponents();
+        await TestBed.compileComponents();
         fixture = TestBed.createComponent(NurseComponent);
         nurseComponent = fixture.componentInstance;
     })
