@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Component } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -10,18 +10,28 @@ import { OrderService } from '../../../services/order.service';
 import { PatientService } from './../../../services/patient.service';
 import { NewOrderComponent } from './new-order.component';
 import { Order } from '../../../models/pending-order.model';
+
+@Component({
+    template: `<router-outlet></router-outlet>`
+  })
+  export class BlankComponent {
+  }
+
+
 describe('NewOrderComponent', () => {
     let httpMock;
     let fixture: ComponentFixture<NewOrderComponent>;
     let newOrderComponent: NewOrderComponent;
     let orderService: OrderService;
     beforeEach(() => {
+        // tslint:disable-next-line
+        localStorage.setItem('currentUser',`{"username":"MgenGlder","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjZhMzdhNDI3NGJlZDg3MWM0MzE2MmEiLCJlbWFpbCI6InNvbWV0dGhpbmdAaG90bWFpbC5jb20iLCJuYW1lIjoiS3VubGUgT3NoaXlveWUiLCJleHAiOjE1NDQ3Mzg5OTAsImlhdCI6MTU0NDczODA5MH0.gh-2K4LEpNbutAHAfroirvHUYQc4h9fdXIU4zFVfg7A"}`)
         TestBed.configureTestingModule({
             imports: [
                 FormsModule,
                 HttpClientTestingModule,
                 HttpClientModule,
-                RouterTestingModule
+                RouterTestingModule.withRoutes([{path: 'orders/new/submitted', component: BlankComponent}])
             ],
             providers: [
                 OrderBuilderService,
@@ -30,7 +40,8 @@ describe('NewOrderComponent', () => {
                 DBService
             ],
             declarations: [
-                NewOrderComponent
+                NewOrderComponent,
+                BlankComponent
             ],
             schemas: [
                 NO_ERRORS_SCHEMA
