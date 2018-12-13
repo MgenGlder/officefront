@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Component } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { DataTableModule } from '../../../../../../node_modules/angular2-datatable';
@@ -9,6 +9,14 @@ import { PatientService } from '../../../services/patient.service';
 import { DataFilterPipe } from '../../plugins/datatable/datafilterpipe';
 import { DBService } from './../../../services/db.service';
 import { ViewOrderComponent } from './view-order.component';
+import { RouterTestingModule } from '@angular/router/testing';
+
+@Component({
+    template: `<router-outlet></router-outlet>`
+  })
+  export class BlankComponent {
+  }
+
 
 describe('ViewOrderComponent', () => {
     let viewOrderComponent: ViewOrderComponent;
@@ -19,7 +27,8 @@ describe('ViewOrderComponent', () => {
             imports: [
                 FormsModule,
                 DataTableModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                RouterTestingModule.withRoutes([{path: 'orders/view/*', component: BlankComponent}])
             ],
             providers: [
                 OrderService,
@@ -28,7 +37,8 @@ describe('ViewOrderComponent', () => {
             ],
             declarations: [
                 ViewOrderComponent,
-                DataFilterPipe
+                DataFilterPipe,
+                BlankComponent
             ],
             schemas: [
                 NO_ERRORS_SCHEMA
