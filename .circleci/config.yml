@@ -17,6 +17,8 @@ jobs:
           name: Front End Unit Tests
           command: npm run testFront
   deploy:
+    machine:
+      image: circleci/classic
     steps:
       - run:
           deployment:
