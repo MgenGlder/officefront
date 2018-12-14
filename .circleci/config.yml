@@ -11,13 +11,22 @@ jobs:
           name: Install Project
           command: npm install
       - run:
-          name: Front End Unit Tests
-          command: npm run testFront
-      - run:
           name: Print the Current Time
           command: date
+  test: 
+    steps:
+      - run:
+            name: Front End Unit Tests
+            command: npm run testFront
 deployment:
   staging:
     branch: master
     heroku:
       appname: officefront
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - build
+      - test
+      - deployment
