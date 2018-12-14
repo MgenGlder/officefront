@@ -18,8 +18,8 @@ jobs:
           CHROME_BIN: "/usr/bin/google-chrome"
     steps:
       - run:
-        name: Front End Unit Tests
-        command: npm run testFront
+          name: Front End Unit Tests
+          command: npm run testFront
 deployment:
   staging:
     branch: master
