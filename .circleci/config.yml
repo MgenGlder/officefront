@@ -10,7 +10,7 @@ jobs:
           command: npm install
       - run:
           name: Front End Unit Tests
-          command: ng test
+          command: npm run test
       - run:
           name: Print the Current Time
           command: date
