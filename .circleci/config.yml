@@ -16,16 +16,11 @@ jobs:
       - run:
           name: Front End Unit Tests
           command: npm run testFront
-  deploy:
-    machine:
-      image: circleci/classic
-    steps:
-      - run:
-          deployment:
-            staging:
-              branch: master
-              heroku:
-                appname: officefront
+  deployment:
+    staging:
+      branch: master
+      heroku:
+        appname: officefront
 workflows:
   version: 2
   workflow:
