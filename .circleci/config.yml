@@ -12,9 +12,10 @@ jobs:
           name: Print the Current Time
           command: date
   test:
-    - image: circleci/node:8.9-browsers
-        environment:
-          CHROME_BIN: "/usr/bin/google-chrome"
+    docker:
+      - image: circleci/node:8.9-browsers
+          environment:
+            CHROME_BIN: "/usr/bin/google-chrome"
     steps:
       - run:
             name: Front End Unit Tests
