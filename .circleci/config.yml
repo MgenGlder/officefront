@@ -16,8 +16,8 @@ jobs:
       - run:
           name: Print the Current Time
           command: date
-  deployment:
-    staging:
-      branch: master
+deployment:
+  staging:
+    branch: master
       heroku:
         appname: officefront
