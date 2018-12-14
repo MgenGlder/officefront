@@ -11,7 +11,7 @@
     "start": "node server.js",
     "serve": "ng serve",
     "build": "ng build",
-    "testFront": "ng test",
+    "testFront": "ng test --watch=false --no-progress --browsers=ChromeNoSandboxHeadless",
     "testBack": "mocha --timeout 10000 --watch",
     "test": "mocha",
     "lint": "ng lint",
