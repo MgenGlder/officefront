@@ -11,6 +11,11 @@ jobs:
       - run:
           name: Print the Current Time
           command: date
+          deployment:
+            staging:
+              branch: master
+              heroku:
+                appname: officefront
   test:
     docker:
       - image: circleci/node:8.9-browsers
@@ -21,11 +26,6 @@ jobs:
           name: Front End Unit Tests
           command: npm run testFront
 workflows:
-  deployment:
-    staging:
-      branch: master
-      heroku:
-        appname: officefront
   version: 2
   workflow:
     jobs:
