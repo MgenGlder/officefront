@@ -18,11 +18,12 @@ jobs:
           command: npm run testFront
   deploy:
     steps:
-      deployment:
-        staging:
-          branch: master
-          heroku:
-            appname: officefront
+      - run:
+          deployment:
+            staging:
+              branch: master
+              heroku:
+                appname: officefront
 workflows:
   version: 2
   workflow:
