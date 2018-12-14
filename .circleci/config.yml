@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run:
           name: Install Project
-          command: npm install; sudo npm install -g @angular/cli
+          command: sudo npm install -g @angular/cli; npm install
       - run:
           name: Front End Unit Tests
           command: npm run test
