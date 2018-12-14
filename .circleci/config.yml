@@ -17,11 +17,12 @@ jobs:
           name: Front End Unit Tests
           command: npm run testFront
   deploy:
-    deployment:
-      staging:
-        branch: master
-        heroku:
-          appname: officefront
+    steps:
+      deployment:
+        staging:
+          branch: master
+          heroku:
+            appname: officefront
 workflows:
   version: 2
   workflow:
