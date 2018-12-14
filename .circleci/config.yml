@@ -26,4 +26,3 @@ workflows:
   workflow:
     jobs:
       - build
-      - deploy
