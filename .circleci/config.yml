@@ -19,5 +19,5 @@ jobs:
 deployment:
   staging:
     branch: master
-      heroku:
-        appname: officefront
+    heroku:
+      appname: officefront
