@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   templateUrl: 'text-editors.component.html',
-  styleUrls: ['../../../../../../node_modules/quill/dist/quill.snow.css'],
+  // styleUrls: ['../../../../../../node_modules/quill/dist/quill.snow.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class TextEditorsComponent {
