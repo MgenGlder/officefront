@@ -2,7 +2,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9
+      - image: circleci/node:8.9-browsers
+        environment:
+                    CHROME_BIN: "/usr/bin/google-chrome"
     steps:
       - checkout
       - run:
@@ -11,24 +13,18 @@ jobs:
       - run:
           name: Print the Current Time
           command: date
-          deployment:
-            staging:
-              branch: master
-              heroku:
-                appname: officefront
-  test:
-    docker:
-      - image: circleci/node:8.9-browsers
-        environment:
-          CHROME_BIN: "/usr/bin/google-chrome"
-    steps:
       - run:
           name: Front End Unit Tests
           command: npm run testFront
+    deploy:
+      deployment:
+        staging:
+          branch: master
+          heroku:
+            appname: officefront
 workflows:
   version: 2
   workflow:
     jobs:
       - build
-      - test
-      - deployment
+      - deploy
