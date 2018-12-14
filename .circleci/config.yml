@@ -7,10 +7,10 @@ jobs:
       - checkout
       - run:
           name: Install Project
-          command: sudo npm install -g @angular/cli; npm install
+          command: npm install
       - run:
           name: Front End Unit Tests
-          command: npm run test
+          command: ./node_modules/@angular/cli/bin/ng test
       - run:
           name: Print the Current Time
           command: date
