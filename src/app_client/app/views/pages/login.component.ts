@@ -15,10 +15,10 @@ returnUrl: string;
 error = '';
 
 constructor(
-  private formBuilder: FormBuilder,
-  private route: ActivatedRoute,
-  private router: Router,
-  private authenticationService: AuthenticationService
+  public formBuilder: FormBuilder,
+  public route: ActivatedRoute,
+  public router: Router,
+  public authenticationService: AuthenticationService
 ) {}
 
 ngOnInit() {
@@ -30,12 +30,6 @@ ngOnInit() {
   this.authenticationService.logout();
 
   this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-}
-
-keyUpFunction(event) {
-  if (event.keyCode === 13) {
-    this.onSubmit();
-  }
 }
 
 onRegister() {
@@ -51,7 +45,7 @@ onSubmit() {
   }
 
   this.loading = true;
-  this.authenticationService.login(this.f.username.value, this.f.password.value)
+  this.authenticationService.login(this.f.username.value.toLowerCase(), this.f.password.value)
     .pipe(first())
     .subscribe(
       data => {
